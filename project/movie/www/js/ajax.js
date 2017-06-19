@@ -25,7 +25,13 @@ var AJAX = {
 				rs = rs || {};
 				loading.hide();
 
-				success(rs);
+				if(rs.state == 1){
+					success(rs.data);
+				}else{
+					success({});
+				}
+
+
 
 			},
 			error: function() {
