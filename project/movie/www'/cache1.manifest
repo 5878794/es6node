@@ -1,0 +1,26 @@
+CACHE MANIFEST
+#v374
+
+CACHE:
+# 需要缓存的列表
+index.html
+css/all.css
+icon/iqiyi.jpeg
+icon/qq.jpeg
+icon/sohu.jpeg
+icon/tudou.jpg
+icon/youku.jpeg
+icon/test.jpeg1
+js/ajax.js
+js/index.js
+js/jquery-2.1.1.min.js
+js/lib.js
+404.html
+icon.png
+
+NETWORK:
+# 不需要缓存的
+*
+
+FALLBACK:
+# 访问缓存失败后，备用访问的资源，第一个是访问源，第二个是替换文件*.html /offline.html
