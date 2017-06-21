@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html manifest="cache1.manifest">
+<head>
+    <meta charset="UTF-8">
+
+
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <!--添加到主屏幕后，全屏显示。-->
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!--顶部系统状态条-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--icon-->
+    <link rel="apple-touch-icon-precomposed" href="image/icon.jpeg" />
+    <!--不设别电话和邮箱-->
+    <meta name="format-detection" content="telephone=no">
+    <meta content="email=no" name="format-detection" />
+    <!--用户把网页存为书签时，在手机HOME界面创建应用程序样式的图标。-->
+    <link rel="apple-touch-icon" href="image/icon.jpeg" />
+    <link rel="apple-touch-icon-precomposed" href="image/icon.jpeg" />
+
+    <title>金控研发通讯录</title>
+
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="css/all.css">
+    <link rel="stylesheet" type="text/css" href="css/css.css">
+
+    <!-- js -->
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/polyfill.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/lib.js"></script>
+    <script src="js/index.js"></script>
+
+
+</head>
+<body>
+<div class="search border_box">
+    <input type="text" id="search" placeholder="搜索" />
+</div>
+<div class="search_top"></div>
+
+
+<div class="main border_box" id="main">
+
+
+</div>
+
+<div class="az box_s" id="az">
+    <!--<span class="center boxflex1">A</span>-->
+</div>
+
+
+<div class="type" id="type" style="display: none;">
+    <p>A</p>
+
+</div>
+
+
+</body>
+</html>

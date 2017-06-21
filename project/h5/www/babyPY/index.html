@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html manifest="cache1.manifest">
+<!--<html>-->
+<head>
+    <meta charset="UTF-8">
+
+
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <!--添加到主屏幕后，全屏显示。-->
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!--顶部系统状态条-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--icon-->
+    <link rel="apple-touch-icon-precomposed" href="icon.jpeg" />
+    <!--不设别电话和邮箱-->
+    <meta name="format-detection" content="telephone=no">
+    <meta content="email=no" name="format-detection" />
+    <!--用户把网页存为书签时，在手机HOME界面创建应用程序样式的图标。-->
+    <link rel="apple-touch-icon" href="icon.jpeg" />
+    <link rel="apple-touch-icon-precomposed" href="icon.jpeg" />
+
+    <title>babyPY</title>
+
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="css/all.css">
+
+
+    <!-- js -->
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/lib.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/index.js"></script>
+
+
+    <style>
+        *{
+            font-size: 20px;
+        }
+
+        #page1,
+        #page2,
+        #page3{
+            position: fixed; left:0; top:0; width: 100%; height: 100%;
+        }
+        #page1 div{
+            margin: 20px 0; width: 60%; height: 40px; line-height: 40px; text-align: center;
+            background: #eee; border: 1px solid #ccc;
+        }
+
+        .music{
+            width: 100%; border-bottom: 1px solid #ccc;
+            margin-bottom: 30px;
+
+        }
+        .music img{
+            width: 100%;
+        }
+        .list{
+            width: 60%; height: 40px; line-height: 40px; background: #eee; border: 1px solid #ccc;
+            margin: 20px auto;
+        }
+        .list span{
+            padding: 0 20px;
+        }
+
+
+        .loading{
+            position: fixed; left:0; top: 0; width: 100%; height: 100%;
+            z-index: 999999; background: url(bg.jpg);
+            -webkit-background-size:100% 100%;
+            background-size:100% 100%;
+        }
+        .loading_top{
+            width: 100%; height: 77.5%; padding-bottom: 20%;
+        }
+        .loading_bottom{
+            width: 100%; height: 22.5%; text-align: center; line-height: 30px;
+        }
+        .loading_icon{
+            position: absolute; left:20px; top: 20px; height: 30px; line-height: 30px;
+            padding-left: 40px;
+        }
+        .loading_icon:before{
+            content: ""; display: inline-block;
+            position: absolute; left:0; top: 0;
+            width: 30px; height: 30px; background: url(../bens1.jpg);
+            background-size: 100% 100%; -webkit-background-size: 100% 100%;
+            -webkit-border-radius:30px;
+            -moz-border-radius:30px;
+            border-radius:30px;
+        }
+        .loading_pro{
+            width: 0%; height: 3px; background:#BD1919;
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="loading_top center border_box"></div>
+        <div class="loading_bottom">
+            <div class="loading_pro hover_animate" id="loading_pro"></div>
+            <span>检查</span>
+        </div>
+        <div class="loading_icon">bens</div>
+    </div>
+
+
+    <div id="page1" class="center box_s">
+        <div>开始</div>
+    </div>
+
+    <div id="page2" class="box_s" style="display: none;">
+        <div class="music">
+            <audio></audio>
+            <img src="jbb.jpeg">
+        </div>
+        <div class="boxflex1 lists">
+            <!--<div class="list"></div>-->
+            <!--<div class="list"></div>-->
+            <!--<div class="list"></div>-->
+            <!--<div class="list"></div>-->
+        </div>
+    </div>
+
+    <div id="page3" class="box_s center_s" style="display: none;">
+        <div style="margin: 60px 0 60px 0;font-size: 30px;">结果</div>
+        <div id="right" style="margin: 10px 0;">做对了:<span></span></div>
+        <div id="error" style="margin: 10px 0;">做错了:<span></span></div>
+        <div style="margin: 100px 0 20px 0;">您获得了</div>
+        <div id="stat">★</div>
+        <a style="position: absolute; bottom: 30px; left:0; display: block; width: 100%; text-align: center; height: 40px;" href="javascript:window.location.reload();">再来一次</a>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+.search{
+    width: 100%; height: 40px; background: #ccc;
+    position: fixed; left:0; top: 0; padding: 5px 8px;
+}
+.search input{
+    width: 100%; height: 30px; text-indent: 1em;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+}
+.az{
+    width: 20px; text-align: center;
+    position: fixed; right: 0; top: 40px; bottom: 0;
+}
+.az span{
+    width: 100%;
+}
+
+
+.search_top{
+    width: 100%; height: 40px;
+}
+
+.main{
+    padding: 0 20px 0 0;
+}
+.main p{
+    width: 100%; height: 30px; background: #eee;
+    line-height: 30px; text-indent: 1em; font-weight: bold;
+}
+.main span{
+    display: block; width: 100%; height: 40px; line-height: 40px;
+    text-indent: 1em; border-bottom: 1px solid #eee;
+}

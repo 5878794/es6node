@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html manifest="cache1.manifest">
+<!--<html>-->
+<head>
+    <meta charset="UTF-8">
+
+
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <!--添加到主屏幕后，全屏显示。-->
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!--顶部系统状态条-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--icon-->
+    <link rel="apple-touch-icon-precomposed" href="icon.jpeg" />
+    <!--不设别电话和邮箱-->
+    <meta name="format-detection" content="telephone=no">
+    <meta content="email=no" name="format-detection" />
+    <!--用户把网页存为书签时，在手机HOME界面创建应用程序样式的图标。-->
+    <link rel="apple-touch-icon" href="icon.jpeg" />
+    <link rel="apple-touch-icon-precomposed" href="icon.jpeg" />
+
+    <title>babyCount</title>
+
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="css/all.css">
+
+
+    <!-- js -->
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/lib.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/index.js"></script>
+
+
+    <style>
+        *{
+            font-size: 20px;
+        }
+        #select div{
+            margin: 20px 0; border: 1px solid #ccc;
+            padding: 10px 10px;  width:200px; text-align: center;
+            background: #eee;
+        }
+        #back{
+            width: 50px; height: 50px;
+            -webkit-border-radius:50px;
+            -moz-border-radius:50px;
+            border-radius:50px;
+            position: fixed; left: 10px; top: 50px;
+            border: 1px solid #ccc; background: #eee;
+            text-align: center; line-height: 50px;
+        }
+
+        label{
+            display: block;
+            width: 100%; height: 100%;
+        }
+
+        #main span{
+            display: block; font-size: 50px;
+            height:60px; line-height: 60px;
+            width: 30%; text-align: right; padding-right: 15%;
+            padding-left: 15%;
+            position: relative;
+        }
+        #main span ff{
+            font-size: 50px;
+        }
+        #input_div{
+            display: block; width: 45%; height: 60px;
+            text-align: right; font-size: 50px;
+            padding-bottom: 50px; border-top: 1px solid #000;
+            padding-right: 15%; position: relative;
+        }
+        #main input{
+            display: block; width: 100%; height: 60px;
+            text-align: right; font-size: 50px; line-height: 0;
+        }
+
+        #fh{
+            position: absolute; left: 0; top: 0;
+            width: 50px; height: 60px; text-align: center;
+            line-height: 60px; font-size: 50px;
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+
+
+    <div class="box_s center" id="select" style="position: fixed; left:0; top: 0; width: 100%; height: 100%;">
+        <div data-number="10">10以内</div>
+        <div data-number="20">20以内</div>
+        <div data-number="50">50以内</div>
+        <div data-number="100">100以内</div>
+    </div>
+
+
+    <div class="box_s boxflex1" id="main" style="display:none;height: 100%; position: fixed; left:0; top: 0; width: 100%;">
+        <div class="box_h" id="rs" style="width: 100%; height: 50px; background: #eee;">
+
+        </div>
+        <label class="boxflex1 box_s center_s">
+            <span>12</span>
+            <span><ff></ff><a id="fh">-</a></span>
+            <div id="input_div" >
+                <input type="tel" />
+            </div>
+
+        </label>
+    </div>
+
+    <div id="rs_" class="center_s box_s" style="display:none;position: fixed; text-align:center;left: 0;top:0;width:100%; height: 100%;">
+        <div style="padding: 40px 0 60px 0; font-size: 40px;">结果</div>
+        <div style="padding: 10px;">总共:<span id="rs_total"></span>题</div>
+        <div style="padding: 10px;">答对:<span style="color:green;font-size:30px;" id="rs_right"></span>题</div>
+        <div style="padding: 40px 0 10px 0;">您获得:</div>
+        <div style="padding: 10px;" id="rs_stat">★</div>
+
+        <a href="javascript:window.location.reload();" style="display:block; text-align:center; line-height:40px;position: fixed; bottom: 20px; left:20%; width: 60%; height: 40px;">再来一次</a>
+    </div>
+
+</body>
+</html>

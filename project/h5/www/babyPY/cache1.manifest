@@ -1,0 +1,48 @@
+CACHE MANIFEST
+#v4
+
+CACHE:
+# 需要缓存的列表
+index.html
+js/data.js
+js/index.js
+js/jquery-2.1.1.min.js
+js/lib.js
+css/all.css
+icon.jpeg
+jbb.jpeg
+bg.jpg
+mp3/a.mp3
+mp3/b.mp3
+mp3/c.mp3
+mp3/d.mp3
+mp3/e.mp3
+mp3/f.mp3
+mp3/g.mp3
+mp3/h.mp3
+mp3/i.mp3
+mp3/j.mp3
+mp3/k.mp3
+mp3/l.mp3
+mp3/m.mp3
+mp3/n.mp3
+mp3/o.mp3
+mp3/p.mp3
+mp3/q.mp3
+mp3/r.mp3
+mp3/s.mp3
+mp3/t.mp3
+mp3/u.mp3
+mp3/v.mp3
+mp3/w.mp3
+mp3/x.mp3
+mp3/y.mp3
+mp3/z.mp3
+
+
+NETWORK:
+# 不需要缓存的
+*
+
+FALLBACK:
+# 访问缓存失败后，备用访问的资源，第一个是访问源，第二个是替换文件*.html /offline.html

@@ -1,0 +1,22 @@
+CACHE MANIFEST
+#v3
+
+CACHE:
+# 需要缓存的列表
+index.html
+css/all.css
+css/css.css
+image/icon.jpeg
+js/data.js
+js/index.js
+js/jquery-2.1.1.min.js
+js/lib.js
+js/polyfill.js
+
+
+NETWORK:
+# 不需要缓存的
+*
+
+FALLBACK:
+# 访问缓存失败后，备用访问的资源，第一个是访问源，第二个是替换文件*.html /offline.html
