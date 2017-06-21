@@ -16,8 +16,10 @@ let server = require("./lib/server/httpServer"),
 
 let runFn = function(request,response){
 	let {dirName,isApi,pathName,fullPath,method,fileName,fileType}= rout(request);
+	console.log("-----isApi:"+isApi+"----------");
 	if(isApi){
 		let url = "./project/"+dirName+"/server/api/"+pathName;
+		console.log("api:"+url);
 		try{
 			let fn = require(url);
 			fn(request).then((rs)=>{
@@ -31,6 +33,7 @@ let runFn = function(request,response){
 				ajaxResponse.error("服务器错误",response);
 			});
 		}catch(e){
+			console.log(e);
 			ajaxResponse.notFoundApi(response);
 			console.log("api not found");
 		}
