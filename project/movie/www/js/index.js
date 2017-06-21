@@ -121,7 +121,7 @@ PAGE = {
 		$("#zz").find(".list").css3({transform:"translateX(-80px)"});
 	},
 	openPage:function(id){
-		id = id || "iqiyi";
+		id = id || "qq";
 		this.getData(id);
 	}
 };
