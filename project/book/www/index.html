@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html manifest="cache1.manifest">
+<head>
+    <meta charset="UTF-8">
+
+
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <!--添加到主屏幕后，全屏显示。-->
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!--顶部系统状态条-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--icon-->
+    <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+    <!--不设别电话和邮箱-->
+    <meta name="format-detection" content="telephone=no">
+    <meta content="email=no" name="format-detection" />
+    <!--用户把网页存为书签时，在手机HOME界面创建应用程序样式的图标。-->
+    <link rel="apple-touch-icon" href="./icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="./icon.png" />
+
+    <title>book</title>
+
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="css/all.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+    <!-- js -->
+    <script src="js/polyfill.js"></script>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/lib.js"></script>
+    <script src="js/ajax.js"></script>
+
+    <script src="js/page1.js"></script>
+    <script src="js/page2.js"></script>
+    <script src="js/page3.js"></script>
+    <script src="js/page4.js"></script>
+
+    <script src="js/index1.js"></script>
+</head>
+<body>
+
+    <div class="loading" id="loading">
+        <div class="loading_top center border_box"></div>
+        <div class="loading_bottom">
+            <div class="loading_pro hover_animate" id="loading_pro"></div>
+            <span>检查</span>
+        </div>
+        <div class="loading_icon">bens</div>
+    </div>
+
+
+    <div id="page1" class="page1 box_s" style="display: none;">
+        <div class="page2_header box_h border_box">
+            <div class="page2_header_btn"></div>
+            <div class="boxflex1">我的小说</div>
+            <div class="page2_header_btn iconfont" id="page1_search">&#xe651;</div>
+        </div>
+        <div class="page1_list box_s boxflex1" id="page1_body">
+
+
+
+        </div>
+
+        <div class="page1_refresh" id="page1_refresh">刷新</div>
+
+
+
+        <div id="page1_list" class="page1_list_main box_h border_box" style="display: none;">
+            <div class="page1_list_name diandian boxflex1">书名书名书名书名书名书名书名书名书名书名书名书名书名书名书名书名</div>
+            <div class="page1_list_number">3333</div>
+            <div class="page1_list_del">删除</div>
+        </div>
+    </div>
+
+
+
+    <div id="page2" class="page2 box_s" style="display: none;">
+        <div class="page2_header box_h border_box">
+            <div id="page2_back" class="page2_header_btn iconfont">&#xe6a9;</div>
+            <div class="boxflex1 diandian">书名书名书名书名</div>
+            <div id="page2_add" class="page2_header_btn right iconfont">&#xe62b;</div>
+        </div>
+        <div class="page2_list boxflex1" id="page2_body">
+
+
+
+        </div>
+
+        <!--class isRead-->
+        <div id="page2_list_item" class="page2_list_item diandian " style="display: none;"></div>
+    </div>
+
+
+
+    <div id="page3" class="page3 box_s" style="display: none;">
+        <div class="page2_header box_h border_box">
+            <div id="page3_back" class="page2_header_btn iconfont">&#xe6a9;</div>
+            <div id="page3_title" class="boxflex1 diandian"></div>
+            <div class="page2_header_btn"></div>
+        </div>
+        <div class="page3_show boxflex1 border_box bg1" id="page3_body">
+
+        </div>
+
+        <div class="page3_bottom border_box">
+            <div class="page3_main box_h">
+                <div id="page3_voice" class="page3_bottom_btn iconfont">&#xe62d;</div>
+                <div id="page3_font" class="page3_bottom_btn iconfont">&#xe618;</div>
+                <div id="page3_bg" class="page3_bottom_btn iconfont">&#xe693;</div>
+                <div id="page3_next" class="page3_bottom_btn iconfont">&#xe67d;</div>
+            </div>
+
+
+            <div id="page3_text_body" class="page3_texts box_h" style="display: none;">
+                <div class="page3_texts_- iconfont">&#xe607;</div>
+                <div class="boxflex1 page3_texts_text">20</div>
+                <div class="page3_texts_add iconfont">&#xe62b;</div>
+            </div>
+
+            <div id="page3_bg_body" class="page3_bg box_h" style="display: none;">
+                <div class="page3_bg_list" style="background-color: rgb(145, 175, 132); "></div>
+                <div class="page3_bg_list" style="background-color: rgb(191, 191, 181); "></div>
+                <div class="page3_bg_list" style="background-color: rgb(148, 122, 122); "></div>
+                <div class="page3_bg_list" style="background-color: rgb(103, 157, 204); "></div>
+                <div class="page3_bg_list" style="background-color: rgb(255, 255, 255); "></div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div id="page4" class="page4 box_s" style="display: none;">
+        <div class="page2_header box_h border_box">
+            <div id="page4_back" class="page2_header_btn iconfont">&#xe6a9;</div>
+            <div class="boxflex1 diandian">搜索</div>
+            <div class="page2_header_btn"></div>
+        </div>
+        <div class="search box_h border_box">
+            <input id="page4_search" class="boxflex1 border_box" type="text" placeholder="请输入笔趣阁书籍编号" />
+            <div id="page4_search_btn" class="iconfont search_btn">&#xe651;</div>
+        </div>
+        <div class="search_ts border_box">
+            注:在浏览器中打开<a>http://www.biquge.tw</a>在地址栏中找到对应书籍的编号,eg:<a>0_50</a> 进行搜索。
+        </div>
+        <div class="page4_main boxflex1" id="page4_body">
+
+
+        </div>
+        <div class="page4_list border_box" id="page4_list" style="display: none;">
+            <div class="page4_list_name diandian"></div>
+            <div class="page4_list_worker"></div>
+            <div class="page4_list_info">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -50,7 +50,7 @@ class _ajax{
 			data={},
 			headers={},
 			type = "get",
-			serverCode = "UTF-8",
+			serverCode = "",
 			timeout=30000
 		} = opt;
 
@@ -74,9 +74,13 @@ class _ajax{
 							msg:err
 						});
 					}else{
-						let Iconv = new iconv(serverCode, 'UTF-8');
-						var buffer = Iconv.convert(body);
-						body = buffer.toString();
+						if(serverCode){
+							let Iconv = new iconv(serverCode, 'UTF-8');
+							var buffer = Iconv.convert(body);
+							body = buffer.toString();
+						}else{
+							body = body.toString();
+						}
 
 						success({
 							state:1,

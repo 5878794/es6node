@@ -26,7 +26,7 @@ let runFn = function(request,response){
 				if(rs.state == 1){
 					ajaxResponse.success(rs.data,response);
 				}else{
-					ajaxResponse.error(rs.data,response);
+					ajaxResponse.error(rs.msg,response);
 				}
 			}).catch(rs=>{
 				console.log(rs);
