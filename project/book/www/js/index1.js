@@ -24,5 +24,3 @@ var DATA = {
 	//书目录
 	booksDir: {}
 };
-
-//# sourceMappingURL=index1.js.map

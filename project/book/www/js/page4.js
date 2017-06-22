@@ -1,69 +1,20 @@
 "use strict";
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
 var PAGE4 = {
 	from: "",
-	init: function init(from) {
-		var _this2 = this;
-
-		return _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
-			return regeneratorRuntime.wrap(function _callee$(_context) {
-				while (1) {
-					switch (_context.prev = _context.next) {
-						case 0:
-							_this2.from = from;
-							_context.next = 3;
-							return _this2.refresh();
-
-						case 3:
-							_context.next = 5;
-							return _this2.show();
-
-						case 5:
-							_context.next = 7;
-							return _this2.bindEvent();
-
-						case 7:
-						case "end":
-							return _context.stop();
-					}
-				}
-			}, _callee, _this2);
-		}))();
+	init: async function init(from) {
+		this.from = from;
+		await this.refresh();
+		await this.show();
+		await this.bindEvent();
 	},
-	search: function search() {
-		var _this3 = this;
+	search: async function search() {
+		var inputVal = await this.checkInput();
+		var data = await this.searchBQ(inputVal);
 
-		return _asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
-			var inputVal, data;
-			return regeneratorRuntime.wrap(function _callee2$(_context2) {
-				while (1) {
-					switch (_context2.prev = _context2.next) {
-						case 0:
-							_context2.next = 2;
-							return _this3.checkInput();
-
-						case 2:
-							inputVal = _context2.sent;
-							_context2.next = 5;
-							return _this3.searchBQ(inputVal);
-
-						case 5:
-							data = _context2.sent;
-
-
-							_this3.bindData(data);
-							_this3.cacheData(data);
-							_this3.bindListEvent();
-
-						case 9:
-						case "end":
-							return _context2.stop();
-					}
-				}
-			}, _callee2, _this3);
-		}))();
+		this.bindData(data);
+		this.cacheData(data);
+		this.bindListEvent();
 	},
 
 	//显示
@@ -203,5 +154,3 @@ var PAGE4 = {
 		});
 	}
 };
-
-//# sourceMappingURL=page4.js.map
