@@ -1,5 +1,7 @@
 	//获取server
 let server = require("./lib/server/httpServer"),
+	//获取路径
+	path = require("path"),
 	//获取ip
 	ip = require("./lib/fn/getIp"),
 	//设置端口
@@ -18,7 +20,7 @@ let runFn = function(request,response){
 	let {dirName,isApi,pathName,fullPath,method,fileName,fileType}= rout(request);
 	console.log("-----isApi:"+isApi+"----------");
 	if(isApi){
-		let url = "./project/"+dirName+"/server/api/"+pathName;
+		let url = __dirname+"/project/"+dirName+"/server/api/"+pathName;
 		console.log("api:"+url);
 		try{
 			let fn = require(url);
@@ -39,6 +41,8 @@ let runFn = function(request,response){
 		}
 
 	}else{
+		fullPath = __dirname+fullPath;
+		console.log(fullPath)
 		responseStaticResources(dirName,fullPath,fileType,response);
 	}
 };

@@ -1,4 +1,5 @@
 let url = require("url"),
+	path = require("path"),
 	responseFileType = require("./../response/getResponseFileType");
 
 
@@ -61,7 +62,7 @@ module.exports = function(request,response){
 	//完整路径
 	//process.cwd() 代码运行路径
 	let _dir = (isApi)? "server" : "www";
-	fullPath = process.cwd()+"/project/"+dirName+"/"+_dir+"/"+_url;
+	fullPath = "/project/"+dirName+"/"+_dir+"/"+_url;
 
 
 	return {
