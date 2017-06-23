@@ -44,7 +44,7 @@ let runFn = function(request,response){
 };
 
 
-server = server(8000,runFn);
+server = server(port,runFn);
 console.log("server start on "+ip+":"+port);
 
 
