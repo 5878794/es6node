@@ -1,54 +1,165 @@
 "use strict";
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var PAGE3 = {
 	from: "",
 	bookUrl: "",
 	infoUrl: "",
 	n: "",
-	init: async function init(bookUrl, infoUrl, infoName, from, n) {
-		this.from = from;
-		this.bookUrl = bookUrl;
-		this.infoUrl = infoUrl;
-		this.n = n;
+	init: function init(bookUrl, infoUrl, infoName, from, n) {
+		var _this2 = this;
 
-		var setting = await this.getLocalSetting();
-		await this.useLocalSetting(setting);
-		await this.refreshPage3();
-		var data = await this.getData(bookUrl, infoUrl);
-		await this.bindData(infoName, data);
-		await this.scrollTop();
-		await this.saveTempInfo(infoName, data);
-		await this.bindEvent();
-		await this.show();
+		return _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+			var setting, data;
+			return regeneratorRuntime.wrap(function _callee$(_context) {
+				while (1) {
+					switch (_context.prev = _context.next) {
+						case 0:
+							_this2.from = from;
+							_this2.bookUrl = bookUrl;
+							_this2.infoUrl = infoUrl;
+							_this2.n = n;
 
-		// console.log(data);
+							_context.next = 6;
+							return _this2.getLocalSetting();
+
+						case 6:
+							setting = _context.sent;
+							_context.next = 9;
+							return _this2.useLocalSetting(setting);
+
+						case 9:
+							_context.next = 11;
+							return _this2.refreshPage3();
+
+						case 11:
+							_context.next = 13;
+							return _this2.getData(bookUrl, infoUrl);
+
+						case 13:
+							data = _context.sent;
+							_context.next = 16;
+							return _this2.bindData(infoName, data);
+
+						case 16:
+							_context.next = 18;
+							return _this2.scrollTop();
+
+						case 18:
+							_context.next = 20;
+							return _this2.saveTempInfo(infoName, data);
+
+						case 20:
+							_context.next = 22;
+							return _this2.bindEvent();
+
+						case 22:
+							_context.next = 24;
+							return _this2.show();
+
+						case 24:
+						case "end":
+							return _context.stop();
+					}
+				}
+			}, _callee, _this2);
+		}))();
 	},
 
 	//异常关闭后进入 入口
-	init1: async function init1(bookUrl, infoUrl, infoName, from, n, data, scrollTop) {
-		this.from = from;
-		this.bookUrl = bookUrl;
-		this.infoUrl = infoUrl;
-		this.n = n;
+	init1: function init1(bookUrl, infoUrl, infoName, from, n, data, scrollTop) {
+		var _this3 = this;
 
-		var setting = await this.getLocalSetting();
-		await this.useLocalSetting(setting);
-		await this.refreshPage3();
-		await this.bindData(infoName, data);
-		await this.scrollTop(scrollTop);
-		await this.bindEvent();
-		await this.show();
+		return _asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
+			var setting;
+			return regeneratorRuntime.wrap(function _callee2$(_context2) {
+				while (1) {
+					switch (_context2.prev = _context2.next) {
+						case 0:
+							_this3.from = from;
+							_this3.bookUrl = bookUrl;
+							_this3.infoUrl = infoUrl;
+							_this3.n = n;
+
+							_context2.next = 6;
+							return _this3.getLocalSetting();
+
+						case 6:
+							setting = _context2.sent;
+							_context2.next = 9;
+							return _this3.useLocalSetting(setting);
+
+						case 9:
+							_context2.next = 11;
+							return _this3.refreshPage3();
+
+						case 11:
+							_context2.next = 13;
+							return _this3.bindData(infoName, data);
+
+						case 13:
+							_context2.next = 15;
+							return _this3.scrollTop(scrollTop);
+
+						case 15:
+							_context2.next = 17;
+							return _this3.bindEvent();
+
+						case 17:
+							_context2.next = 19;
+							return _this3.show();
+
+						case 19:
+						case "end":
+							return _context2.stop();
+					}
+				}
+			}, _callee2, _this3);
+		}))();
 	},
-	loadNextPage: async function loadNextPage() {
-		var info = await this.getNextInfoUrl();
-		var data = await this.getData(this.bookUrl, info.url);
+	loadNextPage: function loadNextPage() {
+		var _this4 = this;
 
-		this.infoUrl = info.url;
-		this.n++;
+		return _asyncToGenerator(regeneratorRuntime.mark(function _callee3() {
+			var info, data;
+			return regeneratorRuntime.wrap(function _callee3$(_context3) {
+				while (1) {
+					switch (_context3.prev = _context3.next) {
+						case 0:
+							_context3.next = 2;
+							return _this4.getNextInfoUrl();
 
-		await this.bindData(info.name, data);
-		await this.scrollTop();
-		await this.saveTempInfo(info.name, data);
+						case 2:
+							info = _context3.sent;
+							_context3.next = 5;
+							return _this4.getData(_this4.bookUrl, info.url);
+
+						case 5:
+							data = _context3.sent;
+
+
+							_this4.infoUrl = info.url;
+							_this4.n++;
+
+							_context3.next = 10;
+							return _this4.bindData(info.name, data);
+
+						case 10:
+							_context3.next = 12;
+							return _this4.scrollTop();
+
+						case 12:
+							_context3.next = 14;
+							return _this4.saveTempInfo(info.name, data);
+
+						case 14:
+						case "end":
+							return _context3.stop();
+					}
+				}
+			}, _callee3, _this4);
+		}))();
 	},
 	getNextInfoUrl: function getNextInfoUrl() {
 		var _this = this;
@@ -79,17 +190,39 @@ var PAGE3 = {
 			"font-size": font_size + "px"
 		});
 	},
-	setLocalSetting: async function setLocalSetting(color, fontSize) {
-		var oldSetting = await this.getLocalSetting();
-		if (color) {
-			oldSetting.bg = color;
-		}
-		if (fontSize) {
-			oldSetting.font = fontSize;
-		}
-		DEVICE.localData.setItem("setting", JSON.stringify(oldSetting));
+	setLocalSetting: function setLocalSetting(color, fontSize) {
+		var _this5 = this;
 
-		await this.useLocalSetting(oldSetting);
+		return _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
+			var oldSetting;
+			return regeneratorRuntime.wrap(function _callee4$(_context4) {
+				while (1) {
+					switch (_context4.prev = _context4.next) {
+						case 0:
+							_context4.next = 2;
+							return _this5.getLocalSetting();
+
+						case 2:
+							oldSetting = _context4.sent;
+
+							if (color) {
+								oldSetting.bg = color;
+							}
+							if (fontSize) {
+								oldSetting.font = fontSize;
+							}
+							DEVICE.localData.setItem("setting", JSON.stringify(oldSetting));
+
+							_context4.next = 8;
+							return _this5.useLocalSetting(oldSetting);
+
+						case 8:
+						case "end":
+							return _context4.stop();
+					}
+				}
+			}, _callee4, _this5);
+		}))();
 	},
 	getData: function getData(bookUrl, infoUrl) {
 		var url = bookUrl + infoUrl.split("\/")[2];
@@ -288,20 +421,52 @@ var PAGE3 = {
 				}, 100);
 			});
 		},
-		click: async function click(id) {
-			var clickId = void 0,
-			    otherId = void 0;
-			clickId = id == "page3_text_body" ? "page3_text_body" : "page3_bg_body";
-			otherId = clickId == "page3_text_body" ? "page3_bg_body" : "page3_text_body";
+		click: function click(id) {
+			var _this6 = this;
 
-			if (this.isShow[clickId]) {
-				await this.hide(clickId);
-			} else {
-				if (this.isShow[otherId]) {
-					await this.hide(otherId);
-				}
-				await this.show(clickId);
-			}
+			return _asyncToGenerator(regeneratorRuntime.mark(function _callee5() {
+				var clickId, otherId;
+				return regeneratorRuntime.wrap(function _callee5$(_context5) {
+					while (1) {
+						switch (_context5.prev = _context5.next) {
+							case 0:
+								clickId = void 0, otherId = void 0;
+
+								clickId = id == "page3_text_body" ? "page3_text_body" : "page3_bg_body";
+								otherId = clickId == "page3_text_body" ? "page3_bg_body" : "page3_text_body";
+
+								if (!_this6.isShow[clickId]) {
+									_context5.next = 8;
+									break;
+								}
+
+								_context5.next = 6;
+								return _this6.hide(clickId);
+
+							case 6:
+								_context5.next = 13;
+								break;
+
+							case 8:
+								if (!_this6.isShow[otherId]) {
+									_context5.next = 11;
+									break;
+								}
+
+								_context5.next = 11;
+								return _this6.hide(otherId);
+
+							case 11:
+								_context5.next = 13;
+								return _this6.show(clickId);
+
+							case 13:
+							case "end":
+								return _context5.stop();
+						}
+					}
+				}, _callee5, _this6);
+			}))();
 		},
 		allHide: function allHide() {
 			var doms = this.isShow;
@@ -352,3 +517,5 @@ var PAGE3 = {
 		DEVICE.localData.setItem("temp", "");
 	}
 };
+
+//# sourceMappingURL=page3.js.map

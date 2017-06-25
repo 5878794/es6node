@@ -1,62 +1,63 @@
-"use strict";
-
-$(document).ready(function () {
+$(document).ready(function(){
 	page.init();
 });
 
+
 var page = {
-	n: -1,
-	showed: [],
-	init: function init() {
+	n:-1,
+	showed:[],
+	init:function(){
 		this.data = JSON.parse(JSON.stringify(DATA));
 		this.addEvent();
 		this.bindEvent();
 		this.showNext();
 	},
-	addEvent: function addEvent() {
+	addEvent:function(){
 		var body = $("body"),
-		    _this = this;
-		$$$(body).myslideright(function () {
+			_this = this;
+		$$$(body).myslideright(function(){
 			_this.showNext();
-		}).myslideleft(function () {
+		}).myslideleft(function(){
 			_this.showPre();
 		});
 	},
-	bindEvent: function bindEvent() {
+	bindEvent:function(){
 		var c = $("#chinese"),
-		    e = $("#english"),
-		    _this = this;
+			e = $("#english"),
+			_this = this;
 
-		$$(c).myclickok(function () {
+		$$(c).myclickok(function(){
 			var text = $(this).text();
 			_this.speak(text);
-		});
+		})
 	},
-	showNext: function showNext() {
-		this.n++;
+	showNext:function(){
+		this.n ++;
 
 		var text;
 
-		if (this.showed[this.n]) {
+		if(this.showed[this.n]){
 			text = this.showed[this.n];
-		} else {
+		}else{
 			var l = this.data.length,
-			    n = parseInt(Math.random() * l);
-			text = this.data.splice(n, 1);
+				n = parseInt(Math.random()*l);
+			text = this.data.splice(n,1);
 			this.showed.push(text);
 		}
 
+
+
 		$("#chinese").text(text);
 	},
-	showPre: function showPre() {
-		this.n--;
+	showPre:function(){
+		this.n --;
 		var text;
-		if (this.showed[this.n]) {
+		if(this.showed[this.n]){
 			text = this.showed[this.n];
 			$("#chinese").text(text);
 		}
 	},
-	speak: function speak(text) {
+	speak:function(text){
 		DEVICE.speak(text);
 	}
 };

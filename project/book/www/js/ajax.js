@@ -1,12 +1,10 @@
-"use strict";
-
 // var serverUrl = "http://bensxu.duapp.com/";
 // var serverUrl = "/book/api";
 var loading;
 
 var AJAX = {
-	go: function go(url, data, _success, _error) {
-		if (!loading) {
+	go: function(url, data, success,error) {
+		if(!loading){
 			loading = new DEVICE.loading();
 		}
 
@@ -17,22 +15,25 @@ var AJAX = {
 			cache: false,
 			url: url,
 			data: JSON.stringify(data),
-			contentType: "application/json;charset=UTF-8",
+			contentType:"application/json;charset=UTF-8",
 			dataType: "json",
 			timeout: 15000,
-			success: function success(rs) {
+			success: function(rs) {
 				rs = rs || "";
 				loading.hide();
 
-				if (rs.state == 1) {
-					_success(rs.data);
-				} else {
-					_error();
+				if(rs.state == 1){
+					success(rs.data);
+				}else{
+					error();
 				}
+
+
+
 			},
-			error: function error() {
+			error: function() {
 				loading.hide();
-				_error();
+				error();
 			}
 		});
 	}

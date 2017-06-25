@@ -1,5 +1,7 @@
 "use strict";
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 $(document).ready(function () {
 	PAGE.init().catch(function (e) {
 		return console.log(e);
@@ -8,14 +10,49 @@ $(document).ready(function () {
 
 var PAGE = {
 	az: [],
-	init: async function init() {
-		await this.createPY();
-		await this.createAZ();
-		await this.bindEvent();
-		await this.createListType();
-		await this.createListItem();
-		await this.addListEvent();
-	},
+	init: function () {
+		var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+			return regeneratorRuntime.wrap(function _callee$(_context) {
+				while (1) {
+					switch (_context.prev = _context.next) {
+						case 0:
+							_context.next = 2;
+							return this.createPY();
+
+						case 2:
+							_context.next = 4;
+							return this.createAZ();
+
+						case 4:
+							_context.next = 6;
+							return this.bindEvent();
+
+						case 6:
+							_context.next = 8;
+							return this.createListType();
+
+						case 8:
+							_context.next = 10;
+							return this.createListItem();
+
+						case 10:
+							_context.next = 12;
+							return this.addListEvent();
+
+						case 12:
+						case "end":
+							return _context.stop();
+					}
+				}
+			}, _callee, this);
+		}));
+
+		function init() {
+			return _ref.apply(this, arguments);
+		}
+
+		return init;
+	}(),
 	createPY: function createPY() {
 		var az = {};
 
@@ -211,3 +248,5 @@ var PAGE = {
 		});
 	}
 };
+
+//# sourceMappingURL=index.js.map

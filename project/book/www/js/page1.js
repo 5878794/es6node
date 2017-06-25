@@ -1,35 +1,103 @@
 "use strict";
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var PAGE1 = {
 
 	//初始执行
-	init: async function init() {
-		await this.bindEvent();
-		var userData = await this.getLocalUserData();
-		DATA.books = userData.books;
-		DATA.hasRead = userData.hasRead;
-		var bookDir = await this.getLocalBookDirData();
-		DATA.booksDir = bookDir;
+	init: function init() {
+		var _this2 = this;
 
-		await this.createList();
-		await this.checkAbnormalClose();
+		return _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+			var userData, bookDir;
+			return regeneratorRuntime.wrap(function _callee$(_context) {
+				while (1) {
+					switch (_context.prev = _context.next) {
+						case 0:
+							_context.next = 2;
+							return _this2.bindEvent();
+
+						case 2:
+							_context.next = 4;
+							return _this2.getLocalUserData();
+
+						case 4:
+							userData = _context.sent;
+
+							DATA.books = userData.books;
+							DATA.hasRead = userData.hasRead;
+							_context.next = 9;
+							return _this2.getLocalBookDirData();
+
+						case 9:
+							bookDir = _context.sent;
+
+							DATA.booksDir = bookDir;
+
+							_context.next = 13;
+							return _this2.createList();
+
+						case 13:
+							_context.next = 15;
+							return _this2.checkAbnormalClose();
+
+						case 15:
+						case "end":
+							return _context.stop();
+					}
+				}
+			}, _callee, _this2);
+		}))();
 	},
+
 
 	//更新按钮触发
-	getNewData: async function getNewData() {
-		var newBookDir = await this.getNewBookDirData();
-		newBookDir = await this.reCreateNewBookDirData(newBookDir);
-		var oldBookDir = await this.getLocalBookDirData();
-		await this.saveNewBookDirData(oldBookDir, newBookDir);
+	getNewData: function getNewData() {
+		var _this3 = this;
 
-		DEVICE.info.show("更新成功!", true);
+		return _asyncToGenerator(regeneratorRuntime.mark(function _callee2() {
+			var newBookDir, oldBookDir;
+			return regeneratorRuntime.wrap(function _callee2$(_context2) {
+				while (1) {
+					switch (_context2.prev = _context2.next) {
+						case 0:
+							_context2.next = 2;
+							return _this3.getNewBookDirData();
 
-		setTimeout(function () {
-			window.location.reload();
-		}, 1000);
+						case 2:
+							newBookDir = _context2.sent;
+							_context2.next = 5;
+							return _this3.reCreateNewBookDirData(newBookDir);
 
-		// return newBookDir;
+						case 5:
+							newBookDir = _context2.sent;
+							_context2.next = 8;
+							return _this3.getLocalBookDirData();
+
+						case 8:
+							oldBookDir = _context2.sent;
+							_context2.next = 11;
+							return _this3.saveNewBookDirData(oldBookDir, newBookDir);
+
+						case 11:
+
+							DEVICE.info.show("更新成功!", true);
+
+							setTimeout(function () {
+								window.location.reload();
+							}, 1000);
+
+							// return newBookDir;
+
+						case 13:
+						case "end":
+							return _context2.stop();
+					}
+				}
+			}, _callee2, _this3);
+		}))();
 	},
+
 
 	//获取本地书地址和已读数据
 	getLocalUserData: function getLocalUserData() {
@@ -47,6 +115,7 @@ var PAGE1 = {
 		});
 	},
 
+
 	//获取本地收藏的书的目录
 	getLocalBookDirData: function getLocalBookDirData() {
 		return new Promise(function (success, error) {
@@ -54,6 +123,7 @@ var PAGE1 = {
 			success(bookDir);
 		});
 	},
+
 
 	//获取最新的书的目录
 	getNewBookDirData: function getNewBookDirData() {
@@ -75,6 +145,7 @@ var PAGE1 = {
 		});
 	},
 
+
 	//与本地数据合成新的数据
 	reCreateNewBookDirData: function reCreateNewBookDirData(data) {
 		var oldData = DATA.booksDir;
@@ -90,6 +161,7 @@ var PAGE1 = {
 		});
 	},
 
+
 	//保存新的书籍的目录数据
 	saveNewBookDirData: function saveNewBookDirData(oldData, data) {
 		return new Promise(function (success, error) {
@@ -104,6 +176,7 @@ var PAGE1 = {
 			success();
 		});
 	},
+
 
 	//生成本地书本列表
 	createList: function createList() {
@@ -132,6 +205,7 @@ var PAGE1 = {
 		}
 	},
 
+
 	//获取书的未读章节数量
 	getBooksNewDirsNumber: function getBooksNewDirsNumber(id) {
 		var bookDir = DATA.booksDir[id] || [],
@@ -152,6 +226,7 @@ var PAGE1 = {
 
 		return bookDir.length - 1 - n;
 	},
+
 
 	//目录事件绑定
 	dirClickEventBind: function dirClickEventBind(bookList) {
@@ -181,6 +256,7 @@ var PAGE1 = {
 		});
 	},
 
+
 	//事件绑定
 	bindEvent: function bindEvent() {
 		var search = $("#page1_search"),
@@ -198,54 +274,105 @@ var PAGE1 = {
 		});
 	},
 
+
 	//打开搜索页面
 	openSearchPage: function openSearchPage() {
 		PAGE4.init("page1");
 	},
+
 
 	//更改未读条数
 	refreshNotReadNumber: function refreshNotReadNumber(id, number) {
 		$("#page1_body").find(".page1_list_main[_id='" + id + "']").find(".page1_list_number").text(number);
 	},
 
+
 	//刷新目录
-	refreshDir: async function refreshDir() {
-		var userData = await this.getLocalUserData();
-		DATA.books = userData.books;
-		DATA.hasRead = userData.hasRead;
+	refreshDir: function refreshDir() {
+		var _this4 = this;
 
-		await this.createList();
+		return _asyncToGenerator(regeneratorRuntime.mark(function _callee3() {
+			var userData;
+			return regeneratorRuntime.wrap(function _callee3$(_context3) {
+				while (1) {
+					switch (_context3.prev = _context3.next) {
+						case 0:
+							_context3.next = 2;
+							return _this4.getLocalUserData();
+
+						case 2:
+							userData = _context3.sent;
+
+							DATA.books = userData.books;
+							DATA.hasRead = userData.hasRead;
+
+							_context3.next = 7;
+							return _this4.createList();
+
+						case 7:
+						case "end":
+							return _context3.stop();
+					}
+				}
+			}, _callee3, _this4);
+		}))();
 	},
-	delBook: async function delBook(url, obj) {
-		var userData = await this.getLocalUserData();
-		var bookDir = await this.getLocalBookDirData();
+	delBook: function delBook(url, obj) {
+		var _this5 = this;
 
-		var books = userData.books,
-		    hasRead = userData.hasRead;
+		return _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
+			var userData, bookDir, books, hasRead, newBooks, i, l, this_url;
+			return regeneratorRuntime.wrap(function _callee4$(_context4) {
+				while (1) {
+					switch (_context4.prev = _context4.next) {
+						case 0:
+							_context4.next = 2;
+							return _this5.getLocalUserData();
 
-		var newBooks = [];
-		for (var i = 0, l = books.length; i < l; i++) {
-			var this_url = books[i].url;
-			if (this_url != url) {
-				newBooks.push(books[i]);
-			}
-		}
+						case 2:
+							userData = _context4.sent;
+							_context4.next = 5;
+							return _this5.getLocalBookDirData();
 
-		delete bookDir[url];
+						case 5:
+							bookDir = _context4.sent;
+							books = userData.books, hasRead = userData.hasRead;
+							newBooks = [];
 
-		await this.saveNewBookDirData(bookDir, bookDir);
-		DEVICE.localData.setItem("cache", JSON.stringify({
-			books: newBooks,
-			hasRead: hasRead
-		}));
+							for (i = 0, l = books.length; i < l; i++) {
+								this_url = books[i].url;
 
-		DATA.books = newBooks;
-		DATA.hasRead = hasRead;
-		DATA.booksDir = bookDir;
+								if (this_url != url) {
+									newBooks.push(books[i]);
+								}
+							}
 
-		obj.remove();
+							delete bookDir[url];
 
-		DEVICE.info.show("删除成功!", true);
+							_context4.next = 12;
+							return _this5.saveNewBookDirData(bookDir, bookDir);
+
+						case 12:
+							DEVICE.localData.setItem("cache", JSON.stringify({
+								books: newBooks,
+								hasRead: hasRead
+							}));
+
+							DATA.books = newBooks;
+							DATA.hasRead = hasRead;
+							DATA.booksDir = bookDir;
+
+							obj.remove();
+
+							DEVICE.info.show("删除成功!", true);
+
+						case 18:
+						case "end":
+							return _context4.stop();
+					}
+				}
+			}, _callee4, _this5);
+		}))();
 	},
 
 	//检查是否异常关闭
@@ -268,3 +395,5 @@ var PAGE1 = {
 		});
 	}
 };
+
+//# sourceMappingURL=page1.js.map
