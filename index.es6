@@ -1,11 +1,10 @@
 	//获取server
 let server = require("./lib/server/httpServer"),
-	//获取路径
 	path = require("path"),
 	//获取ip
 	ip = require("./lib/fn/getIp"),
 	//设置端口
-	port = "18080",
+	port = "8000",
 	//路由
 	rout = require("./lib/fn/rout"),
 	//读取静态文件
@@ -41,8 +40,8 @@ let runFn = function(request,response){
 		}
 
 	}else{
-		fullPath = __dirname+fullPath;
-		console.log(fullPath)
+		fullPath = __dirname + fullPath;
+		console.log(fullPath);
 		responseStaticResources(dirName,fullPath,fileType,response);
 	}
 };
