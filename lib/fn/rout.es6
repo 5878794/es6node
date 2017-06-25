@@ -1,5 +1,4 @@
 let url = require("url"),
-	path = require("path"),
 	responseFileType = require("./../response/getResponseFileType");
 
 
@@ -15,7 +14,6 @@ module.exports = function(request,response){
 		fileType = "",
 		fullPath = "";
 
-	console.log(pathName);
 
 	//自动补index.html
 	if(lastHasG){
