@@ -59,36 +59,33 @@ module.exports = async function(request){
 		return ajax.send({url:url});
 	});
 
+	return new Promise((success,error)=>{
+		Promise.all(fns).then(rs=>{
+			let hasError,errorMsg;
+			rs.map(rs=>{
+				if(rs.state == 0){
+					hasError = true;
+					errorMsg = rs.msg;
+				}
+			});
 
-	return Promise.all(fns).then(rs=>{
-		let hasError,errorMsg;
-		rs.map(rs=>{
-			if(rs.state == 0){
-				hasError = true;
-				errorMsg = rs.msg;
+			if(hasError){
+				error({
+					state:0,
+					msg:"数据请求失败"
+				})
+			}else{
+				success({
+					state:1,
+					data:handlerData(rs,books,hasRead)
+				})
 			}
-		});
-
-		if(hasError){
-			return {
+		}).catch(rs=>{
+			console.log(rs);
+			error({
 				state:0,
-				msg:"数据请求失败"
-			}
-		}else{
-			return {
-				state:1,
-				data:handlerData(rs,books,hasRead)
-			}
-		}
-	}).catch(rs=>{
-		console.log(rs);
-		return {
-			state:0,
-			msg:"服务器错误"
-		}
-	})
-
-
-
-
+				msg:"服务器错误"
+			});
+		})
+	});
 };
