@@ -5,7 +5,7 @@ let url = require("url"),
 module.exports = function(request,response){
 	//请求地址换算到本地地址
 	let src = url.parse(request.url),   //当前请求的地址，不含前缀
-		pathName = src.pathname,
+		pathName = decodeURI(src.pathname),
 		dirName = pathName.match(/^\/[a-zA-Z0-9_-]*\//) || [],
 		//最后一个字符是否是"/"
 		lastHasG = (pathName.lastIndexOf("/") == pathName.length - 1),
@@ -13,6 +13,7 @@ module.exports = function(request,response){
 		fileName = "",
 		fileType = "",
 		fullPath = "";
+
 
 
 	//自动补index.html
