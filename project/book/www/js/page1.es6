@@ -70,7 +70,7 @@ var PAGE1 = {
 		}
 
 		return new Promise(function(success,error){
-			AJAX.go("./api/",{books:data,hasRead:hasRead},success,error)
+			AJAX.go("./api/api",{books:data,hasRead:hasRead},success,error)
 		});
 	},
 
