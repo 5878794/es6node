@@ -46,7 +46,7 @@ var getList = function(){
                     "   <span style='padding-left: 30px;'>"+_data.name+" </span>   " +
                     "   版本:<input style='width: 60px;' type='text' value='"+_data.ver+"'/>" +
                     "   <span class='download_app' style='padding: 0 10px; background: #000; color: #fff;'>下载</span>" +
-                    "   <span class='info_app' style='padding: 0 10px; background: #000; color: #fff;'>查看日志</span>"+
+                    "   <span class='info_app' style='padding: 0 10px; background: #000; color: #fff;'>查看提交日志</span>"+
                     "</div>");
 
             div.find(".download_app").click(function(){
