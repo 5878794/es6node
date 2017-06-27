@@ -23,5 +23,10 @@ module.exports = [
 		id:6,
 		name:"3APP",
 		svnUrl:"https://172.16.1.34/svn/h5/trank/app/common/HealthFiles/trunk"
+	},
+	{
+		id:7,
+		name:"医政卫监客户端",
+		svnUrl:"https://172.16.1.34/svn/YZWJ/web/trunk"
 	}
 ];
