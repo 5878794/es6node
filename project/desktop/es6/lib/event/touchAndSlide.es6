@@ -12,7 +12,6 @@ let baseTouch = require("./baseTouch"),
 	mySlideUp = Symbol(),
 	mySlideDown = Symbol(),
 	myMove = Symbol(),
-	myEnd = Symbol(),
 	isTouch = Symbol(),
 	checkHasMove = Symbol(),
 	longTouchHasRun = Symbol(),
@@ -32,7 +31,6 @@ class touchAndSlide extends baseTouch{
 		this[mySlideUp] = opt.mySlideUp || function(){};
 		this[mySlideDown] = opt.mySlideDown || function(){};
 		this[myMove] = opt.myMove || function(){};
-		this[myEnd] = opt.myEnd || function(){};
 		//点击事件允许在20像素内移动
 		//滑动事件必须大于20像素才能触发
 		this.canMoveLength = opt.canMoveLength || 20;
@@ -69,7 +67,6 @@ class touchAndSlide extends baseTouch{
 
 	moveFn(e){
 		e.myTarget = this.target;
-		this[myMove](e);
 		if(!this[hasTouchStart]){return;}
 		super.moveFn(e);
 
@@ -81,7 +78,6 @@ class touchAndSlide extends baseTouch{
 
 	endFn(e){
 		e.myTarget = this.target;
-		this[myEnd](e);
 		if(!this[hasTouchStart]){return;}
 		super.endFn(e);
 		this[hasTouchStart] = false;
@@ -121,10 +117,13 @@ class touchAndSlide extends baseTouch{
 
 		if(!sPoint || !ePoint ){return true;}
 
+		let mx = ePoint.x - sPoint.x,
+			my = ePoint.y - sPoint.y;
 
+		this[myMove](mx,my);
 		return (
-			abs(sPoint.x - ePoint.x) > this.canMoveLength ||
-			abs(sPoint.y - ePoint.y) > this.canMoveLength
+			abs(mx) > this.canMoveLength ||
+			abs(my) > this.canMoveLength
 		)
 
 	}

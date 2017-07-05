@@ -1,6 +1,8 @@
 
 
 require("../jq/extend");
+let $$ = require("../event/$$"),
+	device = require("../device");
 
 
 let init = Symbol(),
@@ -12,7 +14,19 @@ let init = Symbol(),
 	iconXMap = Symbol(),
 	iconYMap = Symbol(),
 	createObj = Symbol(),
-	addEvent = Symbol();
+	addEvent = Symbol(),
+	iconDownFn = Symbol(),
+	iconUpFn = Symbol(),
+	iconMoveFn = Symbol(),
+	iconOkFn = Symbol(),
+	reSetAllIconPosition = Symbol(),
+	getPositionFromXY = Symbol(),
+	getEmptyPosition = Symbol(),
+	getNearEmptyPosition = Symbol(),
+	getNo = Symbol(),
+	setIconToMap = Symbol(),
+	iconNoMap = Symbol(),
+	iconDoms = Symbol();
 
 
 
@@ -29,7 +43,7 @@ class Icons{
 		//字体大小
 		this.fontSize = opt.fontSize || 16;
 		//容器的padding
-		this.bodyPadding = opt.bodyPadding || 30;
+		this.bodyPadding = opt.bodyPadding || 10;
 		//图标的padding
 		this.iconPadding = opt.iconPadding || 20;
 		//图标的图层
@@ -41,10 +55,14 @@ class Icons{
 		this[cloneIcon] = null;
 		//图标的map对图
 		this[iconMap] = null;
+		//图标的map对图  序号为key
+		this[iconNoMap] = null;
 		//横坐标起始点
 		this[iconXMap] = null;
 		//纵坐标起始点
 		this[iconYMap] = null;
+		//生成的图标dom对象
+		this[iconDoms] = {};
 
 
 		this[init]();
@@ -65,18 +83,26 @@ class Icons{
 			colNumber = parseInt(bodyWidth/iconWidth),
 			rowNumber = parseInt(bodyHeight/iconHeight),
 			map = new Map(),
+			mapNo = new Map(),
 			xMap = [],
-			yMap = [];
+			yMap = [],
+			no = -1;
 
 		for(let x=0,xl=colNumber;x<xl;x++){
 			for(let y=0,yl=rowNumber;y<yl;y++){
+				no++;
 				let key = x+"_"+y,
+					key1 = no,
 					val = {
-						x:this.bodyPadding+iconWidth*x +this.iconPadding,
-						y:this.bodyPadding+iconHeight*y+this.iconPadding,
-						hasIcon:false
+						left:this.bodyPadding+iconWidth*x +this.iconPadding,
+						top:this.bodyPadding+iconHeight*y+this.iconPadding,
+						hasIcon:false,
+						y:y,
+						x:x,
+						no:no
 					};
 				map.set(key,val);
+				mapNo.set(key1,val);
 			}
 		}
 
@@ -88,6 +114,7 @@ class Icons{
 		}
 
 		this[iconMap] = map;
+		this[iconNoMap] = mapNo;
 		this[iconXMap] = xMap;
 		this[iconYMap] = yMap;
 	}
@@ -95,7 +122,7 @@ class Icons{
 	//生成clone的dom
 	[createCloneDom](){
 		let dom = $("<div></div>"),
-			img = $("<img src=''/>"),
+			img = $("<p></p>"),
 			text = $("<span></span>");
 
 		dom.append(img).append(text);
@@ -107,12 +134,14 @@ class Icons{
 			left:0,
 			top:0,
 			"z-index":this.zIndex,
-			transition:"all 0.2s linear"
+			transition:"all 0.2s linear",
+			cursor:"pointer"
 		});
 		img.css({
 			display:"block",
 			width:this.width+"px",
-			height:this.width+"px"
+			height:this.width+"px",
+
 		});
 
 		let lineHeight = this.fontSize+parseInt(this.fontSize/4),
@@ -145,7 +174,6 @@ class Icons{
 					this_val = this_map[1],
 					hasIcon = this_val.hasIcon;
 				if(!hasIcon){
-					this_val.hasIcon = true;
 					obj = this_val;
 					break;
 				}
@@ -175,25 +203,247 @@ class Icons{
 
 	//生成一个图标
 	[createObj](dom,data,position){
-		dom.find("img").attr({src:data.icon});
+		position.hasIcon = "icon_"+data.id;
+
+		dom.find("p").css3({
+			"background-image":"url("+data.icon+")",
+			"background-size":"100% 100%"
+		});
 		dom.find("span").text(data.name);
 		dom.css({
-			left:position.x,
-			top:position.y
+			left:position.left,
+			top:position.top
 		}).attr({
 			openUrl:data.openUrl,
-			_id:data.id
+			_id:"icon_"+data.id
+		}).data({
+			position:position
 		});
 
 		this.body.append(dom);
+		this[iconDoms]["icon_"+data.id] = dom;
 		this[addEvent](dom);
 	}
 
 	//图标事件
 	[addEvent](dom){
+		var _this = this;
+		$$(dom).myclickdown(function(e){
+			_this[iconDownFn](this,e);
+		}).myclickup(function(){
+			_this[iconUpFn](this);
+		}).myclickok(function(){
+			_this[iconOkFn](this);
+		}).mymove(function(x,y){
+			_this[iconMoveFn](this,x,y);
+		});
+	}
+
+	//图标被点击
+	[iconDownFn](dom,e){
+		$(dom).css3({
+			transition:"",
+			opacity:0.5
+		});
+	}
+
+	//鼠标释放
+	[iconUpFn](dom){
+		$(dom).css3({
+			transition:"all 0.2s linear",
+			opacity:1
+		});
+		this[reSetAllIconPosition](dom);
+	}
+
+	//鼠标移动时
+	[iconMoveFn](dom,x,y){
+		let oldPosition = $(dom).data("position"),
+			left = oldPosition.left,
+			top = oldPosition.top;
+
+		$(dom).css({
+			left:left+x+"px",
+			top:top+y+"px"
+		});
+	}
+
+	//图标被运行
+	[iconOkFn](dom){
 
 	}
 
+	//图标重新排位
+	[reSetAllIconPosition](dom){
+		//获取移动dom之前的位置
+		let data = $(dom).data("position"),
+			y = data.y,
+			x = data.x;
+
+		//清除map上该位置的标示为无图标
+		this[iconMap].get(x+"_"+y).hasIcon = false;
+
+		//获取当前坐标点所在的位置(row,col)
+		let left = parseInt($(dom).css("left")),
+			top = parseInt($(dom).css("top")),
+			{_x,_y} = this[getPositionFromXY](left,top);
+
+		//判断需要移动的点上是否已有图标
+		let oldMap = this[iconMap].get(_x+"_"+_y);
+		if(!oldMap.hasIcon){
+			//移动点上没有图标
+			//移动点
+			this[setIconToMap](dom,oldMap);
+			return;
+		}
+
+		//有图标
+		//获取所有的可以放置图标的位置
+		let emptyPosition = this[getEmptyPosition](),
+			//获取最近的可以放图标的位置
+			nearEmptyPosition = this[getNearEmptyPosition](emptyPosition,_x,_y),
+			//当前鼠标点网格序号
+			nowNo = oldMap.no;
+
+		if(nearEmptyPosition.before){
+			//当前点 到 找到的前面空点 之间的图标全部向前移动1个
+			let startNo = nearEmptyPosition.before.no;
+			for(let val of this[iconMap].values()){
+				if(val.no >= startNo && val.no<=nowNo && val.hasIcon){
+					//这一块向上移动一个
+					let this_id = val.hasIcon,
+						this_no = val.no-1,
+						this_dom = this[iconDoms][this_id],
+						this_map = this[iconNoMap].get(this_no);
+
+					this[setIconToMap](this_dom,this_map);
+					val.hasIcon = false;
+				}
+			}
+		}else{
+			//当前点 到 找到的后面空点 之间的图标全部向后移动1个
+			let endNo = nearEmptyPosition.after.no,
+				_array = [...this[iconMap]].reverse();
+
+			for(let val of _array){
+				val = val[1];
+				if(val.no >= nowNo && val.no<=endNo && val.hasIcon){
+					//这一块向上移动一个
+					let this_id = val.hasIcon,
+						this_no = val.no+1,
+						this_dom = this[iconDoms][this_id],
+						this_map = this[iconNoMap].get(this_no);
+					this[setIconToMap](this_dom,this_map);
+
+					val.hasIcon = false;
+				}
+			}
+		}
+
+
+		this[setIconToMap](dom,oldMap);
+	}
+
+
+	//将一个点设置到一个位置
+	[setIconToMap](dom,map){
+		map.hasIcon = $(dom).attr("_id");
+
+		$(dom).css({
+			left:map.left,
+			top:map.top
+		}).data({
+			position:map
+		});
+	}
+
+	//通过当前的left top 获取需要放入的地图map对象属性
+	[getPositionFromXY](x,y){
+		let col = 0,
+			row = 0;
+		for(let i = 1,l=this[iconXMap].length;i<l;i++){
+			if(x>=this[iconXMap][i]){
+				col = i;
+			}
+		}
+		for(let i = 1,l=this[iconYMap].length;i<l;i++){
+			if(y>=this[iconYMap][i]){
+				row = i;
+			}
+		}
+
+		return {
+			_x:col,
+			_y:row
+		}
+	}
+
+	//获取所有的可以放图标的位置
+	[getEmptyPosition](){
+		let temp = [];
+		for(let val of this[iconMap].values()){
+			if(!val.hasIcon){
+				temp.push(val);
+			}
+		}
+		return temp;
+	}
+
+	//获取最近的2个位置,一前一后 或这有一个
+	[getNearEmptyPosition](data,col,row){
+		let backData = [],
+			nowNo = this[getNo](row,col),
+			no = 0,
+			before,after;
+
+		//获取之前的空位
+		for(let i=0,l=data.length;i<l;i++){
+			let this_data = data[i],
+				this_no = this_data.no;
+
+			no = i;
+			if(nowNo>this_no){
+				backData.push(this_data);
+			}else{
+				break;
+			}
+		}
+
+		if(backData.length != 0){
+			before = backData[backData.length-1];
+		}
+
+		//获取后面一个空位
+		if(data[no]){
+			after = data[no];
+		}
+
+		//如果只找到一个直接返回
+		if(!before || !after){
+			return {before,after}
+		}
+
+		//判断前面还是后面的距离当前点最近
+		let beforeNo = before.no,
+			afterNo = after.no,
+			{abs} = Math;
+
+		if(abs(beforeNo-nowNo) > abs(afterNo-nowNo)){
+			before = null;
+			return {before,after};
+		}else{
+			after = null;
+			return {before,after};
+		}
+	}
+
+	//获取当前位置的序号,根据行列数计算
+	[getNo](row,col){
+		let maxRow = this[iconYMap].length,
+			maxCol = this[iconXMap].length;
+
+		return col*maxRow+row;
+	}
 }
 
 

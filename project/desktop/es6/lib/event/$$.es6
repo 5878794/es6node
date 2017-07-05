@@ -8,7 +8,7 @@ let TAS = require("./touchAndSlide"),
 	idArray = Symbol();
 
 
-
+let nowClickObj = [];
 
 
 class $${
@@ -41,6 +41,13 @@ class $${
 				objMap = eventFnCatch.get(_eventid);
 
 			if(objMap){
+				if(type == "myclickdown"){
+					nowClickObj.push(obj);
+				}
+				if(type == "myclickup"){
+					nowClickObj = [];
+				}
+
 
 				let objMapFn = objMap.get(type);
 				if(objMapFn){
@@ -57,6 +64,19 @@ class $${
 		};
 
 		handlerthis(that);
+	}
+	static runMove(x,y,type){
+		nowClickObj.map(obj=>{
+			var _eventid = obj.__bens_eventid__,
+				objMap = eventFnCatch.get(_eventid);
+
+			if(objMap){
+				let objMapFn = objMap.get(type);
+				if(objMapFn){
+					objMapFn.call(obj,x,y);
+				}
+			}
+		});
 	}
 
 	[create](){
@@ -215,6 +235,7 @@ new TAS({
 	mySlideRight:function(e){$$.run(e,"myslideright")},
 	mySlideUp:function(e){$$.run(e,"myslideup")},
 	mySlideDown:function(e){$$.run(e,"myslidedown")},
+	myMove:function(x,y){$$.runMove(x,y,"mymove")},
 	canMoveLength:20,
 	longClickTime:1000,
 	slideMaxTime:500

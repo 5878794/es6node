@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QRcode</title>
+    <script src=jquery-2.1.1.min.js></script>
+    <script src="QRcode.js"></script>>
+    <script>
+        var getParamFromUrl = function(){
+            var data = {};
+
+            var search = window.location.search;
+            search = search.substr(1);
+            var searchs = search.split("&");
+
+            for( var i= 0,l=searchs.length;i<l;i++){
+                var this_val =  searchs[i],
+                        this_keys = this_val.split("="),
+                        this_key = this_keys[0];
+
+                data[this_key] = decodeURI(this_keys[1]);
+            }
+
+            return data;
+        };
+        $(document).ready(function(){
+            var code = getParamFromUrl().code || "http://www.baidu.com";
+            $("body").qrcode(code);
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>
