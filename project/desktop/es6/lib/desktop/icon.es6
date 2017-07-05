@@ -1,5 +1,6 @@
 
 //生成桌面图标,自动对齐网格。可以单个拖动
+//TODO resize窗口未处理
 
 //var icon =  new Icon({
 // 	icons:[         //要放的图标数组

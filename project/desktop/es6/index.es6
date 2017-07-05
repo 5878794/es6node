@@ -1,5 +1,6 @@
 let device = require("device"),
-	Icon = require("./lib/desktop/icon");
+	Icon = require("./lib/desktop/icon"),
+	Window = require("./lib/desktop/windows");
 
 
 $(document).ready(function(){
@@ -32,7 +33,9 @@ $(document).ready(function(){
 		],
 		body:$("#desktop"),
 		clickFn:function(data){
-			console.log(data);
+			new Window(data);
+
+
 		}
 	})
 });
