@@ -30,6 +30,9 @@ $(document).ready(function(){
 				id:4
 			}
 		],
-		body:$("#desktop")
+		body:$("#desktop"),
+		clickFn:function(data){
+			console.log(data);
+		}
 	})
 });

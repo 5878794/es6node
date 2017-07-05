@@ -1,4 +1,43 @@
 
+//生成桌面图标,自动对齐网格。可以单个拖动
+
+//var icon =  new Icon({
+// 	icons:[         //要放的图标数组
+// 		{
+// 			icon:"tempImg/icon.png",
+// 			name:"test1",
+// 			openUrl:"index.html#1",
+// 			id:1
+// 		},
+// 		{
+// 			icon:"tempImg/icon.png",
+// 			name:"test2",
+// 			openUrl:"index.html#2",
+// 			id:2
+// 		},
+// 		{
+// 			icon:"tempImg/icon.png",
+// 			name:"test3",
+// 			openUrl:"index.html#3",
+// 			id:3
+// 		},
+// 		{
+// 			icon:"tempImg/icon.png",
+// 			name:"test4",
+// 			openUrl:"index.html#4",
+// 			id:4
+// 		}
+// 	],
+// 	body:$("#desktop"),         //插入的容器
+// 	clickFn:function(data){     //点击图标执行,参数为传入的图标参数
+// 		console.log(data);
+// 	}
+//              //...其它参数见函数体
+// })
+
+// 销毁
+// icon.destroy();
+
 
 require("../jq/extend");
 let $$ = require("../event/$$"),
@@ -26,7 +65,8 @@ let init = Symbol(),
 	getNo = Symbol(),
 	setIconToMap = Symbol(),
 	iconNoMap = Symbol(),
-	iconDoms = Symbol();
+	iconDoms = Symbol(),
+	mouseToIconXY = Symbol();
 
 
 
@@ -38,6 +78,8 @@ class Icons{
 		this.width = opt.width || 60;
 		//容器dom对象
 		this.body = opt.body;
+		//图标点击执行
+		this.clickFn = opt.clickFn || function(){};
 		//图标文字区域高度
 		this.nameHeight = opt.nameHeight || 50;
 		//字体大小
@@ -63,6 +105,8 @@ class Icons{
 		this[iconYMap] = null;
 		//生成的图标dom对象
 		this[iconDoms] = {};
+		//鼠标到图标左上角距离
+		this[mouseToIconXY] = {};
 
 
 		this[init]();
@@ -117,6 +161,7 @@ class Icons{
 		this[iconNoMap] = mapNo;
 		this[iconXMap] = xMap;
 		this[iconYMap] = yMap;
+
 	}
 
 	//生成clone的dom
@@ -217,7 +262,8 @@ class Icons{
 			openUrl:data.openUrl,
 			_id:"icon_"+data.id
 		}).data({
-			position:position
+			position:position,
+			data:data
 		});
 
 		this.body.append(dom);
@@ -229,6 +275,11 @@ class Icons{
 	[addEvent](dom){
 		var _this = this;
 		$$(dom).myclickdown(function(e){
+			let domOffset = $(this).offset();
+			_this[mouseToIconXY] = {
+				x:e.clientX - domOffset.left,
+				y:e.clientY - domOffset.top
+			};
 			_this[iconDownFn](this,e);
 		}).myclickup(function(){
 			_this[iconUpFn](this);
@@ -270,7 +321,8 @@ class Icons{
 
 	//图标被运行
 	[iconOkFn](dom){
-
+		let data = $(dom).data("data");
+		this.clickFn(data);
 	}
 
 	//图标重新排位
@@ -362,12 +414,12 @@ class Icons{
 		let col = 0,
 			row = 0;
 		for(let i = 1,l=this[iconXMap].length;i<l;i++){
-			if(x>=this[iconXMap][i]){
+			if(x+this[mouseToIconXY].x>=this[iconXMap][i]){
 				col = i;
 			}
 		}
 		for(let i = 1,l=this[iconYMap].length;i<l;i++){
-			if(y>=this[iconYMap][i]){
+			if(y+this[mouseToIconXY].y>=this[iconYMap][i]){
 				row = i;
 			}
 		}
@@ -443,6 +495,14 @@ class Icons{
 			maxCol = this[iconXMap].length;
 
 		return col*maxRow+row;
+	}
+
+	//销毁
+	destroy(){
+		for(let icon of Object.entries(this[iconDoms])){
+			$$(icon).unbind(true);
+			icon.remove();
+		}
 	}
 }
 
