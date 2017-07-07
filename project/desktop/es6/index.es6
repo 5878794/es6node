@@ -33,6 +33,7 @@ $(document).ready(function(){
 		],
 		body:$("#desktop"),
 		clickFn:function(data){
+			data.body = $("#desktop");
 			new Window(data);
 
 

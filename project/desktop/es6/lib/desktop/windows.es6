@@ -1,4 +1,4 @@
-//TODO 层级管理  多窗口管理   重复打开管理  初始loading
+//TODO 层级管理  多窗口管理   重复打开管理
 
 
 let init = Symbol(),
@@ -64,7 +64,8 @@ class _window{
 			min:null,
 			max:null,
 			close:null,
-			btns:null
+			btns:null,
+			loading:null
 		};
 
 		this[init]();
@@ -218,6 +219,13 @@ class _window{
 			display:"none"
 		});
 
+		//loading层
+		let div_loading = div_zz.clone().text("loading...").css3({
+			background:"#fff",
+			display:"box",
+			"box-pack":"center",
+			"box-align":"center"
+		});
 
 
 		main.append(title)
@@ -230,7 +238,8 @@ class _window{
 			.append(div_right_top)
 			.append(div_left_bottom)
 			.append(div_right_bottom)
-			.append(div_zz);
+			.append(div_zz)
+			.append(div_loading);
 
 		this[windowDom].top = div_top;
 		this[windowDom].left = div_left;
@@ -249,6 +258,7 @@ class _window{
 		this[windowDom].min = min;
 		this[windowDom].max = max;
 		this[windowDom].close = close;
+		this[windowDom].loading = div_loading;
 
 		this.body.append(main);
 	}
@@ -261,7 +271,8 @@ class _window{
 			setWH = function(){
 				iframe.get(0).width = main.get(0).clientWidth;
 				iframe.get(0).height = main.get(0).clientHeight;
-			};
+			},
+			_this = this;
 
 		body.listenerStyle(["width","height"],function(){
 			setWH();
@@ -269,6 +280,7 @@ class _window{
 
 
 		iframe.load(function(){
+			_this[windowDom].loading.remove();
 			setWH();
 		});
 
@@ -543,7 +555,6 @@ class _window{
 			type:"Cubic",             //@param:str      tween动画类别,默认：Linear 详见函数内tween函数
 			class:"easeIn",           //@param:str      tween动画方式,默认：easeIn 详见函数内tween函数
 			stepFn:function(pre){     //@param:fn       每步执行函数,返回当前属性值
-				console.log(pre)
 				dom.CSS({
 					top:top+(e_top-top)*pre+"px",
 					left:left+(e_left-left)*pre+"px",
