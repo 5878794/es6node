@@ -1,3 +1,5 @@
+//TODO 层级管理  多窗口管理   重复打开管理  初始loading
+
 
 let init = Symbol(),
 	getParam = Symbol(),
@@ -15,11 +17,13 @@ let init = Symbol(),
 	windowLeftChange = Symbol(),
 	windowRightChange = Symbol(),
 	windowBottomChange = Symbol(),
-	windowTopChange = Symbol();
+	windowTopChange = Symbol(),
+	addThreeButtonEvent = Symbol();
 
 
 
-let $$ = require("../event/$$");
+let $$ = require("../event/$$"),
+	animate = require("../fn/jsAnimate");
 require("../jq/extend");
 require("../jq/listenerStyle");
 
@@ -56,7 +60,11 @@ class _window{
 			topLeft:null,
 			bottomLeft:null,
 			bottomRight:null,
-			zz:null
+			zz:null,
+			min:null,
+			max:null,
+			close:null,
+			btns:null
 		};
 
 		this[init]();
@@ -67,6 +75,7 @@ class _window{
 		this[createWindow]();
 		this[frameAutoSize]();
 		this[addMoveAndResizeEvent]();
+		this[addThreeButtonEvent]();
 	}
 
 	//获取参数
@@ -78,7 +87,7 @@ class _window{
 	//创建窗口
 	[createWindow](){
 		//主容器
-		let main = $("<div id='aaa'></div>");
+		let main = $("<div></div>");
 		main.css3({
 			width:this.width+"px",
 			height:this.height+40+"px",
@@ -114,7 +123,7 @@ class _window{
 		let btns = $("<div></div>");
 		btns.css({
 			position:"absolute",
-			width:"100px",
+			width:"70px",
 			height:"40px",
 			cursor:"default",
 			left:"10px",top:0
@@ -154,8 +163,7 @@ class _window{
 			background:"#fff"
 		});
 
-		let iframeId = "__iframe_"+this.id;
-		let iframe = $("<iframe id='"+iframeId+"' src='"+this.openUrl+"' scrolling='no' marginheight='0' marginwidth='0' frameborder='none'  />");
+		let iframe = $("<iframe src='"+this.openUrl+"'  marginheight='0' marginwidth='0' frameborder='none'  />");
 		frame.append(iframe);
 
 
@@ -237,6 +245,10 @@ class _window{
 		this[windowDom].frame = frame;
 		this[windowDom].iframe = iframe;
 		this[windowDom].zz = div_zz;
+		this[windowDom].btns = btns;
+		this[windowDom].min = min;
+		this[windowDom].max = max;
+		this[windowDom].close = close;
 
 		this.body.append(main);
 	}
@@ -259,6 +271,8 @@ class _window{
 		iframe.load(function(){
 			setWH();
 		});
+
+		setWH();
 	}
 
 	//增加事件
@@ -444,7 +458,6 @@ class _window{
 		return {nowY:newY,nowH:newH};
 	}
 
-
 	//点击移动时 获取最大、最小点xy
 	[getMoveMinMaxXY](){
 		let minX = 0,
@@ -468,6 +481,126 @@ class _window{
 
 	}
 
+	//3按钮事件
+	[addThreeButtonEvent](){
+		//初始设置字体颜色与背景一样,hover显示
+		this[windowDom].btns.find("div").each(function(){
+			let bgColor = $(this).css("background-color");
+			$(this).css({
+				color:bgColor
+			});
+		});
+		this[windowDom].btns.hover(function(){
+			$(this).find("div").css({color:"#000"});
+		},function(){
+			$(this).find("div").each(function(){
+				let bgColor = $(this).css("background-color");
+				$(this).css({
+					color:bgColor
+				});
+			});
+		});
+
+
+		let btns = ["min","max","close"],
+			_this = this;
+		btns.map(btn=>{
+			$$(this[windowDom][btn]).myclickdown(function(e){
+				e.stopPop();
+				$(this).css({opacity:0.5});
+			}).myclickup(function(e){
+				$(this).css({opacity:1});
+				e.stopPop();
+			}).myclickok(function(e){
+				e.stopPop();
+				_this[btn]();
+			});
+		})
+	}
+
+	min(){
+		this[windowDom].main.css({
+			display:"none"
+		});
+	}
+
+	max(){
+		let dom = this[windowDom].main,
+			left = parseInt($(dom).css("left")),
+			top = parseInt($(dom).css("top")),
+			width = parseInt($(dom).css("width")),
+			height = parseInt($(dom).css("height")),
+			e_top = 0,
+			e_left = 0,
+			e_width = this[bodyWidth],
+			e_height = this[bodyHeight],
+			_this = this;
+
+		let a = new animate({
+			start:0,                  //@param:number   初始位置
+			end:1,                    //@param:number   结束位置
+			time:300,                 //@param:number   动画执行时间  ms
+			type:"Cubic",             //@param:str      tween动画类别,默认：Linear 详见函数内tween函数
+			class:"easeIn",           //@param:str      tween动画方式,默认：easeIn 详见函数内tween函数
+			stepFn:function(pre){     //@param:fn       每步执行函数,返回当前属性值
+				console.log(pre)
+				dom.CSS({
+					top:top+(e_top-top)*pre+"px",
+					left:left+(e_left-left)*pre+"px",
+					width:width+(e_width-width)*pre+"px",
+					height:height+(e_height-height)*pre+"px"
+				});
+			},
+			endFn:function(){
+				_this[updateDomParam]();
+			}
+		});
+		a.play();
+	}
+
+	close(){
+		let dom = this[windowDom].main,
+			_this = this;
+
+		let a = new animate({
+			start:0,                  //@param:number   初始位置
+			end:1,                    //@param:number   结束位置
+			time:300,                 //@param:number   动画执行时间  ms
+			type:"Cubic",             //@param:str      tween动画类别,默认：Linear 详见函数内tween函数
+			class:"easeIn",           //@param:str      tween动画方式,默认：easeIn 详见函数内tween函数
+			stepFn:function(pre){     //@param:fn       每步执行函数,返回当前属性值
+				let nowPre=  1-pre;
+				dom.CSS({
+					transform:"scale("+nowPre+")",
+					opacity:nowPre
+				});
+			},
+			endFn:function(){
+				_this.destroy();
+			}
+		});
+		a.play();
+	}
+
+	destroy(){
+		let doms = [
+			"left",
+			"top",
+			"right",
+			"bottom",
+			"topLeft",
+			"topRight",
+			"bottomLeft",
+			"bottomRight",
+			"min",
+			"max",
+			"close"
+		];
+		doms.map(dom=>{$$(dom).unbind(true)});
+		$(this[windowDom].btns).unbind("hover");
+
+		this[windowDom].main.remove();
+	}
 
 }
 

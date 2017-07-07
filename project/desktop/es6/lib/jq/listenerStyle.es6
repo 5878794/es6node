@@ -17,7 +17,7 @@
 // });
 
 
-
+require("../jq/extend");
 
 $.fn.listenerStyle = function(array,callback){
 	let data = $(this).data("__listener_style__") || {},
@@ -38,7 +38,7 @@ $.fn.listenerStyle = function(array,callback){
 
 $.fn.CSS = function(obj){
 
-	$(this).css(obj);
+	$(this).css3(obj);
 
 	let data = $(this).data("__listener_style__") || {},
 		_this = $(this).get(0);
