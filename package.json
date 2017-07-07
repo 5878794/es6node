@@ -6,7 +6,7 @@
   "scripts": {
     "run": "babel-node index.es6",
     "es6ToEs5": "webpack --display-error-details -d",
-    "es6ToEs5Min":"webpack --display-error-details"
+    "es6ToEs5Min": "webpack --display-error-details"
   },
   "repository": {
     "type": "git",
@@ -28,8 +28,12 @@
     "babel-preset-stage-3": "^6.24.1",
     "canvas": "^1.6.5",
     "cheerio": "^1.0.0-rc.1",
+    "csv-parser": "^1.11.0",
     "iconv": "^2.2.3",
+    "jsonstream": "^1.0.3",
     "mysql": "^2.13.0",
+    "node-xlsx": "^0.7.4",
+    "phpexcel-stream": "^1.0.1",
     "request": "^2.81.0",
     "sqlite3": "^3.1.8",
     "webpack": "^3.0.0"

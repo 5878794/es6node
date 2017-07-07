@@ -295,7 +295,8 @@ class Icons{
 	[iconDownFn](dom,e){
 		$(dom).css3({
 			transition:"",
-			opacity:0.5
+			opacity:0.5,
+			"z-index":this.zIndex+1
 		});
 	}
 
@@ -303,7 +304,8 @@ class Icons{
 	[iconUpFn](dom){
 		$(dom).css3({
 			transition:"all 0.2s linear",
-			opacity:1
+			opacity:1,
+			"z-index":this.zIndex
 		});
 		this[reSetAllIconPosition](dom);
 	}

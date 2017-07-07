@@ -17,7 +17,7 @@
     <!--csp策略-->
     <meta http-equiv="Content-Security-Policy" content="
                     object-src 'none';
-                    script-src 'self' 'unsafe-eval';
+                    script-src 'self' 'unsafe-eval' 'unsafe-inline';
                     img-src data: 'self';
                     style-src 'self' 'unsafe-inline';
                     connect-src 'self';
@@ -29,8 +29,12 @@
 
 
     <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/polyfill.js"></script>
     <link rel="stylesheet" type="text/css" href="css/all.css">
-    <script src="js/dist/index.min.js"></script>
+    <!--<script src="js/dist/index.min.js"></script>-->
+    <script>
+        document.write("<script type='text/javascript' src='js/dist/index.min.js?"+Math.random()+"'><\/script>");
+    </script>
 
 </head>
 <body>
