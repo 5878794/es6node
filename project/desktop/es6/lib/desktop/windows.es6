@@ -1,6 +1,7 @@
 // 生成一个窗口可以拖动,拉动改变大小
 
 //TODO 未考虑浏览器窗口缩放
+//TODO 生成的窗口的层级  不对
 
 // let a = new _window({
 // 	name:"test4",                       //标题名称
@@ -49,8 +50,7 @@ require("../jq/listenerStyle");
 
 let openedWindow = [],
 	maxZIndex = 0;
-
-window.openedWindow = openedWindow;
+window.ww = openedWindow;
 
 class _window{
 	constructor(opt){
@@ -186,7 +186,7 @@ class _window{
 			openedWindow[i].zIndex = maxNo;
 			openedWindow[i].setZIndex();
 		}
-
+		maxNo = (maxNo<500)? 500 : maxNo;
 		maxZIndex = maxNo + 1;
 	}
 
@@ -212,7 +212,7 @@ class _window{
 			left:this.left,
 			top:this.top
 		}});
-
+console.log(this.zIndex)
 		//标题栏
 		let title = $("<div>"+this.name+"</div>");
 		title.css3({
@@ -293,9 +293,9 @@ class _window{
 			"z-index":10
 		});
 		let div_top = divH.clone().css({cursor:"n-resize"}),
-			div_bottom = divH.clone().css({top:"initial",bottom:0,cursor:"s-resize"}),
+			div_bottom = divH.clone().css({top:"auto",bottom:0,cursor:"s-resize"}),
 			div_left = divS.clone().css({cursor:"w-resize"}),
-			div_right = divS.clone().css({left:"initial",right:0,cursor:"e-resize"});
+			div_right = divS.clone().css({left:"auto",right:0,cursor:"e-resize"});
 
 		//四个角的感应条
 		let div_angle = $("<div></div>");
@@ -308,9 +308,9 @@ class _window{
 			"z-index":20
 		});
 		let div_left_top = div_angle.clone().css({cursor:"nw-resize"}),
-			div_right_top = div_angle.clone().css({left:"initial",right:0,cursor:"ne-resize"}),
-			div_left_bottom = div_angle.clone().css({top:"initial",bottom:0,cursor:"sw-resize"}),
-			div_right_bottom = div_angle.clone().css({top:"initial",left:"initial",right:0,bottom:0,cursor:"se-resize"});
+			div_right_top = div_angle.clone().css({left:"auto",right:0,cursor:"ne-resize"}),
+			div_left_bottom = div_angle.clone().css({top:"auto",bottom:0,cursor:"sw-resize"}),
+			div_right_bottom = div_angle.clone().css({top:"auto",left:"auto",right:0,bottom:0,cursor:"se-resize"});
 
 		//创建遮罩层
 		let div_zz = $("<div></div>");
@@ -731,6 +731,12 @@ class _window{
 		$(this[windowDom].btns).unbind("hover");
 
 		this[windowDom].main.remove();
+
+		openedWindow = openedWindow.filter(win=>{
+			if(win != this){
+				return win;
+			}
+		});
 	}
 
 }

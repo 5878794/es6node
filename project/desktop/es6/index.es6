@@ -2,6 +2,7 @@ let device = require("device"),
 	Icon = require("./lib/desktop/icon"),
 	Window = require("./lib/desktop/windows");
 
+window.device= device;
 
 $(document).ready(function(){
 	new Icon({
