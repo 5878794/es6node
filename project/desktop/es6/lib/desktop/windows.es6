@@ -1,4 +1,23 @@
-//TODO   非顶层窗口的遮罩层处理
+// 生成一个窗口可以拖动,拉动改变大小
+
+//TODO 未考虑浏览器窗口缩放
+
+// let a = new _window({
+// 	name:"test4",                       //标题名称
+// 	openUrl:"http://www.baidu.com",     //需要打开的地址
+// 	id:4,                               //id
+// 	body:$("body"),                     //插入的容器
+// 	width:300,                          //宽、高、坐标
+// 	height:400,
+// 	left:100,
+// 	top:100
+// });
+
+
+// a.min();             //窗口最小化
+// a.max();             //窗口最大化
+// a.close();           //关闭窗口
+// a.show();            //显示到最顶层
 
 
 let init = Symbol(),
@@ -20,8 +39,7 @@ let init = Symbol(),
 	windowTopChange = Symbol(),
 	addThreeButtonEvent = Symbol(),
 	setMaxZIndex = Symbol(),
-	checkHasExist = Symbol(),
-	showAndGoTop = Symbol();
+	checkHasExist = Symbol();
 
 let $$ = require("../event/$$"),
 	animate = require("../fn/jsAnimate");
@@ -36,7 +54,6 @@ window.openedWindow = openedWindow;
 
 class _window{
 	constructor(opt){
-		this.icon = opt.icon;
 		this.name = opt.name;
 		this.openUrl = opt.openUrl;
 		this.id = opt.id;
@@ -79,7 +96,7 @@ class _window{
 	[init](){
 		let openWin = _window[checkHasExist](this.id);
 		if(openWin){
-			openWin.showTop();
+			openWin.show();
 			return;
 		}
 		this[getParam]();
@@ -104,10 +121,39 @@ class _window{
 	}
 
 	//将当前对象放到顶层
-	showTop(){
+	show(){
 		_window[setMaxZIndex]();
 		this.zIndex = maxZIndex;
-		this[windowDom].main.css({"z-index":maxZIndex});
+		this[windowDom].main.css({"z-index":maxZIndex,display:"block"});
+		//所有的窗口显示遮罩层
+		openedWindow.map(_win=>{
+			let title = _win[windowDom].title,
+				bg = title.data("background");
+			if(_win == this){
+				_win[windowDom].zz.css({display:"none"});
+				title.css({"background":bg});
+				_win[windowDom].btns.data({isTop:true});
+				_win[windowDom].btns.find("div").each(function(){
+					let bg = $(this).data("bg1");
+					$(this).css({
+						"background-color":bg,
+						color:bg
+					});
+				});
+			}else{
+				_win[windowDom].zz.css({display:"block"});
+				title.css({"background":"rgb(246,246,246)"});
+				_win[windowDom].btns.data({isTop:false});
+				_win[windowDom].btns.find("div").each(function(){
+					let bg = $(this).data("bg2");
+					$(this).css({
+						"background-color":bg,
+						color:bg
+					});
+				});
+			}
+		});
+
 	}
 
 	//设置zindex
@@ -177,7 +223,7 @@ class _window{
 			position:"relative",
 			"text-align":"center",
 			background:"linear-gradient(rgb(235,237,235) 0%,rgb(215,213,215) 100%)"
-		});
+		}).data({background:"linear-gradient(rgb(235,237,235) 0%,rgb(215,213,215) 100%)"});
 
 		//标题栏3按钮
 		let btns = $("<div></div>");
@@ -352,12 +398,10 @@ class _window{
 
 		//标题移动
 		$$(this[windowDom].title).myclickdown(function(){
-			_window[setMaxZIndex]();
+			_this.show();
 			_this[windowDom].zz.css({display:"block"});
 			_this[getMoveMinMaxXY]();
 			$(this).css({opacity:0.6});
-			$(_this[windowDom].main).css({"z-index":maxZIndex});
-			_this.zIndex = maxZIndex;
 		}).myclickup(function(){
 			_this[windowDom].zz.css({display:"none"});
 			$(this).css({opacity:1});
@@ -379,11 +423,9 @@ class _window{
 		];
 		doms.map(type=>{
 			$$(this[windowDom][type]).myclickdown(function(){
-				_window[setMaxZIndex]();
+				_this.show();
 				_this[windowDom].zz.css({display:"block"});
 				$(this).css({opacity:0.6});
-				$(_this[windowDom].main).css({"z-index":maxZIndex});
-				_this.zIndex = maxZIndex;
 			}).myclickup(function(){
 				_this[windowDom].zz.css({display:"none"});
 				$(this).css({opacity:1});
@@ -393,7 +435,10 @@ class _window{
 			});
 		});
 
-
+		//遮罩层点击
+		$$(this[windowDom].zz).myclickok(function(){
+			_this.show();
+		});
 
 	}
 
@@ -561,15 +606,28 @@ class _window{
 			let bgColor = $(this).css("background-color");
 			$(this).css({
 				color:bgColor
+			}).data({
+				bg1:bgColor,
+				bg2:"rgb(227,227,227)"
 			});
 		});
 		this[windowDom].btns.hover(function(){
-			$(this).find("div").css({color:"#000"});
-		},function(){
 			$(this).find("div").each(function(){
-				let bgColor = $(this).css("background-color");
+				let bg1 = $(this).data("bg1");
 				$(this).css({
-					color:bgColor
+					color:"#000",
+					"background-color":bg1
+				});
+			});
+		},function(){
+			let isTop = $(this).data("isTop");
+			$(this).find("div").each(function(){
+				let bg1 = $(this).data("bg1"),
+					bg2 = $(this).data("bg2"),
+					bg = (isTop)? bg1 : bg2;
+				$(this).css({
+					color:bg,
+					"background-color":bg
 				});
 			});
 		});
@@ -580,6 +638,7 @@ class _window{
 		btns.map(btn=>{
 			$$(this[windowDom][btn]).myclickdown(function(e){
 				e.stopPop();
+				_this.show();
 				$(this).css({opacity:0.5});
 			}).myclickup(function(e){
 				$(this).css({opacity:1});
