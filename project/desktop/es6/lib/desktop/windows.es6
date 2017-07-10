@@ -1,4 +1,4 @@
-//TODO 层级管理  多窗口管理   重复打开管理
+//TODO   非顶层窗口的遮罩层处理
 
 
 let init = Symbol(),
@@ -18,9 +18,10 @@ let init = Symbol(),
 	windowRightChange = Symbol(),
 	windowBottomChange = Symbol(),
 	windowTopChange = Symbol(),
-	addThreeButtonEvent = Symbol();
-
-
+	addThreeButtonEvent = Symbol(),
+	setMaxZIndex = Symbol(),
+	checkHasExist = Symbol(),
+	showAndGoTop = Symbol();
 
 let $$ = require("../event/$$"),
 	animate = require("../fn/jsAnimate");
@@ -28,6 +29,10 @@ require("../jq/extend");
 require("../jq/listenerStyle");
 
 
+let openedWindow = [],
+	maxZIndex = 0;
+
+window.openedWindow = openedWindow;
 
 class _window{
 	constructor(opt){
@@ -42,7 +47,7 @@ class _window{
 		this.minHeight = opt.minHeight || 200;
 		this.left = 100;
 		this.top = 100;
-		this.zIndex = 500;
+		this.zIndex = 500;  //不要修改
 
 		this[bodyWidth] = null;
 		this[bodyHeight] = null;
@@ -72,17 +77,71 @@ class _window{
 	}
 
 	[init](){
+		let openWin = _window[checkHasExist](this.id);
+		if(openWin){
+			openWin.showTop();
+			return;
+		}
 		this[getParam]();
 		this[createWindow]();
 		this[frameAutoSize]();
 		this[addMoveAndResizeEvent]();
 		this[addThreeButtonEvent]();
+		openedWindow.push(this);
+	}
+
+	//检查窗口是否已打开
+	static [checkHasExist](id){
+		let isExist = false;
+
+		openedWindow.map(_win=>{
+			if(_win.id == id){
+				isExist = _win;
+			}
+		});
+
+		return isExist;
+	}
+
+	//将当前对象放到顶层
+	showTop(){
+		_window[setMaxZIndex]();
+		this.zIndex = maxZIndex;
+		this[windowDom].main.css({"z-index":maxZIndex});
+	}
+
+	//设置zindex
+	setZIndex(){
+		this[windowDom].main.css({"z-index":this.zIndex});
 	}
 
 	//获取参数
 	[getParam](){
 		this[bodyWidth] = parseInt(this.body.width());
 		this[bodyHeight] = parseInt(this.body.height());
+		maxZIndex = (this.zIndex > maxZIndex)? this.zIndex : maxZIndex;
+		_window[setMaxZIndex]();
+		this.zIndex = maxZIndex;
+	}
+
+	//处理最大层级数（500-1000）
+	static  [setMaxZIndex](){
+		maxZIndex++;
+		if(maxZIndex < 510){return;}
+
+		//大于1000重新生成zindex
+		openedWindow = openedWindow.sort(function(a ,b){
+			return a.zIndex > b.zIndex;
+		});
+
+		let maxNo = 0;
+		for(var i=0,l=openedWindow.length;i<l;i++){
+			maxNo =  500 + i;
+			openedWindow[i].zIndex = maxNo;
+			openedWindow[i].setZIndex();
+		}
+
+		maxZIndex = maxNo + 1;
 	}
 
 	//创建窗口
@@ -293,14 +352,15 @@ class _window{
 
 		//标题移动
 		$$(this[windowDom].title).myclickdown(function(){
+			_window[setMaxZIndex]();
 			_this[windowDom].zz.css({display:"block"});
 			_this[getMoveMinMaxXY]();
 			$(this).css({opacity:0.6});
-			$(_this[windowDom].main).css({"z-index":_this.zIndex+1});
+			$(_this[windowDom].main).css({"z-index":maxZIndex});
+			_this.zIndex = maxZIndex;
 		}).myclickup(function(){
 			_this[windowDom].zz.css({display:"none"});
 			$(this).css({opacity:1});
-			$(_this[windowDom].main).css({"z-index":_this.zIndex});
 			_this[updateDomParam]();
 		}).mymove(function(x,y){
 			_this[windowMove](x,y);
@@ -319,13 +379,14 @@ class _window{
 		];
 		doms.map(type=>{
 			$$(this[windowDom][type]).myclickdown(function(){
+				_window[setMaxZIndex]();
 				_this[windowDom].zz.css({display:"block"});
 				$(this).css({opacity:0.6});
-				$(_this[windowDom].main).css({"z-index":_this.zIndex+1});
+				$(_this[windowDom].main).css({"z-index":maxZIndex});
+				_this.zIndex = maxZIndex;
 			}).myclickup(function(){
 				_this[windowDom].zz.css({display:"none"});
 				$(this).css({opacity:1});
-				$(_this[windowDom].main).css({"z-index":_this.zIndex});
 				_this[updateDomParam]();
 			}).mymove(function(x,y){
 				_this[windowResize](x,y,type);

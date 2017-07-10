@@ -9,13 +9,13 @@ $(document).ready(function(){
 			{
 				icon:"tempImg/icon.png",
 				name:"test1",
-				openUrl:"http://www.baidu.com",
+				openUrl:"page1.html",
 				id:1
 			},
 			{
 				icon:"tempImg/icon.png",
 				name:"test2",
-				openUrl:"http://www.qq.com",
+				openUrl:"page2.com",
 				id:2
 			},
 			{
@@ -27,7 +27,7 @@ $(document).ready(function(){
 			{
 				icon:"tempImg/icon.png",
 				name:"test4",
-				openUrl:"http://www.sina.com.cn",
+				openUrl:"http://www.baidu.com",
 				id:4
 			}
 		],
