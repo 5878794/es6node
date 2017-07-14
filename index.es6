@@ -1,6 +1,5 @@
-require("babel-polyfill");
 	//获取server
-let server = require("./lib/server/httpServer"),
+let server = require("./lib/server/httpAndSocketServer"),
 	path = require("path"),
 	//获取ip
 	ip = require("./lib/fn/getIp"),
@@ -18,6 +17,12 @@ let server = require("./lib/server/httpServer"),
 
 let runFn = function(request,response){
 	let {dirName,isApi,pathName,fullPath,method,fileName,fileType}= rout(request);
+
+	//判断是否有socket.io的请求  忽略
+	if(fullPath.indexOf("socket.io") > -1){
+		return;
+	}
+
 	console.log("-----isApi:"+isApi+"----------");
 	if(isApi){
 		let url = __dirname+"/project/"+dirName+"/server/api/"+pathName;
@@ -48,8 +53,29 @@ let runFn = function(request,response){
 };
 
 
-server = server(port,runFn);
+let socketFn = function(allSocket,socket){
+	//allSocket 以socket的id 为key 的socket对象
+	//socket    当前发信息的socket用户的对象
+
+	socket.on("test",function(data){
+		// console.log(allSocket);
+		for(var [key,val] of Object.entries(allSocket)){
+			console.log(key)
+		}
+		console.log("-----")
+		console.log(socket.id);
+	})
+};
+
+
+
+server = server(port,runFn,socketFn);
 console.log("server start on "+ip+":"+port);
+
+
+
+
+
 
 
 

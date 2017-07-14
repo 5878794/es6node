@@ -15,7 +15,6 @@ module.exports = function(request,response){
 		fullPath = "";
 
 
-
 	//自动补index.html
 	if(lastHasG){
 		pathName = pathName+"index.html"
