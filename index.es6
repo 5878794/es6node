@@ -1,3 +1,4 @@
+require("babel-polyfill");
 	//获取server
 let server = require("./lib/server/httpServer"),
 	path = require("path"),
