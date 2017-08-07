@@ -23,7 +23,7 @@ module.exports = async function(request){
 	data = data.getData;
 
 	let	id = data.id,
-		ver = data.ver,
+		ver = parseInt(data.ver),
 		obj = getObj(id);
 
 	return new Promise(async (success,error)=>{
@@ -41,7 +41,9 @@ module.exports = async function(request){
 			zipUrl = path.join(__dirname,"../../www/zip/"),
 			username = user.username,
 			password = user.password,
-			cmd = "svn checkout -r "+ver+" "+svnUrl+" "+saveUrl+" --username "+username+" --password "+password,
+			cmd = (ver)?
+				"svn checkout -r "+ver+" "+svnUrl+" "+saveUrl+" --username "+username+" --password "+password :
+				"svn checkout "+svnUrl+" "+saveUrl+" --username "+username+" --password "+password ,
 			stamp = new Date().getTime(),
 			fileName = name+"_ver_"+ver+"____"+stamp+".zip",
 			cmd1 = "cd "+saveUrl+" ; zip -r "+zipUrl+fileName+" ./*",
