@@ -4,7 +4,7 @@ let server = require("./lib/server/httpAndSocketServer"),
 	//获取ip
 	ip = require("./lib/fn/getIp"),
 	//设置端口
-	port = "8000",
+	port = "10100",
 	//路由
 	rout = require("./lib/fn/rout"),
 	//读取静态文件

@@ -31,12 +31,28 @@ module.exports = [
 	},
 	{
 		id:8,
-		name:"健康档案查询",
-		svnUrl:"https://172.16.1.34/svn/h5/trank/app/common/healthCard_search"
+		name:"居民健康卡申领查询",
+		svnUrl:"https://172.16.1.34/svn/h5/trank/app/common/healthCardSearch_2.0/trunk"
 	},
 	{
 		id:9,
 		name:"健康成都6.0",
 		svnUrl:"https://172.16.1.34/svn/h5/trank/app/native/Health_CD_6.0/trunk"
+	},
+	{
+		id:10,
+		name:"血站app_第三方",
+		svnUrl:"https://172.16.1.34/svn/h5/trank/app/native/blood_station/trunk"
+	},
+	{
+		id:11,
+		name:"公开课",
+		svnUrl:"https://172.16.1.34/svn/h5/trank/app/wechat/weChatActivity/trunk"
+	},
+	{
+		id:12,
+		name:"悦跑圈",
+		svnUrl:"https://172.16.1.34/svn/h5/trank/app/native/Health_CD_6.0/trunk/wailingCircle"
+	
 	}
 ];
