@@ -27,7 +27,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "cheerio": "^1.0.0-rc.1",
-    "iconv": "^2.2.3",
+    "iconv": "^2.3.0",
     "jsonstream": "^1.0.3",
     "request": "^2.81.0"
   },

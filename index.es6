@@ -4,7 +4,7 @@ let server = require("./lib/server/httpAndSocketServer"),
 	//获取ip
 	ip = require("./lib/fn/getIp"),
 	//设置端口
-	port = "10100",
+	port = "10101",
 	//路由
 	rout = require("./lib/fn/rout"),
 	//读取静态文件
@@ -12,7 +12,8 @@ let server = require("./lib/server/httpAndSocketServer"),
 	//找不到 404
 	pageNotFond = require("./lib/response/404"),
 	//ajax返回
-	ajaxResponse = require("./lib/response/ajaxResponse");
+	ajaxResponse = require("./lib/response/ajaxResponse"),
+	socketRoute = require("./project/xjj/server/socketRoute");
 
 
 let runFn = function(request,response){
@@ -53,18 +54,31 @@ let runFn = function(request,response){
 };
 
 
+
+let request = require("request");
+let requests = {
+	appSystem:request.defaults({jar: true}),
+	adminSystem:request.defaults({jar: true})
+};
+let catchData = {
+	port:port
+};
 let socketFn = function(allSocket,socket){
 	//allSocket 以socket的id 为key 的socket对象
 	//socket    当前发信息的socket用户的对象
 
-	socket.on("test",function(data){
-		// console.log(allSocket);
-		for(var [key,val] of Object.entries(allSocket)){
-			console.log(key)
-		}
-		console.log("-----")
-		console.log(socket.id);
-	})
+	// socket.on("test",function(data){
+	// 	// console.log(allSocket);
+	// 	for(var [key,val] of Object.entries(allSocket)){
+	// 		console.log(key)
+	// 	}
+	// 	console.log("-----")
+	// 	console.log(socket.id);
+	// })
+
+	socketRoute(allSocket,socket,requests,catchData)
+
+
 };
 
 

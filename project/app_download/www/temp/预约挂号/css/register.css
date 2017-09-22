@@ -1,0 +1,171 @@
+
+
+body{font-family: "microsoft yahei";}
+._Header{height: 0.88rem;width: 100%;background:#f2f5f5;padding-top: 0.16rem;
+	position: fixed;top:0;left:0;z-index: 99}
+.next{border-radius:0.1rem ;border: 1px solid #e7e7e7;width: 90%;background: white;margin: 0rem auto;}
+._Header img{display: inline-block;}
+._Header input{width: 40%;height: 0.56rem;text-align: center;font-size: 0.28rem;color: #8d8c92;
+				background:url(../images/search.png) ;
+				background-size: 0.26rem 0.26rem;
+				background-origin: border-box;
+				background-repeat:no-repeat ;
+				background-position: 0.2rem 50%;
+				padding-left: 0.6rem;
+				-moz-box-sizing: border-box;
+				     box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				padding-right: 0.3rem;
+	}
+._Header input:hover{
+	width: 100%;
+}
+.UL{
+	padding-bottom: 1.3rem;
+	margin-top:1.88rem;
+}
+.UL li{list-style: none;border-bottom: 1px solid lightgray;width: 100%;height: 1.71rem;
+            -moz-box-pack: start;
+             -ms-flex-pack: start;
+                 justify-content: flex-start;
+            -webkit-justify-content: flex-start;
+            -moz-box-align: center;
+             -ms-flex-align: center;
+                 align-items: center;
+}
+.UL img{display: inline-block;margin: 0.3rem;width: 1.5rem;height: 1.1rem;}
+.hos_name{
+	font-size: 0.26rem;color: #3d3d3d;text-align: left;
+	max-width: 3.3rem;
+	line-height: .35rem;
+}
+.hos_name em{font-style: normal;
+}
+.hos_text_info{
+	position: relative;
+}
+.hos_name .name{
+	max-width: 3.2rem;
+	text-align: left;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+.hos_rank{font-size: 0.24rem;color: #8d8c92;margin-top:.1rem;font-style: normal}
+.hos_rank em,.hos_adress em{
+	font-style: normal;
+	display: inline-block;
+	width: 1.2rem;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.hos_rank em:first-child,.hos_adress em:first-child{
+	margin-right: .5rem;
+}
+.Footer{width: 100%;height: 1.3rem;position: fixed;bottom: 0;background-color: #fff;    border-top: 1px solid lightgray;}
+.Footer button{width: 4rem;height: 0.6rem;background: #007DF2;border-radius: 0.3rem;border: none;padding: 0;text-align: center;}
+.Footer button>img{
+	vertical-align: middle;
+}
+.order_wait{font-size: 0.28rem;color: #ffffff;vertical-align: middle;}
+.hos_adress{
+	font-size: .24rem;color: #8d8c92;
+}
+._add_leave{
+	background: #007DF2;
+	color: #fff;
+	border-radius: 1rem;
+	padding:0 .1rem;
+	margin-left:.1rem;
+	font-size: .22rem;
+	font-style: normal;
+	position: absolute;
+	right:.1rem;
+	top:0;
+	height: .3rem;
+	line-height: .3rem;
+}
+.sort_main{
+	position: fixed;
+	top:.88rem;
+	width: 100%;
+	z-index:99;
+	background: #fff;
+}
+.sort_tab{
+	height: .9rem;
+	line-height: .9rem;
+	text-align: center;
+	box-shadow: 0 3px 0 #eee;
+
+}
+.sort_tab span{
+	font-size: .28rem;
+	width: 50%;
+	display: block;
+	color: #999;
+
+}
+.sort_tab span:after{
+	content: '';
+	font-style: normal;
+	background: url("../images/sj1.png") no-repeat right center;
+	background-size: .17rem .11rem;
+	display: inline-block;
+	width: .17rem;
+	height: .11rem;
+	vertical-align: middle;
+	padding-left: .1rem;
+	margin-top: -.05rem;
+}
+.sort_tab .on{
+	color: #007DF2;
+}
+.sort_tab .on:after{
+	background: url("../images/sj2.png") no-repeat right center;
+	background-size: .16rem .12rem;
+}
+.sort_list,.mask{
+	display: none;
+}
+/*.sort_list_li{*/
+	/*!*max-height: 6.5rem;*!*/
+	/*overflow: auto;*/
+	/*!*pointer-events: ;*!*/
+	/*!*-webkit-overflow-scrolling: touch;*!*/
+/*}*/
+.sort_list_li li{
+	height: .85rem;
+	line-height: .85rem;
+	font-size: .28rem;
+	padding: 0 .85rem;
+	border-bottom:1px solid #ccc;
+	color: #999;
+	/*pointer-event:none*/
+}
+.close{
+	height: .8rem;
+	line-height: .8rem;
+	font-size: .28rem;
+}
+.sort_list_li .active{
+	background: url("../images/gou.png") no-repeat 5.5rem center;
+	color: #007DF2;
+	background-size: .3rem .3rem;
+}
+.mask{
+	position: fixed;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	background:rgba(0,0,0,.5);
+	z-index:98;
+}
+.no_data p{
+	font-size: .28rem;
+	color: #999;
+	line-height:.3rem;
+}

@@ -12,7 +12,6 @@ module.exports = function(port,requestFn,socketFn){
 	});
 
 	io.sockets.on('connection', function (socket) {
-
 		socketFn(io.sockets.sockets,socket);
 
 		// 接收消息

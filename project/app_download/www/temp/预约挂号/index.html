@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<head>
+    <title>预约医院</title>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/all.css">
+    <link rel="stylesheet" href="css/register.css">
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/ajax.js"></script>
+    <script src="js/lib.js"></script>
+    <script src="js/all.js"></script>
+    <script src="js/md5.js"></script>
+    <script src="js/pmz_all.js"></script> 
+    <script src="js/index.js"></script>
+</head>
+<body>
+	<div id="notnull" style="display:none">
+		<div class="nodata">
+				<div class="" style="text-align: center;">
+				<img src="images/noData.png"/>
+				<br> <span style="font-size: 0.28rem;color: #ccc;margin-top: 0.05rem">近期暂无医院！</span>
+				</div>
+			</div>
+	</div>
+    <div class="_Header border_box">
+        <div class="next center">
+             <input type="text" class="center" placeholder="搜索医院" id="searchInput">
+        </div>
+    </div>
+    <div id="hospital" style="display:none;">
+        <li class="box_h hosptail_list" attr-ttype="" attr-hosid="">
+            <div style="padding:0.3rem"><img style="margin: 0" src="" alt=""></div>
+                <div class="boxflex1 box_s center_h" style="padding-right: 5px">
+                   <div class="hos_text_info">
+                       <p class="hos_name diandian2"></p>
+                       <em class="_add_leave"></em>
+                       <!--<span>甲级</span>-->
+                   </div>
+
+                    <p class="hos_adress"><em class="hos_a_1">金牛区</em><em class="hos_a_2">5km</em></p>
+                    <p class="hos_rank"><em class="hos_r_2">公立医院</em><em class="hos_r_1">三甲级</em></p>
+            </div>
+        </li>
+    </div>
+
+    <!--TODO 排序下拉框-->
+    <div class="sort_main">
+        <div class="sort_tab box_h">
+            <span id="sort_1">全城</span>
+            <span id="sort_2">综合排序</span>
+        </div>
+        <div class="sort_list">
+            <ul class="sort_list_li" id="city_list">
+                <li data-area="" class="active">全城</li>
+                <li data-area="双流区">双流区</li>
+                <li data-area="成华区">成华区</li>
+                <li data-area="青羊区">青羊区</li>
+                <li data-area="锦江区">锦江区</li>
+                <li data-area="金牛区">金牛区</li>
+                <li data-area="武侯区">武侯区</li>
+                <li data-area="高新区">高新区</li>
+                <li data-area="天府新区">天府新区</li>
+                <p class="text-center close"><img src="images/up.png" alt=""></p>
+            </ul>
+            <ul class="sort_list_li" style="display: none">
+                <li data-area="default" class="active">综合排序</li>
+                <li data-area="leave">按医院等级排序</li>
+                <!--<li>按预约量排序</li>-->
+                <li data-area="distance" id="distance">按距离排序</li>
+                <p class="text-center close"><img src="images/up.png" alt=""></p>
+            </ul>
+        </div>
+    </div>
+    <div class="mask"></div>
+    <div class="ul_list">
+        <ul class="UL">
+
+        </ul>
+
+    </div>
+
+
+    <div class="no_data" style="text-align: center;font-size: .28rem;display: none">
+        <img src="images/img_nohospital.png" alt="">
+        <p>无医院结果</p>
+    </div>
+<div class="Footer center">
+    <button>
+        <!--<img src="images/Order.png" alt="">-->
+        <span class="order_wait">我的预约</span>
+    </button>
+    <script type="text/javascript">
+    	
+    </script>
+</div>
+</body>

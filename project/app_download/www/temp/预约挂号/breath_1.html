@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="msapplication-tap-highlight" content="no">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	<link rel="stylesheet" type="text/css" href="css/all.css">
+	<link rel="stylesheet" href="css/breath.css">
+	<script src="js/jquery-2.1.1.min.js"></script>
+	<script src="js/ajax.js"></script>
+	<script src="js/lib.js"></script>
+	<script src="js/all.js"></script>
+	<script src="js/pmz_all.js"></script>
+	<script src="js/md5.js"></script>
+	<script src="js/breath_1.js"></script>
+	<script src="js/plugins/jquery.charfirst.pinyin.js"></script>
+	<title>医生列表</title>
+</head>
+<body>
+<div id="notnull" style="display:none">
+	<div class="nodata">
+		<div class="" style="text-align: center;">
+			<img src="images/noData.png"/>
+			<br> <span style="font-size: 0.28rem;color: #ccc;margin-top: 0.05rem">近期该医院暂时无可挂号医生！</span>
+		</div>
+	</div>
+</div>
+<div id="doctor" style="display:none">
+	<div class="Content_li sort_list">
+
+		<div class="box_h center doc_Head_wrap">
+			<div class="doc_img">
+				<img class="doc_Name_img" src="images/defalutDoctor.png" alt="">
+			</div>
+			<div class="boxflex1 doc_Head_ul">
+				<div>
+					<span class="doc_Head_name"></span>
+					<span class="doc_Head_job"></span>
+				</div>
+				<div class="doc_Foot_dec diandian2"></div>
+			</div>
+			<div>
+				<button class="doc_Head_butt">预约</button>
+			</div>
+		</div>
+		<!--<div class="doc_Foot">-->
+		<!--<p class="doc_Foot_dec diandian2">擅长：各院区服务功能定位明确：院本部床位4100张，以诊治疑难危重疾病为主；温江院区床位200张，以诊治康复、肿瘤及慢性疾病为主</p>-->
+		<!--</div>-->
+	</div>
+</div>
+
+
+
+<div class="Content sort_box" id="docList">
+	<!--<li class="Content_li">-->
+	<!--<div class="doc_Head ">-->
+	<!--<div class="box_h center doc_Head_wrap">-->
+	<!--<div>-->
+	<!--<img class="doc_Name_img" src="images/icon.png" alt="">-->
+	<!--</div>-->
+	<!--<ul class="boxflex1 doc_Head_ul">-->
+	<!--<li>-->
+	<!--<span class="doc_Head_name">刘耀建</span>-->
+	<!--<span class="doc_Head_job">主任医师</span>-->
+	<!--</li>-->
+	<!--<li class="doc_Head_object">呼吸科</li>-->
+	<!--</ul>-->
+	<!--<div>-->
+	<!--<button class="doc_Head_butt">预约</button>-->
+	<!--</div>-->
+	<!--</div>-->
+
+
+	<!--</div>-->
+	<!--<div class="doc_Foot">-->
+	<!--<p class="doc_Foot_dec diandian2">擅长：各院区服务功能定位明确：院本部床位4100张，以诊治疑难危重疾病为主；温江院区床位200张，以诊治康复、肿瘤及慢性疾病为主</p>-->
+	<!--</div>-->
+	<!--</li>-->
+	<!--<li class="Content_li">-->
+	<!--<div class="doc_Head ">-->
+	<!--<div class="box_h center doc_Head_wrap">-->
+	<!--<div>-->
+	<!--<img class="doc_Name_img" src="images/icon.png" alt="">-->
+	<!--</div>-->
+	<!--<ul class="boxflex1 doc_Head_ul">-->
+	<!--<li>-->
+	<!--<span class="doc_Head_name">刘耀建</span>-->
+	<!--<span class="doc_Head_job">主任医师</span>-->
+	<!--</li>-->
+	<!--<li class="doc_Head_object">呼吸科</li>-->
+	<!--</ul>-->
+	<!--<div>-->
+	<!--<button class="doc_Head_butt doc_Head_butt2">未开通</button>-->
+	<!--</div>-->
+	<!--</div>-->
+
+
+	<!--</div>-->
+	<!--<div class="doc_Foot">-->
+	<!--<p class="doc_Foot_dec diandian2">擅长：各院区服务功能定位明确：院本部床位4100张，以诊治疑难危重疾病为主；温江院区床位200张，以诊治康复、肿瘤及慢性疾病为主</p>-->
+	<!--</div>-->
+	<!--</li>-->
+
+</div>
+<div class="number_sort">
+	<ul></ul>
+</div>
+</body>
+</html>

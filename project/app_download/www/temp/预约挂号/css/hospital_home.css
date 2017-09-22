@@ -1,0 +1,168 @@
+html,body{
+	height: 100%;
+}
+ul li{list-style: none;}
+body{background: #f2f5f5;font-family: "microsoft yahei";}
+.hos_name{font-size: 0.28rem;color: #3d3d3d;
+	/*padding-right: .8rem;*/
+	position: relative;
+}
+.hos_addr{font-size: 0.24rem;color: #8d8c92;text-align: left;
+
+	width: 3.4rem;
+	position: relative;
+}
+.hos_addr_em{
+	max-width: 2.9rem;
+	font-style: normal;
+	/* display: inline-block; */
+	display: block;
+	/* float: left; */
+	overflow: hidden;
+	margin-left: .4rem;
+}
+.icon_map{
+	/* display: inline-block; */
+	background: url(../images/map.png) no-repeat center;
+	width: .21rem;
+	height: .29rem;
+	border-right: 1px solid #9B9B9B;
+	padding-left: .15rem;
+	/* vertical-align: sub; */
+	display: block;
+	position: absolute;
+	top:.05rem;
+	background-size: .21rem .29rem;
+
+}
+#hos_name{
+	font-style: normal;
+	/*display: inline-block;*/
+	max-width: 2.5rem;
+	vertical-align: middle;
+	text-align: left;
+	font-size: .24rem;
+}
+.hos_rank{
+	font-size: .22rem;
+	color: #fff;
+	background: #007DF2;
+	height: .3rem;
+	padding:0 .1rem;
+	text-align: center;
+	display: inline-block;
+	border-radius: .5rem;
+	line-height: .3rem;
+	position: absolute;
+	top:.05rem;
+	right:.1rem;
+}
+.hos_Head img{display: inline-block;margin: 0.3rem;width: 2.2rem;height: 1.65rem;float: left;}
+.hos_Head{width: 100%;height: 2.2rem;background: white;}
+.hos_Head_intro{line-height: 1.5;
+	position: relative;}
+.hos_Foot{background: white;width: 100%;}
+.hos_Foot li{height: 0.76rem;}
+.hos_Foot_head{width: 100%;height: 0.76rem;margin-top: 0.18rem;background-color: #fff;}
+.hos_Foot_head li{
+	width: 50%;
+	float: left;
+	text-align: center;
+	font-size: 0.24rem;
+	box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+	border-bottom: 1px solid #e7e7e7;
+	line-height: 0.75rem;
+	color: #8d8c92;
+	
+}
+#allKs>li{
+	width: 50%;
+	float: left;
+}
+/*点击切换的样式*/
+.Active{border-bottom: 0.06rem solid #29BAEC !important; color: #29BAEC !important;line-height: 0.7rem !important;}
+/*.Default{border-bottom: 1px solid #e7e7e7;line-height: 0.75rem;color: #8d8c92;}*/
+/*点击切换的样式-end*/
+.hos_Foot_left{background: #fff;
+	margin-top:2.4rem;
+	border-top:1px solid #ECECEC;}
+.hos_Foot_right{background: white;}
+.Conmmon li{border-bottom: 0.02rem solid #eee;font-size: 0.24rem;line-height: 0.74rem;}
+.hos_Foot_left li{color: #5a5a5a;padding-left: 0.3rem;}
+.hos_Foot_right li{width: 90%;float: right;color: #3f3f3f;}
+/*预约挂号选中样式*/
+.foot_active{
+	position: relative;
+	background: #007DF2 !important;
+	background-position: right center;
+	color: #fff !important;
+}
+.foot_active:after{
+	position: absolute;
+	right: 0.3rem;
+	top:.2rem;
+	content: '';
+	display: block;
+	width: .31rem;
+	height:.31rem;
+	background: url("../images/active.png") no-repeat;
+	background-size: .31rem .31rem;
+}
+/*预约挂号选中样式-end*/
+
+#allKs>li:nth-child(odd){
+	border-right: 0.02rem solid #eee;
+}
+
+/*挂号规则样式*/
+.h_content{
+	padding: 0.2rem 0.3rem 0 0.3rem;
+	display: none;
+}    
+.h_content p{
+	color: #8d8c92;
+	font-size: 0.24rem;
+	text-align: left;
+}
+.tips{
+	font-size: 0.25rem;
+	margin-bottom: 0.2rem;
+}
+/*挂号规则样式-end*/
+
+/*预约挂号和挂号规则之间的切换*/
+.display1{
+	display: none !important;
+}
+/*预约挂号和挂号规则之间的切换-end*/
+
+/*修改*/
+.__hos{
+	position: relative;
+}
+.__hos .__hos_detail{
+	position: absolute;
+	right:.3rem;
+	top:.4rem;
+	font-size: .18rem;
+	color: #fff;
+	background: #207FD9 url("../images/right.png") no-repeat 1rem center;
+	background-size: .08rem;
+	opacity: .7;
+	/*background: rgba(32,127,217,.8);*/
+	width:1.16rem;
+	height:.38rem;
+	line-height:.38rem;
+	font-style: normal;
+	text-align: center;
+	border-radius: .5rem 0 0 .5rem;
+}
+.__line{
+	height:.2rem;
+}
+.nodata img{
+	width: 45%;
+	margin-bottom: .5rem;
+}

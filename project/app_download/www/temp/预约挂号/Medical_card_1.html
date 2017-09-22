@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>就诊卡管理</title>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+	    <meta name="msapplication-tap-highlight" content="no">
+	    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	    <link rel="stylesheet" type="text/css" href="css/all.css">
+	    <link rel="stylesheet" href="css/Medical_card.css">
+	    <script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/lib.js"></script>
+		<script src="js/all.js"></script>
+		<script src="js/pmz_all.js"></script>
+		<script src="js/md5.js"></script>
+		<script src="js/ajax.js"></script>
+		<script src="js/Medical_card_1.js"></script>
+	</head>
+	<body>
+		<ul class="card_cont" style="list-style: none">
+			<li id="name_S">
+				<span class="card_left">姓名</span>
+				<span class="card_right ide_input">必填</span>
+			</li>
+			<li id="Mdeical_select">
+				<span class="card_left">卡类型</span>
+				<span class="card_right"><b>就诊卡</b>
+				</span>
+			</li>
+			<li id="hosName">
+				<span class="card_left">医院</span>
+				<span class="card_right">四川省人民医院</span>
+			</li>
+			<li id="card_input">
+				<span class="card_left">卡号</span>
+				<input type="tel" class="card_right card_num ide_inputs" style="font-size: 0.28rem ;height: 0.88rem;text-align: right;" placeholder="请输入卡号">
+			</li>
+		</ul>
+		<div class="foot_butt" id="ok_submit">
+			确定
+		</div>
+	</body>
+</html>

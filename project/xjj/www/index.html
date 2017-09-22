@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        *{padding: 0;margin: 0;}
+        #msg{
+            position: fixed; left: 0; top: 0; width: 300px; height: 100%;
+            background: #333; color: #eee; font-size:14px; overflow-x: hidden;
+            overflow-y: scroll;
+        }
+        #main,#main1{
+            padding-left: 350px;
+        }
+        body,html{
+            width: 100%; height: 100%; overflow: hidden;
+        }
+        #main div{
+            height: 40px;
+        }
+        #button,
+        #button1{
+            display: block; width:200px; height: 30px;
+            border: none; background:#12b4ff; color: #fff;
+            outline: none; cursor: pointer;
+            -webkit-border-radius:5px;
+            -moz-border-radius:5px;
+            border-radius:5px;
+        }
+        #button:hover,
+        #button1:hover{
+            opacity: 0.5;
+        }
+        #main1 div{
+            height: 40px;
+        }
+        #msg p:before{
+            content: ">";
+            padding-right: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="main">
+        <p style="width: 100%; height: 30px;"></p>
+        <div><img src="" id="img"/></div>
+        <div>验证码:<input type="text" id="code"/></div>
+        <div><input onclick="login('appSystem')" type="button" id="button" value="登陆"></div>
+    </div>
+
+
+
+    <div id="main1" style="display: none;">
+        <p style="width: 100%; height: 30px;"></p>
+        <div>请选择商家系统要发布的项目：<select onchange="getSystemAppInfo()" id="id">
+            <option value="">请选择</option>
+        </select></div>
+        <div>请选择要发布的项目<select id="select">
+            <option value="">请选择</option>
+        </select></div>
+        <div>查看该项目svn提交日志：<input onclick="viewSvnInfo();" value="查看" type="button" id="button2"/></div>
+        <div><input style="display: none;" onclick="submit1('appSystem')" type="button" id="button1" value="提交"></div>
+    </div>
+
+
+
+
+
+    <div id="msg">
+        <p>正在连接服务器</p>
+    </div>
+
+
+
+</body>
+</html>
+<script>
+    var SETTING = {
+        appSystem:{
+            msg:"商家后台",
+            imgCodeUrl:"http://118.123.173.101:7001/partnermanage/getVerCode.do",
+            pageUrl:"http://118.123.173.101:7001/partnermanage/",
+            loginUrl:"http://118.123.173.101:7001/partnermanage/partner/login.do",
+            username:"test419",
+            password:"12345678",
+            saveVersionImg:"http://118.123.173.101:7001/partnermanage/appmanage/saveVersionImg2.do",
+            iconUpdateUrl:"http://118.123.173.101:7001/partnermanage/appmanage/appIcon2.do",
+            appListUrl:"http://118.123.173.101:7001/partnermanage/appmanage/appList.do",
+            appEditUrl:"http://118.123.173.101:7001/partnermanage/appmanage/appVersion2.do",
+            fileUploadUrl:"http://118.123.173.101:7001/HealthServer/fileUpDown/upload.do",
+            saveFileInfo:"http://118.123.173.101:7001/partnermanage/appmanage/saveVersion2.do"
+        },
+        adminSystem:{
+            msg:"系统后台",
+            imgCodeUrl:"http://118.123.173.101:7001/HealthWeb/getVerCode.do",
+            username:"zgj2008",
+            password:"zgj2008"
+        }
+    }
+</script>
+<script>
+    var msg = $("#msg");
+
+
+
+    socket = io.connect();
+    socket.on("message",function(rs){
+        var type = rs.type,
+                message = rs.data;
+
+        switch(type){
+            case "connect":
+                msg.append("<p>socket已连接</p>");
+                linkSystem("appSystem");
+                break;
+            case "err":
+                msg.append("<p>"+message+"</p>");
+                break;
+            case "message":
+                msg.append("<p>"+message+"</p>");
+                break;
+            case 'imgCode':
+                msg.append("<p>连接成功</p>");
+                $("#img").attr({src:message.url});
+                break;
+            case 'login':
+                msg.append("<p>登陆成功</p>");
+                $("#main").remove();
+                getAppList();
+                getAppSystemList();
+                $("#main1").css({display:"block"});
+                break;
+            case 'fileUpload':
+                msg.append("<p>文件上传成功</p>");
+                saveZipInfo(message);
+                break;
+            case 'appList':
+                msg.append("<p>获取应用列表成功</p>");
+                createAppList(message.data);
+                break;
+            case 'appInfo':
+                msg.append("<p>获取应用svn提交信息成功</p>");
+                showAppSvnInfo(message);
+                break;
+            case 'appSystemList':
+                msg.append("<p>获取商家后台应用列表成功</p>");
+                createSystemAppList(message);
+                break;
+
+            case 'appSystemInfo':
+                msg.append("<p>所选应用信息成功</p>");
+                bindAppInfo(message);
+                break;
+
+            case 'createSvnZip':
+                msg.append("<p>svn打包成功</p>");
+                updateZip(message);
+                break;
+
+            case 'saveFileInfo':
+                msg.append("<p>上传文件信息保存成功</p>");
+                getUpdateIconInfo();
+                break;
+
+            case 'getUpdateIconInfo':
+                msg.append("<p>图标信息页面信息获取成功</p>");
+                sendIcon();
+                break;
+
+            case 'sendIcon':
+                msg.append("<p>icon文件上传成功</p>");
+                saveAllMsg(message);
+                break;
+
+            case 'saveAllMsg':
+                msg.append("<p>商家系统完成</p>");
+                break;
+
+            default:
+
+                break;
+        }
+    });
+
+
+    var linkSystem = function(key){
+        msg.append("<p>正在连接"+SETTING.appSystem.msg+"</p>");
+        socket.send("getImageCode",{
+            imgUrl:SETTING[key].imgCodeUrl,
+            pageUrl:SETTING[key].pageUrl,
+            id:key
+        });
+    };
+
+
+    var login = function(key){
+        var code = $.trim($("#code").val());
+        if(code==""){
+            msg.append("<p>请输入验证码</p>");
+            return;
+        }
+
+        msg.append("<p>正在登陆"+SETTING.appSystem.msg+"</p>");
+        socket.send("login",{
+            code:code,
+            loginUrl:SETTING[key].loginUrl,
+            username:SETTING[key].username,
+            password:SETTING[key].password,
+            id:key
+        });
+    };
+
+
+    var getAppList = function(){
+        msg.append("<p>正在获取应用列表</p>");
+        socket.send("appList",{
+            id:"appSystem"
+        });
+    };
+
+
+    var viewSvnInfo = function(){
+        var select = $("#select"),
+            val = select.val();
+
+        if(val == ""){
+            msg.append("<p>请选择要查看的项目</p>");
+            return;
+        }
+
+        msg.append("<p>正在获取应用svn提交信息</p>");
+        socket.send("appInfo",{
+            appId:val,
+            id:"appSystem"
+        });
+    };
+
+
+    var showAppSvnInfo = function(rs){
+        rs = rs.data;
+        rs = rs.replace(/-{10,}/ig,function(str){
+            return "<br/>"+str+"<br/>"
+        });
+        rs = rs.replace(/\sline\s/ig,function(str){
+            return str+"<br/>"
+        });
+        var text = '<html lang="en"><head><meta charset="UTF-8"></head><body>'+rs+'</body></html>';
+        // rs = rs.data;
+        var blob = new Blob([text],{"type":"text/html"});
+        var src= window.URL.createObjectURL(blob);
+        window.open(src);
+    };
+
+
+    var createAppList = function(data){
+        var select = $("#select");
+
+        for(var i=0,l=data.length;i<l;i++){
+            select.append("<option ver='"+data[i].ver+"' value='"+data[i].id+"'>"+data[i].name+"</option>");
+        }
+
+    };
+
+
+    var createSystemAppList = function(data){
+        var select = $("#id");
+
+        for(var i=0,l=data.length;i<l;i++){
+            select.append("<option  value='"+data[i].id+"'>"+data[i].name+"</option>");
+        }
+
+    };
+
+
+    var getAppSystemList = function(){
+        var key = "appSystem";
+        msg.append("<p>正在获取"+SETTING.appSystem.msg+"的应用列表</p>");
+        socket.send("appSystemList",{
+            apiUrl:SETTING[key].appListUrl,
+            id:key
+        });
+    };
+
+
+    var getSystemAppInfo = function(){
+        var select = $("#id"),
+            val = select.val();
+
+        var button = $("#button1");
+        button.data({data:null}).css({display:"none"});
+
+
+        if(val == ""){
+            return;
+        }
+
+        var key = "appSystem";
+        msg.append("<p>正在获取"+SETTING.appSystem.msg+"所选应用的信息</p>");
+        socket.send("appSystemInfo",{
+            appId:val,
+            serverUrl:SETTING[key].appEditUrl,
+            id:key
+        });
+    };
+
+
+    var bindAppInfo = function(data){
+        var button = $("#button1");
+        button.data({data:data}).css({display:"block"});
+
+    };
+
+
+    var submit1 = function(key){
+        var appData = $("#button1").data("data"),
+            svnId = $("#select").val();
+
+        if(!appData){
+            msg.append("<p>请选择商家系统要发布的项目</p>");
+            return;
+        }
+        if(!svnId){
+            msg.append("<p>请选择svn中要发布的项目</p>");
+            return;
+        }
+
+
+        msg.append("<p>正在获取svn版本，并打包</p>");
+        socket.send("createSvnZip",{
+            appId:svnId,
+            id:key
+        });
+    };
+
+
+    var updateZip = function(name){
+        var key = "appSystem";
+
+        msg.append("<p>正在上传zip包</p>");
+        socket.send("changeZip",{
+            zipName:name,
+            serverUrl:SETTING[key].fileUploadUrl,
+            id:key
+        });
+    };
+
+
+    var saveZipInfo = function(data){
+        var appData = $("#button1").data("data"),
+            key = "appSystem";
+
+
+        var texts = "version.id="+appData.vesionId;
+        texts+= "&version.appBase.id="+appData.appId;
+        texts+= "&version.checkState="+appData.checkState;
+        texts+= "&call_interface=";
+        texts+= "&h5Files="+encodeURI(data.zipName);
+        texts+= "&h5Files="+data.filePath.replace(/\//ig,'%2F');
+        texts+= "&h5Files="+data.fileSize;
+        texts+= "&iosFiles=";
+        texts+= "&iosFiles=";
+        texts+= "&iosFiles=";
+        texts+= "&androidFiles=";
+        texts+= "&androidFiles=";
+        texts+= "&androidFiles=";
+        texts+= "&version.desc=";
+        texts+= "&appInterfaces=";
+        texts+= "&instructionFiles=";
+        texts+= "&instructionFiles=";
+
+        socket.send("saveFileInfo",{
+            data:texts,
+            serverUrl:SETTING[key].saveFileInfo,
+            id:key
+        });
+    };
+
+
+    var getUpdateIconInfo = function(){
+        var key = "appSystem";
+        var appData = $("#button1").data("data");
+
+        msg.append("<p>正在获取"+SETTING.appSystem.msg+"的图标信息页面</p>");
+        socket.send("getUpdateIconInfo",{
+            apiUrl:SETTING[key].iconUpdateUrl,
+            id:key,
+            appId:appData.appId
+        });
+    };
+
+
+    var sendIcon = function(){
+        var key = "appSystem";
+
+        msg.append("<p>正在上传icon</p>");
+        socket.send("sendIcon",{
+            serverUrl:SETTING[key].fileUploadUrl,
+            id:key
+        });
+    };
+
+
+    var saveAllMsg = function(data){
+        var file = data.file,
+            other = data.other.icon;
+        var key = "appSystem";
+
+
+        var texts = "id="+other.id;
+        texts+= "&version.id="+other['version.id'];
+        texts+= "&version.appBase.id="+other['version.appBase.id'];
+        texts+= "&checkState="+other.checkState;
+        texts+= "&iconSrc="+file.filePath.replace(/\//ig,'%2F');
+
+
+        socket.send("saveAllMsg",{
+            data:texts,
+            serverUrl:SETTING[key].saveVersionImg,
+            id:key
+        });
+
+    }
+
+
+</script>

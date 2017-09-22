@@ -1,0 +1,357 @@
+
+
+body{
+	/*background: #f2f5f5;*/
+	font-family: "microsoft yahei";
+}
+*{margin: 0;padding: 0;}	
+.Out_head{
+	/*margin-top: 0.18rem;*/
+	width: 100%;
+	height:2.2rem ;
+	background: white;
+	align-items: center;
+	-webkit-align-items: center;
+	border-bottom: 1px solid #e7e7e7;
+}
+.Out_head_img{
+	width: 1.45rem;
+	height: 1.45rem;
+	border-radius: 50%;
+	margin-left: 0.3rem;
+	margin-right: 0.3rem;
+}
+/*.Out_name{
+	width: 40%;
+}*/
+.Out_name span{
+	display: block;
+	line-height: 1.8;
+}
+.doc_Head_name{
+	font-size: 0.32rem;
+	color: #434343;
+}
+.doc_Head_job{
+	font-size: 0.28rem;
+	color: #999;
+	display: block;
+	text-align: center;
+}
+.doc_Head_book{
+	text-align: center;
+	display: block;
+	margin-top: .1rem;
+}
+.doc_Head_hos,.doc_Head_book{
+	font-size: .24rem;
+	color: #999;
+}
+.book_ul1,._add_book_ul1{
+	box-sizing: border-box;
+	width: 100%;
+	height: 2.8rem;
+	padding:0 .3rem;
+	background: white;
+	font-size: 0.28rem;
+	/*padding-top: 0.1rem;*/
+	display: flex;
+    display: -webkit-flex;
+	flex-direction: column;
+	-webkit-flex-direction: column;
+	justify-content: space-around;
+	-webkit-justify-content: space-around;
+	
+}
+
+.book_ul1 .book_lft,._add_book_ul1 .book_lft,.book_ul2 .book_lft{
+	padding-left: 0;
+}
+.book_ul1 span,._add_book_ul1 span{
+	display: inline-block;
+}
+.book_ul2 .book_right{
+	padding-left: .3rem;
+}
+/*.book_ul1 li{margin-bottom: 0.15rem;}*/
+/*ul li{width: 100%;}*/
+.book_lft{
+	width:25% ;
+	box-sizing: border-box;
+	padding-left: 0.3rem;
+	text-align:left ;
+	color: #313131;
+	font-size: .32rem;
+	/*margin-left: 0.3rem;*/
+}
+.Color{
+	color: #FF8A11;
+}
+
+.book_right{
+	width: 73%;
+	/*text-align:left ;*/
+	/*margin-left: 0.3rem;*/
+	border: 1px solid white;
+	font-size: .28rem;
+	color: #999999;
+}
+.book_ul1 .ul2_right b{
+	font-size: .32rem;
+	color: #999;
+}
+.ul2_right img{
+	width:8%;
+}
+.book_ul2{
+	font-size: 0.28rem;
+	margin-top: 0.18rem;
+	list-style: none;
+	}
+.ide_butt {
+	width: 6rem;
+	height: 0.88rem;
+	border-radius: 1rem;
+	background: #ccc;
+	line-height: 0.88rem;
+	text-align: center;
+	color: white;
+	margin: 0.18rem auto;
+	font-size: 0.28rem;
+	display: block;
+	border:0;
+}
+.agree{
+	font-size: 0;
+}
+.agree label{
+	font-size: .24rem;
+}
+.agree label span{
+	color: #007DF2;
+}
+.book_ul2 li{
+	box-sizing: border-box;
+	padding: 0 0.3rem;
+	height: 0.8rem;
+	width: 100%;
+	background: white;
+	line-height: 0.8rem;
+	border-bottom:1px solid #e7e7e7 ;
+}
+
+.ul2_right{color: #cccccc;float: right;}
+.ul2_left{float: left;}
+b{font-weight: normal;display: inline-block;margin-right: 0.1rem;}
+
+
+.booking_foot{
+	font-size: 0.24rem;
+	padding: 0 0.3rem;
+	padding-top: 0.2rem;
+	
+}
+
+/*预约信息弹出层*/
+.shadow{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+	background: black;
+	opacity: 0.5;
+	overflow: hidden;
+}
+.Modal_cont{
+	position: absolute;
+	z-index: 9999;
+	width: 4.35rem;
+	height: 2.84rem;
+	background: white;
+	top: 50%;
+	left: 50%;
+	margin-left: -2.175rem;
+	margin-top: -1.42rem;
+	text-align: center;
+	border-radius: 0.1rem;
+	/*display: flex;
+	flex-direction: column;
+	justify-content: space-around;*/
+
+}
+.M_div1 img{
+	display: inline-block;
+	width: 1.7rem;
+	height: 1.7rem;
+	margin-top: 0.1rem;
+}
+.M_div2{
+	font-size: 0.32rem;
+	color:#29BAEC ;
+	margin-top: 0.06rem;
+}
+.M_div3{
+	font-size: 0.24rem;
+	color: #FF8A11;
+	margin-top: 0.06rem;
+}
+.b_Wrap{display: none;}
+/*预约信息弹出层-end*/
+ .disabled { pointer-events: none; }
+
+ /*add*/
+._add_person{
+	text-align: right;
+	padding-right: .2rem;
+}
+.book_ul2 li.agree{
+	text-align: center;
+	border-bottom:0;
+}
+.agree a{
+	color: #007df2;
+}
+.agree input{
+	width: .3rem;
+	height: .3rem;
+	border-radius: 50%;
+	vertical-align: sub;
+	margin-right: .1rem;
+}
+/*优化checkbox样式*/
+.agree label{
+	display: block;
+	margin: 10px 0;
+	padding: 0 10px 0 0;
+}
+.mgc-success:checked {
+	background-color: #007DF2;
+	border-color: #007DF2;
+}
+.mgc {
+	position: relative;
+	width: 16px;
+	height: 16px;
+	background-clip: border-box;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	margin: -.15px .6px 0 0;
+	vertical-align: text-bottom;
+	border-radius: 3px;
+	-webkit-transition: background-color .25s;
+	transition: background-color .25s;
+	background-color: #fff;
+	border: 1px solid #d7d7d7;
+}
+.mgc-success {
+	background-color: #fff;
+	border: 1px solid #d7d7d7;
+}
+.mgc-circle {
+	border-radius: 50%;
+}
+.mgc:checked {
+	background-color: #fff;
+	border-color: #d7d7d7;
+}
+.mgc-success:checked:after {
+	border-color: #fff;
+}
+.mgc:checked:after {
+	content: '';
+	display: block;
+	height: .08rem;
+	width: .17rem;
+	border: 0 solid #333;
+	border-width: 0 0 2px 2px;
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	position: absolute;
+	top: .05rem;
+	left: .05rem;
+}
+.mgc-success {
+	background-color: #fff;
+	border: 1px solid #d7d7d7;
+}
+
+.mgc-success:checked {
+	background-color: #007DF2;
+	border-color: #007DF2;
+}
+
+.mgc-success:checked:after {
+	border-color: #fff
+}
+.card_style{
+	font-size: .24rem;
+	font-style: normal;
+}
+.rule_show{
+	background: white;
+	display: none;
+	/*height: 7.38rem;*/
+	width: 6rem;
+	border-radius: 0.35rem;
+	-webkit-border-radius: 0.35rem;
+	position: fixed;
+	z-index: 9999;
+	left: 50%;
+	top: 50%;
+	margin-left: -3rem;
+	margin-top: -3.69rem;
+}
+.rule_mask{
+	display: none;
+	background: black;
+	height: 100%;
+	width: 100%;
+	opacity: 0.5;
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	left: 0;
+}
+.headpp{
+	height: 0.68rem;
+	width: 100%;
+}
+.rule_txt{
+	font-size: .28rem;
+	padding:0 .3rem;
+	text-align: left;
+	color: #999;
+	margin-top: .3rem;
+}
+.rule_txt p{
+	font-size: .24rem;
+	/*text-align: left;*/
+}
+.imgWrap2 img{
+	width: 45%;
+}
+.Bottombutt2 {
+	height: 1.4rem;
+	line-height: 1.4rem;
+	border-top: 2px solid #eeeeee;
+	margin-top: 0.2rem;
+}
+.Bottombutt2 button {
+	font-size: 0.28rem;
+	height: 0.7rem;
+	width: 2.4rem;
+	text-align: center;
+	line-height: 0.7rem;
+	border: 0.03rem solid #007DF2;
+	color: #007DF2;
+	border-radius: 0.35rem;
+	-webkit-border-radius: 0.35rem;
+	background: white;
+}
+.text_right{
+	text-align: right;
+	display: inline-block;
+}

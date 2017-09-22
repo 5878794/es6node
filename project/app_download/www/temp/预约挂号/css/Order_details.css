@@ -1,0 +1,64 @@
+
+
+body{
+	font-size: 0.28rem;
+	font-family: "microsoft yahei";
+	background: #f2f5f5;
+}
+.order_cont{
+	margin-top: 0.18rem;
+	background: white;
+	width: 100%;
+	box-sizing: border-box;
+	padding-left: 0.32rem;
+}
+.order_cont li{
+	padding-right: 0.32rem;
+	height: 0.88rem;
+	line-height: 0.88rem ;
+	border-bottom: 1px solid #E7E7E7;
+}
+.order_left{
+	float: left;
+}
+.order_right{
+	float: right;
+	color: 	#808080;
+}
+
+.hos_name{
+	width:55% ;
+}
+b{
+	font-weight: normal;
+	display: inline-block;
+	/*margin-right: 0.1rem;*/
+	
+}
+
+.order_foot{
+	padding: 0.2rem 0.32rem;
+	margin-top: 0.18rem;
+	background: white;
+}
+.tips{
+	margin-top: 0.2rem;
+	color: 	#808080;
+	text-align: left !important;
+	
+}
+.tip_head{
+	font-size: 0.29rem;
+}
+.order_butt{
+	width: 6rem;
+	height: 0.88rem;
+	border-radius: 0.1rem;
+	background: #29BAEC;
+	line-height: 0.88rem;
+	text-align: center;
+	color: white;
+	margin: 0.18rem auto;
+	letter-spacing: 0.1rem;
+	display: none;
+}

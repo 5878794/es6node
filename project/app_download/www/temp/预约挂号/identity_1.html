@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>实名认证</title>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+	    <meta name="msapplication-tap-highlight" content="no">
+	    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	    <link rel="stylesheet" type="text/css" href="css/all.css">
+	    <link rel="stylesheet" href="css/identity.css">
+		<link rel="stylesheet" href="css/Medical_card.css">
+	    <script src="js/jquery-2.1.1.min.js"></script>
+
+	    <script src="js/lib.js"></script>
+		<script src="js/all.js"></script>
+		<script src="js/pmz_all.js"></script>
+		<script src="js/md5.js"></script>
+		<script src="js/ajax.js"></script>
+		<script src="js/indntity_12.js"></script>
+		<!--<script src="http://192.168.1.214:8091/target/target-script-min.js#anonymous"></script>-->
+	</head>
+	<body>
+		<!--头部-->
+		<!--<div class="ide_head">*请填写真实信息，一经提交不允许修改。</div>-->
+		<!--头部-end-->
+		
+		<!--中间部分-->
+		<ul class="ide_cont">
+			<li>
+				<span class="ide_left">真实姓名</span>
+				<input class="ide_right ide_input"  id="name" placeholder="必填">
+			</li>
+			<li>
+				<span class="ide_left">身份证</span>
+				<input type="text"  class="ide_right ide_input" idCard=""  id="papersNum" placeholder="必填">
+			</li>
+			<li id="sex" class="haveA">
+				<span class="ide_left">性别</span>
+				<span class="ide_right ide_num"><b>男</b><img src="images/Arron.png"/></span>
+			</li>
+			<li id="birthDay">
+				<span class="ide_left">出生日期</span>
+				<span class="ide_right"><b>必填</b>
+				</span>
+			</li>
+			<li id="address">
+				<span class="ide_left">居住地</span>
+				<span class="ide_right ide_color">成都市</span>
+			</li>
+			<li>
+				<span class="ide_left">手机号</span>
+				<!--<span class="ide_right ide_hide diandian">用于接收预约短信，请谨慎选择。</span>-->
+				<input type="tel"  class="ide_right ide_input" id="phoneNum" placeholder="用于接收预约短信，请...">
+			</li>
+			<!--<li id="papers">-->
+				<!--<span class="ide_left">证件</span>-->
+				<!--<span class="ide_right"><b class="ide_color">身份证</b></span>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<span class="ide_left">证件号</span>-->
+				<!--<input  type="text" id="papersNum" class="ide_right ide_input" placeholder="一经填写无法修改，请...">-->
+			<!--</li>-->
+
+			<!--<li>-->
+				<!--<span class="ide_left">邮箱</span>-->
+				<!--<input class="ide_right ide_input" id="E_mail" placeholder="非必填">-->
+			<!--</li>-->
+		</ul>
+		<!--中间部分-end-->
+		<!--TODO 绑定就医卡 以及使用居民健康卡-->
+		<div class="line"></div>
+		<div class="bind_card">
+			<div class="card_tab">
+				<span class="on">绑定就诊卡</span>
+				<span class="health_span">使用居民健康卡</span>
+			</div>
+			<div class="card_list_main">
+				<div class="card_list">
+					<div class="card_list_box">
+
+					</div>
+					<!--<div class="card_l_li box_h">-->
+						<!--<div class="card_name">高俊</div>-->
+						<!--<div class="card_hos boxflex1">市一医院</div>-->
+						<!--<div class="card_c boxflex1">就医卡</div>-->
+					<!--</div>-->
+					<div class="add_Card">
+						<button>新增</button>
+					</div>
+					<div class="choose_card_main" style="display: none">
+						<!--<div class="choose_card_list box_h">-->
+							<!--<div class="choose_name">医院</div>-->
+							<!--<select class="boxflex1" name="" id="">-->
+								<!--<option value="请选择">请选择</option>-->
+							<!--</select>-->
+						<!--</div>-->
+						<!--<div class="choose_card_list box_h">-->
+							<!--<div class="choose_name">卡类型</div>-->
+							<!--<select class="boxflex1" name="" id="">-->
+								<!--<option value="请选择">请选择</option>-->
+							<!--</select>-->
+						<!--</div>-->
+						<!--<div class="choose_card_list box_h">-->
+							<!--<div class="choose_name">卡号</div>-->
+							<!--<input type="text" class="boxflex1" placeholder="请输入卡号">-->
+						<!--</div>-->
+						<!--<div class="add_Card">-->
+							<!--<button>确定</button>-->
+						<!--</div>-->
+
+
+						<ul class="card_cont" style="list-style: none">
+							<!--<li id="name_S">-->
+								<!--<span class="card_left">姓名</span>-->
+								<!--<span class="card_right ide_input">必填</span>-->
+							<!--</li>-->
+							<li id="Mdeical_select">
+								<span class="card_left">卡类型</span>
+								<span class="card_right"><b>就诊卡</b>
+								</span>
+							</li>
+							<li id="hosName">
+								<span class="card_left">医院</span>
+								<span class="card_right">四川省人民医院</span>
+							</li>
+							<li id="card_input">
+								<span class="card_left">卡号</span>
+								<input type="tel"  class="card_right card_num ide_inputs" style="font-size: 0.28rem ;height: 0.88rem;text-align: right;" placeholder="请输入卡号">
+							</li>
+						</ul>
+						<div class="foot_butt" id="ok_submit">
+							绑定
+						</div>
+					</div>
+
+					<!--<div class="add_Card">-->
+						<!--<button>新增</button>-->
+					<!--</div>-->
+				</div>
+				<div class="card_list" style="display: none">
+
+					<div class="temporary_card_list_main">
+
+						<!--居民健康卡克隆-->
+
+						<div class="temporary_card_list box_h" style="display: none">
+							<div class="t_name">高俊</div>
+							<div class="t_card boxflex1">居民健康卡临时卡</div>
+						</div>
+					</div>
+
+
+
+					<!--如果未绑定居民健康卡显示-->
+					<div class="not_bind_cart">
+						<img src="images/cart.png" alt="">
+						<p>暂无居民健康卡</p>
+						<a href="">前去绑定</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+		<!--就诊卡列表克隆-->
+		<div id="clone_list" class="card_l_li box_h" style="display: none;">
+			<div class="card_name">高俊</div>
+			<div class="card_hos diandian boxflex1">市一医院</div>
+			<div class="card_c boxflex1">就诊卡</div>
+		</div>
+		<!--尾部按钮-->
+		<div class="ide_butt">
+			提交
+		</div>
+		<!--尾部按钮-end-->
+
+
+		<!--尾部文本-->
+		<p class="bottom_p">填写身份便于您使用健康程度平台服务，我们承诺保护您的隐私</p>
+	</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>预约信息</title>
+		<meta charset="UTF-8">
+		<meta name="format-detection" content="telephone=no">
+	    <meta name="msapplication-tap-highlight" content="no">
+	    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	    <link rel="stylesheet" type="text/css" href="css/all.css">
+	    <link rel="stylesheet" href="css/Booking_info.css">
+	    <script src="js/jquery-2.1.1.min.js"></script>
+	    <script src="js/lib.js"></script>
+	    <script src="js/ajax.js"></script>
+		<script src="js/all.js"></script>
+		<script src="js/pmz_all.js"></script>
+		<script src="js/md5.js"></script>
+		<script src="js/Booking_info_1.js"></script>
+	</head>
+	<body>
+		<!--预约信息弹出层-->
+			<div class="b_Wrap">
+				<!--背景阴影-->
+				<div class="shadow"></div>
+				<!--背景阴影-end-->
+				
+				<!--弹出层内容-->
+				<div class="Modal_cont ">
+					<div class="M_div1"><img src="images/succicon.png"/></div>
+					<div class="M_div2">恭喜您，预约成功！</div>
+					<div class="M_div3">5s后自动跳转预约列表</div>
+				</div>
+				<!--弹出层内容-end-->
+			</div>
+		<!--预约信息弹出层-end-->
+		
+		<!--头部-->
+			<div class="Out_head Display">
+	        	<div class="out_h">
+	        		<img class="Out_head_img" src="" alt="">
+	        	</div>
+	            <div class="Out_name boxflex1">
+	                <span class="doc_Head_name"></span>
+					<span class="doc_Head_hos"></span>
+	            </div>
+				<div class="Out_info boxflex1">
+					<span class="doc_Head_job"></span>
+					<span class="doc_Head_book"></span>
+				</div>
+        	</div>
+			<div class="line"></div>
+		<!--头部-end-->
+		
+		<!--中间部分-->
+		<ul class="book_ul1">
+			<li>
+				<span class="book_lft">挂号费用</span>
+				<span class="book_right box_h text_right">
+					<b class="price boxflex1"></b>
+				</span>
+			</li>
+			<li>
+				<span class="book_lft">就诊时间</span>
+				<span class="book_right Color text_right"></span>
+			</li>
+			<li id="getPatintCard">
+				<span class="book_lft">就诊信息</span>
+				<span class="ul2_right"><b>添加就诊信息</b><em class="card_style"></em><img src="images/Arron.png" alt=""></span>
+			</li>
+			<!--<li>-->
+				<!--<span class="book_lft">就诊医院</span>-->
+				<!--<span class="book_right"></span>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<span class="book_lft">就诊科室</span>-->
+				<!--<span class="book_right"></span>-->
+			<!--</li>-->
+			<!--<li>-->
+				<!--<span class="book_lft">预约时段</span>-->
+				<!--<span class="book_right Color"></span>-->
+			<!--</li>-->
+			<!--<li>
+				<span class="book_lft">门诊类型</span>
+				<span class="book_right boxflex1 "></span>
+			</li>-->
+			<!--<li>-->
+				<!--<span class="book_lft">挂号费</span>-->
+				<!--<span class="book_right  boxflex1"></span>-->
+			<!--</li>-->
+		</ul>
+		<!--中间部分-end-->
+		<div class="line"></div>
+		<ul class="book_ul2">
+			<li>
+				<span class="book_lft">所在地</span>
+				<span class="book_right text_right" id="hos_adress"></span>
+			</li>
+			<li>
+				<span class="book_lft">看诊点</span>
+				<span class="book_right text_right" id="hos_name"></span>
+			</li>
+			<li class="agree">
+
+
+				<label for="cr"><input type="checkbox" id="cr" class="mgc mgc-success mgc-circle">同意 <span>《预约规则》</span></label>
+				<!--//<input type="checkbox" id="cr">同意<label for="cr"></label>-->
+			</li>
+		</ul>
+		<!--底部-->
+		<!--TODO 预约信息修改-->
+		<!--<ul class="book_ul2">-->
+			<!--<li id="getPatientVisitsInfo" class="">-->
+				<!--<span class="ul2_left">就诊人</span>-->
+				<!--<span class="ul2_right"><b>请选择就诊人</b><img src="images/Arron.png" alt="" /></span>-->
+			<!--</li>-->
+			<!--<li id="getPatintCard">-->
+				<!--<span class="ul2_left">就诊卡号</span>-->
+				<!--<span class="ul2_right"><b>添加就诊卡</b><img src="images/Arron.png" alt="" /></span>-->
+			<!--</li>-->
+			<!--<li  class="isClick" id="id_card">-->
+				<!--<span class="ul2_left" >身份证</span>-->
+				<!--<span class="ul2_right">必填</span>-->
+			<!--</li>-->
+			<!--<li  class="isClick" id="iphone">-->
+				<!--<span class="ul2_left">手机</span>-->
+				<!--<span class="ul2_right">必填</span>-->
+			<!--</li>-->
+			<!--<li  class="isClick" id="sexed">-->
+				<!--<span class="ul2_left">性别</span>-->
+				<!--<span class="ul2_right">必填</span>-->
+			<!--</li>-->
+		<!--</ul>-->
+		<div class="booking_foot">
+			<!--                                                                                                                                                                                                                                                                                                                                                                                                                       -->
+		</div>
+		<button class="ide_butt" disabled>
+			提交
+		</button>
+		<!--底部-end-->
+
+
+		<!--TODO 预约挂号规则-->
+		<div class="rule_show">
+			<div class="headpp"></div>
+			<div class="imgWrap2 text-center">
+				<img src="images/ico_cardsearch_making.png">
+			</div>
+			<div class="rule_txt">
+				<p>1.停诊将短信通知，请保持手机畅通</p>
+				<p>2.实名制预约，就诊人信息不符将无法取号</p>
+				<p>3.预约挂号后，请按时到院就诊，如多次爽约，会进入医院黑名单，将不能再次预约挂号</p>
+				<p>挂号费由医院自行设定，平台不收取任何额外费用</p>
+			</div>
+			<div class="Bottombutt2 text-center">
+				<button>确定</button>
+			</div>
+		</div>
+		<div class="rule_mask"></div>
+	</body>
+</html>
