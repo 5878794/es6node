@@ -44,6 +44,7 @@ module.exports = function(data,request,socket,catchData){
 						type:"fileUpload",
 						data:body1
 					});
+					success();
 				}else{
 					error(body1.return_msg);
 				}

@@ -40,7 +40,7 @@ module.exports = function(data,request,socket,catchData){
 					type:"createSvnZip",
 					data:downloadName
 				});
-
+				success();
 
 			}
 		);

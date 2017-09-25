@@ -52,7 +52,7 @@ module.exports = function(data,request,socket,catchData){
 					type:"getUpdateIconInfo",
 					data:{}
 				});
-
+				success();
 
 			}
 		);

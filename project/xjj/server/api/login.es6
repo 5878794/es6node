@@ -47,6 +47,7 @@ module.exports = function(data,request,socket,catchData){
 							type:"login",
 							data:{}
 						});
+						success();
 					}else{
 						error("异常");
 					}

@@ -36,6 +36,7 @@ module.exports = function(data,request,socket,catchData){
 						type:"saveAllMsg",
 						data:{}
 					});
+					success();
 				}else{
 					error(body1.msg);
 				}

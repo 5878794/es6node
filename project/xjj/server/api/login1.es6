@@ -37,6 +37,7 @@ module.exports = function(data,request,socket,catchData){
 						type:"login1",
 						data:{}
 					});
+					success();
 				}else{
 					error("解析异常，或登陆失败")
 				}

@@ -113,7 +113,16 @@
             loginUrl:"http://118.123.173.101:7001/HealthWeb/admin/login.do",
             auditImgUrl:"http://118.123.173.101:7001/HealthWeb/app/manageIcon.do"
         }
-    }
+    };
+
+    $(document).ready(function(){
+        var msg = $("#msg").get(0);
+        setInterval(function(){
+            msg.scrollTop = msg.scrollHeight;
+        },500);
+    });
+
+
 </script>
 <script>
     var msg = $("#msg");

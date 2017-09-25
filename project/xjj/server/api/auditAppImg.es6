@@ -72,6 +72,7 @@ var submitAuditInfo = function(request,url,success,error,socket){
 					type:"auditAppImg",
 					data:{}
 				});
+				success();
 			}else{
 				error("错误，请手动在后台提交");
 			}

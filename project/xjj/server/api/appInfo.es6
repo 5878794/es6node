@@ -24,7 +24,8 @@ module.exports = function(data,request,socket,catchData){
 			socket.send({
 				type:"appInfo",
 				data:rs
-			})
+			});
+			success();
 		}).catch(rs=>{
 			console.log(rs);
 			error(rs);

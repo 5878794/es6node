@@ -62,6 +62,7 @@ module.exports = function(data,request,socket,catchData){
 					type:"appSystemList",
 					data:data
 				});
+				success();
 			}
 		);
 	})

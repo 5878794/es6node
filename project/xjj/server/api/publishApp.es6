@@ -24,7 +24,7 @@ let getSubmitList = function(request,appId,pageUrl,success,error,socket){
 			var body1 = buffer.toString();
 
 			var $ = cheerio.load(body1);
-			var form = $("body").find("form").eq(0);
+			var form = $("body").find("form").eq(1);
 
 			let newData = "";
 			form.find("input").each(function(){
@@ -49,6 +49,7 @@ let getSubmitList = function(request,appId,pageUrl,success,error,socket){
 
 
 var submit = function(request,newData,serverUrl,success,error,socket){
+	console.log(newData,serverUrl)
 	request(
 		{
 			url: serverUrl,  //请求的URL
@@ -80,6 +81,7 @@ var submit = function(request,newData,serverUrl,success,error,socket){
 					type:"publishApp",
 					data:{}
 				});
+				success();
 			}
 
 		}

@@ -42,7 +42,7 @@ module.exports = function(data,request,socket,catchData){
 					type:"testApp",
 					data:{}
 				});
-
+				success();
 
 			}
 		);

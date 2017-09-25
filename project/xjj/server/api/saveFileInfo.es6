@@ -38,6 +38,7 @@ module.exports = function(data,request,socket,catchData){
 							versionId:body1.versionId
 						}
 					});
+					success();
 				}else{
 					error(body1.msg);
 				}

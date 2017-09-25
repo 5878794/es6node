@@ -10,6 +10,7 @@ module.exports = function(data,request,socket,catchData){
 				type:"appList",
 				data:rs
 			})
+			success();
 		}).catch(e=>{
 			console.log(e);
 			error(e.toString());
