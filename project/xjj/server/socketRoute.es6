@@ -13,7 +13,12 @@ let api={
 	saveFileInfo:require("./api/saveFileInfo"),
 	getUpdateIconInfo:require("./api/getUpdateIconInfo"),
 	sendIcon:require("./api/sendIcon"),
-	saveAllMsg:require("./api/saveAllMsg")
+	saveAllMsg:require("./api/saveAllMsg"),
+	login1:require("./api/login1"),
+	auditAppImg:require("./api/auditAppImg"),
+	auditAppZip:require("./api/auditAppZip"),
+	testApp:require("./api/testApp"),
+	publishApp:require("./api/publishApp")
 };
 
 

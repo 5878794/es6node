@@ -12,17 +12,20 @@
             background: #333; color: #eee; font-size:14px; overflow-x: hidden;
             overflow-y: scroll;
         }
-        #main,#main1{
+        #main,#main1,#main2{
             padding-left: 350px;
         }
         body,html{
             width: 100%; height: 100%; overflow: hidden;
         }
-        #main div{
+        #main div,
+        #main1 div,
+        #main2 div{
             height: 40px;
         }
         #button,
-        #button1{
+        #button1,
+        #button3{
             display: block; width:200px; height: 30px;
             border: none; background:#12b4ff; color: #fff;
             outline: none; cursor: pointer;
@@ -31,12 +34,11 @@
             border-radius:5px;
         }
         #button:hover,
-        #button1:hover{
+        #button1:hover,
+        #button3:hover{
             opacity: 0.5;
         }
-        #main1 div{
-            height: 40px;
-        }
+
         #msg p:before{
             content: ">";
             padding-right: 5px;
@@ -66,7 +68,12 @@
         <div><input style="display: none;" onclick="submit1('appSystem')" type="button" id="button1" value="提交"></div>
     </div>
 
-
+    <div id="main2" style="display: none;">
+        <p style="width: 100%; height: 30px;"></p>
+        <div><img src="" id="img1"/></div>
+        <div>验证码:<input type="text" id="code1"/></div>
+        <div><input onclick="login1('adminSystem')" type="button" id="button3" value="登陆"></div>
+    </div>
 
 
 
@@ -96,9 +103,15 @@
         },
         adminSystem:{
             msg:"系统后台",
+            pageUrl:"http://118.123.173.101:7001/HealthWeb/admin/toLogin.do",
             imgCodeUrl:"http://118.123.173.101:7001/HealthWeb/getVerCode.do",
             username:"zgj2008",
-            password:"zgj2008"
+            password:"zgj2008",
+            publishPageUrl:"http://118.123.173.101:7001/HealthWeb/app/addAppVersion.do",
+            testApiUrl:"http://118.123.173.101:7001/HealthWeb/app/auditTest.do",
+            auditZipUrl:'http://118.123.173.101:7001/HealthWeb/app/manageInfo.do',
+            loginUrl:"http://118.123.173.101:7001/HealthWeb/admin/login.do",
+            auditImgUrl:"http://118.123.173.101:7001/HealthWeb/app/manageIcon.do"
         }
     }
 </script>
@@ -126,6 +139,7 @@
             case 'imgCode':
                 msg.append("<p>连接成功</p>");
                 $("#img").attr({src:message.url});
+                $("#img1").attr({src:message.url});
                 break;
             case 'login':
                 msg.append("<p>登陆成功</p>");
@@ -177,7 +191,38 @@
                 break;
 
             case 'saveAllMsg':
-                msg.append("<p>商家系统完成</p>");
+                msg.append("<p>商家系统完成发布</p>");
+                msg.append("<p>开始审核软件包</p>");
+                $("#img1").attr({src:""});
+                $("#main1").css({display:"none"});
+                $("#main2").css({display:"block"});
+                linkSystem("adminSystem");
+                break;
+
+            case 'login1':
+                msg.append("<p>审核系统登陆成功</p>");
+                auditApp();
+                break;
+
+            case 'auditAppImg':
+                msg.append("<p>信息图片审核成功</p>");
+                auditAppZip();
+                break;
+
+            case 'auditAppZip':
+                msg.append("<p>信息审核完成</p>");
+                testApp();
+                break;
+
+            case 'testApp':
+                msg.append("<p>app测试完成</p>");
+                publishApp();
+                break;
+
+
+            case 'publishApp':
+                alert("app发布完成");
+                window.location.reload();
                 break;
 
             default:
@@ -423,7 +468,86 @@
             id:key
         });
 
-    }
+    };
 
+//-------------------------------------------------------
+
+    var login1 = function(key){
+        var code = $.trim($("#code1").val());
+        if(code==""){
+            msg.append("<p>请输入验证码</p>");
+            return;
+        }
+
+        msg.append("<p>正在登陆"+SETTING[key].msg+"</p>");
+        socket.send("login1",{
+            code:code,
+            loginUrl:SETTING[key].loginUrl,
+            username:SETTING[key].username,
+            password:SETTING[key].password,
+            id:key
+        });
+    };
+
+
+    var auditApp = function(){
+        var data = $("#button1").data("data"),
+            appId= data.appId,
+            key = "adminSystem";
+
+        msg.append("<p>正在审核图片信息</p>");
+
+        socket.send("auditAppImg",{
+            appId:appId,
+            serverUrl:SETTING[key].auditImgUrl,
+            id:key
+        });
+
+    };
+
+
+    var auditAppZip = function(){
+        var data = $("#button1").data("data"),
+                appId= data.appId,
+                key = "adminSystem";
+
+        msg.append("<p>正在审核压缩包信息</p>");
+
+        socket.send("auditAppZip",{
+            appId:appId,
+            serverUrl:SETTING[key].auditZipUrl,
+            id:key
+        });
+    };
+
+
+    var testApp = function(){
+        var data = $("#button1").data("data"),
+            appId= data.appId,
+            key = "adminSystem";
+
+        msg.append("<p>正在测试提交的app</p>");
+
+        socket.send("testApp",{
+            appId:appId,
+            serverUrl:SETTING[key].testApiUrl,
+            id:key
+        });
+    };
+
+
+    var publishApp = function(){
+        var data = $("#button1").data("data"),
+                appId= data.appId,
+                key = "adminSystem";
+
+        msg.append("<p>正在发布app</p>");
+
+        socket.send("publishApp",{
+            appId:appId,
+            pageUrl:SETTING[key].publishPageUrl,
+            id:key
+        });
+    };
 
 </script>
