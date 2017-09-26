@@ -7,22 +7,27 @@
 //最下面有测试用的调用
 //接口返回的都是promise对象
 
+//需要先调用open方法传入要打开的数据库名
+
 
 let path = require("path"),
-	sqlite3 = require('sqlite3').verbose(),
-	dbPath = path.join(__dirname+"/db");
+	sqlite3 = require('sqlite3').verbose();
+
 
 let sql = {
 	db:null,
 	//打开数据库连接
-	open(){
-		if(!this.db){
-			this.db = new sqlite3.Database(dbPath);
-		}
+	open(dbName){
+		return new Promise(success=>{
+			this.close().then(()=>{
+				let dbPath = path.join(__dirname,"/"+dbName);
+				this.db = new sqlite3.Database(dbPath);
+				success();
+			})
+		})
 	},
 	//执行语句，无返回
 	run(sql,param){
-		this.open();
 		let _this = this;
 		return new Promise((success,error)=>{
 			_this.db.run(sql,param,function(err){
@@ -37,7 +42,6 @@ let sql = {
 	},
 	//查询语句
 	all(sql,param){
-		this.open();
 		let _this = this;
 		return new Promise((success,error)=>{
 			_this.db.all(sql,param,function(err,row){
@@ -104,6 +108,9 @@ let sql = {
 module.exports = sql;
 
 // let test = async function(){
+// 	//建立连接
+// 	await sql.open('db');
+//
 // 	//创建表
 // 	await sql.run('CREATE TABLE IF NOT EXISTS test2 (' +
 // 				//主键 自增长
@@ -152,8 +159,8 @@ module.exports = sql;
 // 	// let aa= await sql.all('select last_insert_rowid() ');
 // 	// console.log(aa[0]['last_insert_rowid()'])
 //
-// 	// let id = await sql.insertBackRowId('INSERT INTO test2 (name) VALUES(?)',['aa'])
-// 	// console.log(id);
+// 	let id = await sql.insertBackRowId('INSERT INTO test2 (name) VALUES(?)',['aa'])
+// 	console.log(id);
 //
 // };
 
