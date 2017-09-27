@@ -215,35 +215,35 @@ module.exports = User;
 
 
 
-let test = async function(){
-	// let ddd = new sql('db');
-	// let rs = await ddd.all('select * from d_users')
-	// console.log(rs);
-	// await ddd.run('delete  from d_users');
-	// await ddd.close();
+// let test = async function(){
+// 	// let ddd = new sql('db');
+// 	// let rs = await ddd.all('select * from d_users')
+// 	// console.log(rs);
+// 	// await ddd.run('delete  from d_users');
+// 	// await ddd.close();
+//
+//
+// 	// let info = await User.add('bens4','123123','{a:1,b:2}');
+// 	// console.log(info)
+//
+//
+// 	// let nowList = await User.login("bens4","222222");
+// 	// console.log(nowList);
+//
+// 	// let userInfo = await User.getByToken(nowList.u_token);
+// 	// console.log(userInfo)
+//
+// 	// await User.logout(nowList.u_token);
+//
+// 	// await User.delById(info.id);
+//
+// 	// return await User.getAll();
+//
+//
+// 	// await User.changePassword(nowList.u_token,'123123','222222');
+//
+// };
 
-
-	// let info = await User.add('bens4','123123','{a:1,b:2}');
-	// console.log(info)
-
-
-	// let nowList = await User.login("bens4","222222");
-	// console.log(nowList);
-
-	// let userInfo = await User.getByToken(nowList.u_token);
-	// console.log(userInfo)
-
-	// await User.logout(nowList.u_token);
-
-	// await User.delById(info.id);
-
-	// return await User.getAll();
-
-
-	// await User.changePassword(nowList.u_token,'123123','222222');
-
-};
-
-test()
-	.then(rs=>console.log(rs))
-	.catch(msg=>console.log(msg));
+// test()
+// 	.then(rs=>console.log(rs))
+// 	.catch(msg=>console.log(msg));
