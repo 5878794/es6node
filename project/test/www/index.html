@@ -6,58 +6,66 @@
 
 </head>
 <body>
-    <canvas id="test" style="width: 400px; height: 300px;"></canvas>
+    <!--<canvas id="test" style="width: 400px; height: 300px;"></canvas>-->
 
-<a id="aa" href="#">下载</a>
+<!--<a id="aa" href="#">下载</a>-->
+
+    <form action="/test/api/upload" target="_blank" enctype="multipart/form-data" method="post">
+        <input type="file" name="file"/>
+        <!--<input type="file" name="file"/>-->
+        <input type="submit" value="tttttt"/>
+
+    </form>
+
 </body>
 </html>
 
 <script>
 
 
-    var downloadCanvasToFile = function(canvasId,downloadDomId,downloadFileName){
-        var dataURLtoBlob = function (dataurl) {
-            var arr = dataurl.split(','),
-                    mime = arr[0].match(/:(.*?);/)[1],
-                    bstr = atob(arr[1]),
-                    n = bstr.length,
-                    u8arr = new Uint8Array(n);
-            while(n--){
-                u8arr[n] = bstr.charCodeAt(n);
-            }
-            return new Blob([u8arr], {type:mime});
-        };
+    <!--var downloadCanvasToFile = function(canvasId,downloadDomId,downloadFileName){-->
+        <!--var dataURLtoBlob = function (dataurl) {-->
+            <!--var arr = dataurl.split(','),-->
+                    <!--mime = arr[0].match(/:(.*?);/)[1],-->
+                    <!--bstr = atob(arr[1]),-->
+                    <!--n = bstr.length,-->
+                    <!--u8arr = new Uint8Array(n);-->
+            <!--while(n&#45;&#45;){-->
+                <!--u8arr[n] = bstr.charCodeAt(n);-->
+            <!--}-->
+            <!--return new Blob([u8arr], {type:mime});-->
+        <!--};-->
 
-        var canvas = document.getElementById(canvasId),
-            base64 = canvas.toDataURL("image/png"),
-            blob = dataURLtoBlob(base64),
-            src= window.URL.createObjectURL(blob),
-            downloadDom = document.getElementById(downloadDomId);
-
-
-        if(window.navigator.msSaveBlob){
-            downloadDom.onclick = function(){
-                window.navigator.msSaveBlob(blob, downloadFileName+".png");
-            };
-        }else{
-            downloadDom.download = downloadFileName+".png";
-            downloadDom.href = src;
-        }
-    };
+        <!--var canvas = document.getElementById(canvasId),-->
+            <!--base64 = canvas.toDataURL("image/png"),-->
+            <!--blob = dataURLtoBlob(base64),-->
+            <!--src= window.URL.createObjectURL(blob),-->
+            <!--downloadDom = document.getElementById(downloadDomId);-->
 
 
+        <!--if(window.navigator.msSaveBlob){-->
+            <!--downloadDom.onclick = function(){-->
+                <!--window.navigator.msSaveBlob(blob, downloadFileName+".png");-->
+            <!--};-->
+        <!--}else{-->
+            <!--downloadDom.download = downloadFileName+".png";-->
+            <!--downloadDom.href = src;-->
+        <!--}-->
+    <!--};-->
 
 
 
-    var canvas = document.getElementById("test"),
-        ctx = canvas.getContext("2d");
-
-    ctx.fillStyle = "red";
-    ctx.fillRect(0,0,100,100);
 
 
+    <!--var canvas = document.getElementById("test"),-->
+        <!--ctx = canvas.getContext("2d");-->
 
-    downloadCanvasToFile("test","aa","a")
+    <!--ctx.fillStyle = "red";-->
+    <!--ctx.fillRect(0,0,100,100);-->
+
+
+
+    <!--downloadCanvasToFile("test","aa","a")-->
 
 
 

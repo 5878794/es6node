@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "crypto": "^1.0.1",
+    "formidable": "^1.1.1",
     "socket.io": "^2.0.3",
     "sqlite3": "^3.1.12"
   }
