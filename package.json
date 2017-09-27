@@ -32,6 +32,7 @@
     "request": "^2.81.0"
   },
   "dependencies": {
+    "crypto": "^1.0.1",
     "socket.io": "^2.0.3",
     "sqlite3": "^3.1.12"
   }

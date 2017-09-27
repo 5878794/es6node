@@ -13,81 +13,19 @@
 let path = require("path"),
 	sqlite3 = require('sqlite3').verbose();
 
+class Sqlite{
+	constructor(dbFileName='db'){
+		this.db = null;
 
-let sql = {
-	db:null,
+		this.open(dbFileName);
+	}
+
 	//打开数据库连接
 	open(dbName){
-		return new Promise(success=>{
-			this.close().then(()=>{
-				let dbPath = path.join(__dirname,"/"+dbName);
-				this.db = new sqlite3.Database(dbPath);
-				success();
-			})
-		})
-	},
-	//执行语句，无返回
-	run(sql,param){
-		let _this = this;
-		return new Promise((success,error)=>{
-			_this.db.run(sql,param,function(err){
-				if(err){
-					error(err);
-					return;
-				}
+		let dbPath = path.join(__dirname,"/"+dbName);
+		this.db = new sqlite3.Database(dbPath);
+	}
 
-				success();
-			})
-		})
-	},
-	//查询语句
-	all(sql,param){
-		let _this = this;
-		return new Promise((success,error)=>{
-			_this.db.all(sql,param,function(err,row){
-				if(err){
-					error(err);
-					return;
-				}
-
-				success(row);
-			})
-		})
-	},
-	//事务
-	transaction(sql){
-		let _this = this;
-		return new Promise(async (success,error)=>{
-			await _this.run('BEGIN');
-			let all = [];
-			sql.map(rs=>{
-				all.push(_this.run(rs[0],rs[1]));
-			});
-
-			Promise.all(all).then(async ()=>{
-				await _this.run('COMMIT');
-				success();
-			}).catch(async (msg)=>{
-				await _this.run('ROLLBACK');
-				error(msg);
-			});
-		})
-	},
-	//插入一行并返回当前行
-	insertBackRowId(sql,param){
-		let _this = this;
-		return new Promise((success,error)=>{
-			_this.run(sql,param).then(()=>{
-				_this.all('select last_insert_rowid()').then(rs=>{
-					success(rs[0]['last_insert_rowid()']);
-				}).catch(msg=>{
-					error(msg);
-				});
-			}).catch(msg=>{
-				error(msg);
-			})
-		})
-	},
 	//关闭数据库
 	close(){
 		let _this = this;
@@ -101,15 +39,71 @@ let sql = {
 				success();
 			});
 		})
-
 	}
-};
 
-module.exports = sql;
+	//执行语句，无返回
+	run(sql,param){
+		let _this = this;
+		return new Promise((success,error)=>{
+			_this.db.run(sql,param,function(err){
+				if(err){
+					error(err);
+					return;
+				}
+
+				success();
+			})
+		})
+	}
+
+	//查询语句
+	all(sql,param){
+		let _this = this;
+		return new Promise((success,error)=>{
+			_this.db.all(sql,param,function(err,row){
+				if(err){
+					error(err);
+					return;
+				}
+
+				success(row);
+			})
+		})
+	}
+
+	//事务
+	//@param：sql 二维数组
+	async transaction(sql){
+		await this.run('BEGIN');
+		let all = [];
+		sql.map(rs=>{
+			all.push(this.run(rs[0],rs[1]));
+		});
+
+		await Promise.all(all).then(async ()=>{
+			await this.run('COMMIT');
+		}).catch(async (msg)=>{
+			await this.run('ROLLBACK');
+			throw (msg);
+		});
+	}
+
+	//插入一行并返回当前行
+	//不晓得异步返回是否准确
+	async insertBackRowId(sql,param){
+		await this.run(sql,param);
+		let rs = await this.all('select last_insert_rowid() ');
+
+		return rs[0]['last_insert_rowid()'];
+	}
+}
+
+
+module.exports = Sqlite;
 
 // let test = async function(){
 // 	//建立连接
-// 	await sql.open('db');
+// 	let sql = new Sqlite('db');
 //
 // 	//创建表
 // 	await sql.run('CREATE TABLE IF NOT EXISTS test2 (' +
@@ -159,7 +153,7 @@ module.exports = sql;
 // 	// let aa= await sql.all('select last_insert_rowid() ');
 // 	// console.log(aa[0]['last_insert_rowid()'])
 //
-// 	let id = await sql.insertBackRowId('INSERT INTO test2 (name) VALUES(?)',['aa'])
+// 	let id = await sql.insertBackRowId('INSERT INTO test2 (name) VALUES(?)',['aa']);
 // 	console.log(id);
 //
 // };
