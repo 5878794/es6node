@@ -46,6 +46,11 @@ let runFn = function(request,response){
 			console.log("api not found");
 		}
 
+	}else if(method=='options'){
+		//请求类型是options
+		console.log('-------------options request-------------');
+		ajaxResponse.success({},response);
+
 	}else{
 		fullPath = __dirname + fullPath;
 		console.log(fullPath);

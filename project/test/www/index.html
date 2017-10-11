@@ -3,6 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script>
+//        (function(){
+//            var opt = {};
+//            $.fn.uploadify = function(ddd){
+//                if(typeof ddd == 'object'){
+//                    opt = ddd;
+//                    return;
+//                }
+//
+//
+//                var serverUrl = opt.uploader || '',
+//                        success = opt.onUploadSuccess || function(){},
+//                        fileName = opt.fileObjName || "fileupload";
+//
+//                var oData = new FormData();
+//                oData.append('file',document.getElementsByName(fileName)[0].files[0]);
+//                oData.append('uploadUser','123');
+//
+//                var oReq = new XMLHttpRequest();
+//                oReq.open( "POST", serverUrl , true );
+//                oReq.onload = function(oEvent) {
+//                    if (oReq.status == 200) {
+//                        var rs = oEvent.target.responseText;
+//                        rs = JSON.parse(rs);
+//                        success(rs);
+//                    } else {
+//                        alert(oReq.status);
+//                    }
+//                };
+//                oReq.send(oData);
+//            }
+//
+//
+//        })();
+
+
+
+
+    </script>
+
 
 </head>
 <body>
@@ -20,55 +60,55 @@
 </body>
 </html>
 
-<script>
+<!--<script>-->
 
 
-    <!--var downloadCanvasToFile = function(canvasId,downloadDomId,downloadFileName){-->
-        <!--var dataURLtoBlob = function (dataurl) {-->
-            <!--var arr = dataurl.split(','),-->
-                    <!--mime = arr[0].match(/:(.*?);/)[1],-->
-                    <!--bstr = atob(arr[1]),-->
-                    <!--n = bstr.length,-->
-                    <!--u8arr = new Uint8Array(n);-->
-            <!--while(n&#45;&#45;){-->
-                <!--u8arr[n] = bstr.charCodeAt(n);-->
-            <!--}-->
-            <!--return new Blob([u8arr], {type:mime});-->
-        <!--};-->
+    <!--&lt;!&ndash;var downloadCanvasToFile = function(canvasId,downloadDomId,downloadFileName){&ndash;&gt;-->
+        <!--&lt;!&ndash;var dataURLtoBlob = function (dataurl) {&ndash;&gt;-->
+            <!--&lt;!&ndash;var arr = dataurl.split(','),&ndash;&gt;-->
+                    <!--&lt;!&ndash;mime = arr[0].match(/:(.*?);/)[1],&ndash;&gt;-->
+                    <!--&lt;!&ndash;bstr = atob(arr[1]),&ndash;&gt;-->
+                    <!--&lt;!&ndash;n = bstr.length,&ndash;&gt;-->
+                    <!--&lt;!&ndash;u8arr = new Uint8Array(n);&ndash;&gt;-->
+            <!--&lt;!&ndash;while(n&#45;&#45;){&ndash;&gt;-->
+                <!--&lt;!&ndash;u8arr[n] = bstr.charCodeAt(n);&ndash;&gt;-->
+            <!--&lt;!&ndash;}&ndash;&gt;-->
+            <!--&lt;!&ndash;return new Blob([u8arr], {type:mime});&ndash;&gt;-->
+        <!--&lt;!&ndash;};&ndash;&gt;-->
 
-        <!--var canvas = document.getElementById(canvasId),-->
-            <!--base64 = canvas.toDataURL("image/png"),-->
-            <!--blob = dataURLtoBlob(base64),-->
-            <!--src= window.URL.createObjectURL(blob),-->
-            <!--downloadDom = document.getElementById(downloadDomId);-->
-
-
-        <!--if(window.navigator.msSaveBlob){-->
-            <!--downloadDom.onclick = function(){-->
-                <!--window.navigator.msSaveBlob(blob, downloadFileName+".png");-->
-            <!--};-->
-        <!--}else{-->
-            <!--downloadDom.download = downloadFileName+".png";-->
-            <!--downloadDom.href = src;-->
-        <!--}-->
-    <!--};-->
+        <!--&lt;!&ndash;var canvas = document.getElementById(canvasId),&ndash;&gt;-->
+            <!--&lt;!&ndash;base64 = canvas.toDataURL("image/png"),&ndash;&gt;-->
+            <!--&lt;!&ndash;blob = dataURLtoBlob(base64),&ndash;&gt;-->
+            <!--&lt;!&ndash;src= window.URL.createObjectURL(blob),&ndash;&gt;-->
+            <!--&lt;!&ndash;downloadDom = document.getElementById(downloadDomId);&ndash;&gt;-->
 
 
-
-
-
-    <!--var canvas = document.getElementById("test"),-->
-        <!--ctx = canvas.getContext("2d");-->
-
-    <!--ctx.fillStyle = "red";-->
-    <!--ctx.fillRect(0,0,100,100);-->
-
-
-
-    <!--downloadCanvasToFile("test","aa","a")-->
+        <!--&lt;!&ndash;if(window.navigator.msSaveBlob){&ndash;&gt;-->
+            <!--&lt;!&ndash;downloadDom.onclick = function(){&ndash;&gt;-->
+                <!--&lt;!&ndash;window.navigator.msSaveBlob(blob, downloadFileName+".png");&ndash;&gt;-->
+            <!--&lt;!&ndash;};&ndash;&gt;-->
+        <!--&lt;!&ndash;}else{&ndash;&gt;-->
+            <!--&lt;!&ndash;downloadDom.download = downloadFileName+".png";&ndash;&gt;-->
+            <!--&lt;!&ndash;downloadDom.href = src;&ndash;&gt;-->
+        <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--&lt;!&ndash;};&ndash;&gt;-->
 
 
 
 
 
-</script>
+    <!--&lt;!&ndash;var canvas = document.getElementById("test"),&ndash;&gt;-->
+        <!--&lt;!&ndash;ctx = canvas.getContext("2d");&ndash;&gt;-->
+
+    <!--&lt;!&ndash;ctx.fillStyle = "red";&ndash;&gt;-->
+    <!--&lt;!&ndash;ctx.fillRect(0,0,100,100);&ndash;&gt;-->
+
+
+
+    <!--&lt;!&ndash;downloadCanvasToFile("test","aa","a")&ndash;&gt;-->
+
+
+
+
+
+<!--</script>-->

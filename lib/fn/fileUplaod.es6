@@ -39,14 +39,12 @@ class FileUpload{
 		this.form = null;
 
 
-
 		this.init();
 	}
 
 	init(){
 		this.createFormObj();
 		this.handlerForm();
-
 	}
 
 	//生成处理form的对象
@@ -63,6 +61,7 @@ class FileUpload{
 	//处理表单
 	handlerForm(){
 		let _this = this;
+
 		this.form.parse(this.request, function(err, fields, files) {
 			//发生错误
 			if(err){
@@ -88,6 +87,8 @@ class FileUpload{
 			_this.handlerFiles(req_files);
 
 		});
+
+
 	}
 
 	//判断文件是否超出限制

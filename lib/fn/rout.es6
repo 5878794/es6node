@@ -24,7 +24,7 @@ module.exports = function(request,response){
 	let method = request.method.toLocaleLowerCase();
 
 	//判断是否是api请求
-	let isApi = (pathName.indexOf("/api/") > -1);
+	let isApi = (pathName.indexOf("/api/") > -1 && method != 'options');
 
 	//文件类型
 	fileName = pathName.substr(pathName.lastIndexOf("/")+1);
