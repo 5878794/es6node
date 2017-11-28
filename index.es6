@@ -4,7 +4,8 @@ let server = require("./lib/server/httpAndSocketServer"),
 	//获取ip
 	ip = require("./lib/fn/getIp"),
 	//设置端口
-	port = "10101",
+	// port = "10101",
+	port = '10101',
 	//路由
 	rout = require("./lib/fn/rout"),
 	//读取静态文件
@@ -13,7 +14,10 @@ let server = require("./lib/server/httpAndSocketServer"),
 	pageNotFond = require("./lib/response/404"),
 	//ajax返回
 	ajaxResponse = require("./lib/response/ajaxResponse"),
-	socketRoute = require("./project/xjj/server/socketRoute");
+	socketRoute = {
+		xjj:require("./project/xjj/server/socketRoute"),
+		chatRoom:require('./project/chatRoom/server/socketRoute')
+	};
 
 
 let runFn = function(request,response){
@@ -68,7 +72,7 @@ let requests = {
 let catchData = {
 	port:port
 };
-let socketFn = function(allSocket,socket){
+let socketFn = function(project,allSocket,socket){
 	//allSocket 以socket的id 为key 的socket对象
 	//socket    当前发信息的socket用户的对象
 
@@ -81,9 +85,18 @@ let socketFn = function(allSocket,socket){
 	// 	console.log(socket.id);
 	// })
 
-	socketRoute(allSocket,socket,requests,catchData)
 
+	//根据访问的1级子目录区分socket事件,但是全部的socket对象包含所有
+	//全部的socket中需要通过 socket.handshake.headers.referer 访问地址判断
+	//allSocket 是对象
+	if(socketRoute[project]){
+		if(project == 'xjj'){
+			socketRoute[project](allSocket,socket,requests,catchData);
+		}else{
+			socketRoute[project](allSocket,socket);
+		}
 
+	}
 };
 
 
