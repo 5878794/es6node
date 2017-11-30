@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="js/jquery-2.1.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-
+    <script src="js/index.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/all.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
 </head>
 <body>
+    <div class="login box_s center" id="login">
+        <div class="login_title">Face To Face</div>
+        <input id="nickname" type="text" placeholder="请输入昵称" />
+        <div class="login_btn" id="login_btn">确定</div>
+    </div>
 
+
+    <div class="list" id="list" style="display: none;">
+        <div class="list_title">在线列表</div>
+        <div class="list_main" id="list_main">
+
+        </div>
+    </div>
+
+    <div id="list_item" class="list_item diandian" style="display: none;"></div>
 </body>
 </html>
-
-<script>
-
-
-
-    var socket = io.connect();
-    socket.on("message",function(rs){
-        console.log(rs);
-        socket.send('test',{
-            a:1
-        });
-    });
-
-
-
-</script>

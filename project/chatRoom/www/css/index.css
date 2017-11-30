@@ -1,0 +1,53 @@
+html,body{
+    width: 100%; height: 100%;
+}
+
+.login{
+    width: 100%; height: 100%; overflow: hidden;
+}
+.login_title{
+    width: 100%; text-align: center; font-size: 50px;
+    margin-bottom: 200px;
+}
+
+.login input{
+    display: block; width: 80%; text-align: center;
+    height: 40px; line-height: 40px; font-size: 20px;
+    background: #eee;
+    -webkit-border-radius:20px;
+    -moz-border-radius:20px;
+    border-radius:20px;
+}
+.login_btn{
+    width: 80%; height: 40px; line-height: 40px;
+    font-size: 20px; background: royalblue; color: #eee;
+    -webkit-border-radius:20px;
+    -moz-border-radius:20px;
+    border-radius:20px;
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 100px;
+}
+
+
+.list{
+    padding-top: 50px;
+}
+.list_title{
+    position: fixed; left:0; top: 0;
+    width: 100%; height: 50px; text-align: center; line-height: 50px;
+    background: #ececec; font-size: 18px;
+    border-bottom: 1px solid #999;
+    z-index:10
+}
+.list_item{
+    height: 50px; line-height: 50px;
+    padding:0 20px; border-bottom: 1px solid #999;
+    position: relative;
+}
+.list_item:after{
+    content: '☉';
+    text-align: center;
+    position: absolute; top:0; right:0;
+    display: block; width: 50px; height: 50px; line-height: 50px;
+}

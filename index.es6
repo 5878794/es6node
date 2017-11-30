@@ -1,11 +1,13 @@
 	//获取server
-let server = require("./lib/server/httpAndSocketServer"),
+let
+	// server = require("./lib/server/httpAndSocketServer"),
+	server = require('./lib/server/httpsAndSocketServer'),
 	path = require("path"),
 	//获取ip
 	ip = require("./lib/fn/getIp"),
 	//设置端口
 	// port = "10101",
-	port = '10101',
+	port = '10000',
 	//路由
 	rout = require("./lib/fn/rout"),
 	//读取静态文件
@@ -72,6 +74,9 @@ let requests = {
 let catchData = {
 	port:port
 };
+
+
+
 let socketFn = function(project,allSocket,socket){
 	//allSocket 以socket的id 为key 的socket对象
 	//socket    当前发信息的socket用户的对象
@@ -90,12 +95,16 @@ let socketFn = function(project,allSocket,socket){
 	//全部的socket中需要通过 socket.handshake.headers.referer 访问地址判断
 	//allSocket 是对象
 	if(socketRoute[project]){
-		if(project == 'xjj'){
-			socketRoute[project](allSocket,socket,requests,catchData);
-		}else{
-			socketRoute[project](allSocket,socket);
+		switch(project){
+			case 'xjj':
+				socketRoute[project](allSocket,socket,requests,catchData);
+				break;
+			case 'chatRoom':
+				socketRoute[project](allSocket,socket);
+				break;
+			default:
+				console.log(project+' is not exist');
 		}
-
 	}
 };
 

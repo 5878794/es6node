@@ -36,6 +36,7 @@
     "formidable": "^1.1.1",
     "officegen": "^0.4.5",
     "socket.io": "^2.0.3",
-    "sqlite3": "^3.1.12"
+    "sqlite3": "^3.1.12",
+    "webpack": "^3.8.1"
   }
 }

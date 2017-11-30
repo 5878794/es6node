@@ -96,5 +96,10 @@ module.exports = [
 		id:20,
 		name:"月经",
 		svnUrl:"https://172.16.1.34/svn/h5/trank/app/common/some_app/trunk/menstruation"
+	},
+	{
+		id:21,
+		name:"BMR",
+		svnUrl:"https://172.16.1.34/svn/h5/trank/app/common/some_app/trunk/BMR"
 	}
 ];

@@ -6,12 +6,13 @@ module.exports = {
 
 	//页面入口文件配置
 	entry: {
-		index:"./project/desktop/es6/index.es6"
+		'desktop/www/js/dist/index':"./project/desktop/es6/index.es6",
+		'chatRoom/www/js/index':'./project/chatRoom/www/srcJs/index.es6'
 	},
 	devtool:false,
 	//入口文件输出配置
 	output: {
-		path: __dirname+"/project/desktop/www/js/dist",
+		path: __dirname+"/project/",
 		filename: "[name].min.js"
 	},
 	// watch:true,
