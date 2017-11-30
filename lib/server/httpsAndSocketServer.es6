@@ -1,4 +1,5 @@
 let https = require('https'),
+	path = require('path'),
 	fs = require("fs"),
 	socket = require("socket.io"),
 	server = new https.Server({
