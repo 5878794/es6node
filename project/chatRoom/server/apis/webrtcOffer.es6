@@ -3,11 +3,11 @@
 
 module.exports = function(allSocket,socket,data,catchData){
 	let to = data.to,
-		msg = data.msg,
+		offer = data.offer,
 		from = socket._chatRoomNickName,
-		toSocket = catchData.users[to];
+		toSocketId = catchData[to];
 
-	if(!toSocket){
+	if(!toSocketId){
 		socket.send({
 			type:'answer',
 			data:{
@@ -19,12 +19,12 @@ module.exports = function(allSocket,socket,data,catchData){
 	}
 
 
-	toSocket.socket.send({
+	allSocket[toSocketId].send({
 		type:'offer',
 		data:{
 			state:true,
 			from:from,
-			msg:msg
+			offer:offer
 		}
 	})
 

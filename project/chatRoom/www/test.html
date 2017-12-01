@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <video style="border: 1px solid #333" id="v1" width="300" height="150" autoplay muted playsinline></video>
+    <video style="border: 1px solid #333" id="v2" width="300" height="150" autoplay muted playsinline></video>
+
+    <script>
+        var pp1 = new RTCPeerConnection();
+        var pp2 = new RTCPeerConnection();
+        var v1 = document.getElementById('v1');
+        var v2 = document.getElementById('v2');
+
+        pp1.onicecandidate = function(rs){
+            console.log('pp1 onicecandidate............');
+            console.log(rs);
+            if(rs.candidate){
+                pp2.addIceCandidate(new RTCIceCandidate(rs.candidate));
+            }
+        };
+        pp2.onicecandidate = function(rs){
+            console.log('pp2 onicecandidate............');
+            console.log(rs);
+            if(rs.candidate){
+                pp1.addIceCandidate(new RTCIceCandidate(rs.candidate));
+            }
+
+        };
+        pp2.onaddstream = function(rs){
+            console.log('pp2 onaddstream.............')
+            console.log(rs);
+            console.log('--==--==--==--==--==--==')
+            console.log(rs.stream.getAudioTracks().length)
+            v2.src = window.URL.createObjectURL(rs.stream);
+//            v2.srcObject = rs.stream;
+            v2.play();
+        };
+        pp1.oniceconnectionstatechange = function(e) {
+            console.log('pp1 oniceconnectionstatechange.........')
+            console.log(pp1.iceConnectionState)
+        };
+        pp2.oniceconnectionstatechange = function(e) {
+            console.log('pp2 oniceconnectionstatechange.........')
+            console.log(pp2.iceConnectionState)
+        };
+
+        var call = function(){
+            pp1.createOffer().then(function(offer){
+                console.log('offer.........')
+                console.log(offer)
+                pp1.setLocalDescription(offer);
+
+                return pp2.setRemoteDescription(new RTCSessionDescription(offer))
+            }).then(function(){
+                return pp2.createAnswer();
+            }).then(function(answer){
+                pp2.setLocalDescription(answer);
+                console.log('answer..........')
+                console.log(answer)
+                return pp1.setRemoteDescription(new RTCSessionDescription(answer))
+            })
+
+        };
+
+        var param = {
+            audio:true,
+            video:{
+                facingMode:'user'      //后置：environment  前置：user
+            }
+        };
+        navigator.mediaDevices.getUserMedia(param).then(function(stream){
+//            v1.srcObject = stream;
+            v1.src = window.URL.createObjectURL(stream);
+            console.log('--==--==--==--==--==--==')
+            console.log(stream.getAudioTracks().length)
+            v1.play();
+            pp1.addStream(stream);
+            call();
+        });
+
+    </script>
+
+</body>
+</html>

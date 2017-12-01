@@ -22,9 +22,8 @@ var iceServer = {
 
 $(document).ready(()=>{
 	RTC.init();
-	socket.init();
 	page.init();
-
+	socket.init();
 });
 
 
@@ -71,20 +70,14 @@ var page = {
 	},
 	openVideo(to){
 		this.createVideoUi(to);
-		this.createRemoteVideo();
 		this.createLocalVideo().then(()=>{
-
-			RTC.from = to;
-			socket.sendMsg('invite',{
-					to:to
-			})
+			RTC.sendOffer(to).then().catch(rs=>console.log(rs));
 		});
 
 	},
 	answerOpenVideo(){
 		this.createVideoUi('13123');
-		this.createRemoteVideo();
-		return this.createLocalVideo();
+		this.createLocalVideo();
 	},
 	createVideoUi(to){
 		let _this = this;
@@ -98,7 +91,7 @@ var page = {
 			background:'#000',color:'#eee'
 		});
 
-		let zz = $('<div id="temp_ts" class="box center">正在连接:'+to+',请等待!</div>');
+		let zz = $('<div class="box center">正在连接:'+to+',请等待!</div>');
 		zz.css({
 			position:'absolute',
 			left:0,top:0,
@@ -173,23 +166,7 @@ var page = {
 		});
 	},
 	createRemoteVideo(){
-		console.log('...remote....')
-		let video = document.createElement('video');
-		$(video).css({
-			width:'100%',
-			height:'100%',
-			display:'block',
-			position:'absolute',
-			left:0,top:0
-		}).attr({
-			playsinline:'',
-			autoplay:'',
-			muted:'',
-			id:'remote'
-		});
 
-		$('#video_main').append(video);
-		console.log(video)
 	},
 	closeVideo(){
 
@@ -281,19 +258,6 @@ var socket = {
 			candidate = data.candidate;
 
 		RTC.receiveCandidate(from,candidate).then().catch(rs=>console.log(rs));
-	},
-	invite(data){
-		if(!data.state){
-			alert(data.msg);
-			return;
-		}
-
-		if(confirm('有人找')){
-			RTC.from = data.from;
-			page.answerOpenVideo().then(()=>{
-				RTC.sendOffer(RTC.from).then().catch(rs=>console.log(rs));
-			});
-		}
 	}
 
 };
@@ -339,8 +303,7 @@ var RTC = {
 		//流媒体来了
 		this.pc.onaddstream = function(event){
 			// event.stream
-			document.getElementById('remote').srcObject = event.stream;
-			$('#temp_ts').remove();
+			console.log('come......')
 			console.log(event.stream)
 		};
 	},
@@ -360,6 +323,7 @@ var RTC = {
 		});
 	},
 	async receiveOffer(from,offer){
+		page.answerOpenVideo();
 		this.pc.setRemoteDescription(new RTCSessionDescription(offer));
 		let answer = await this.pc.createAnswer();
 		this.pc.setLocalDescription(answer);
@@ -379,6 +343,7 @@ var RTC = {
 		console.log('receive answer')
 		console.log(from)
 		console.log(offer)
+		this.from = from;
 		this.pc.setRemoteDescription(new RTCSessionDescription(offer));
 	},
 	async receiveCandidate(from,candidate){

@@ -7,7 +7,8 @@ let api = {
 	login:require('./apis/login'),
 	offer:require('./apis/webrtcOffer'),
 	answer:require('./apis/webrtcAnswer'),
-	iceCandidate:require('./apis/webrtcIceCandidate')
+	iceCandidate:require('./apis/webrtcIceCandidate'),
+	invite:require('./apis/invite')
 };
 
 
@@ -40,6 +41,8 @@ module.exports = function(allSocket,socket){
 
 		if(api[type]){
 			api[type](allSocket,socket,data,catchData);
+		}else{
+			console.log(type+'  is not fond')
 		}
 	});
 
