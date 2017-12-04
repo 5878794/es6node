@@ -6,13 +6,14 @@
 </head>
 <body>
     <video style="border: 1px solid #333" id="v1" width="300" height="150" autoplay muted playsinline></video>
-    <video style="border: 1px solid #333" id="v2" width="300" height="150" autoplay muted playsinline></video>
+    <video style="border: 1px solid #333" id="v2" width="300" height="150" autoplay playsinline></video>
 
     <script>
         var pp1 = new RTCPeerConnection();
         var pp2 = new RTCPeerConnection();
         var v1 = document.getElementById('v1');
         var v2 = document.getElementById('v2');
+        var localStream,remoteStream;
 
         pp1.onicecandidate = function(rs){
             console.log('pp1 onicecandidate............');
@@ -30,12 +31,16 @@
 
         };
         pp2.onaddstream = function(rs){
+
             console.log('pp2 onaddstream.............')
             console.log(rs);
             console.log('--==--==--==--==--==--==')
             console.log(rs.stream.getAudioTracks().length)
-            v2.src = window.URL.createObjectURL(rs.stream);
-//            v2.srcObject = rs.stream;
+            console.log(rs.stream.getAudioTracks())
+//            v2.src = window.URL.createObjectURL(rs.stream);
+            v2.srcObject = rs.stream;
+            remoteStream = rs.stream;
+            console.log(rs.stream)
             v2.play();
         };
         pp1.oniceconnectionstatechange = function(e) {
@@ -71,15 +76,54 @@
                 facingMode:'user'      //后置：environment  前置：user
             }
         };
-        navigator.mediaDevices.getUserMedia(param).then(function(stream){
-//            v1.srcObject = stream;
-            v1.src = window.URL.createObjectURL(stream);
-            console.log('--==--==--==--==--==--==')
-            console.log(stream.getAudioTracks().length)
-            v1.play();
-            pp1.addStream(stream);
-            call();
+
+
+        navigator.mediaDevices.enumerateDevices().then(function(list){
+            var a,v;
+//            list.forEach(function(rs){
+//                if(rs.kind == 'audioinput' && !a){
+//                    a = rs.deviceId;
+//                }else if(rs.kind == 'videoinput' && !v){
+//                    v = rs.deviceId
+//                }
+//            });
+
+//            param.audio = {
+//                optional:[{
+//                    sourceId:list[3].deviceId
+//                }]
+//            };
+//            param.video = {
+//                optional:[{
+//                    sourceId:list[4].deviceId
+//                }]
+////                facingMode:'user'
+//            };
+
+
+
+            navigator.mediaDevices.getUserMedia(param).then(function(stream){
+                v1.srcObject = stream;
+                localStream = stream;
+//                localStream.getAudioTracks()[0].enable = false;
+//                v1.src = window.URL.createObjectURL(stream);
+                console.log('--==--==--==--==--==--==')
+                console.log(stream.getAudioTracks().length)
+                console.log(stream.getAudioTracks())
+                v1.play();
+                pp1.addStream(stream);
+                call();
+            });
         });
+
+//        var ctx = new AudioContext();
+//        var source = ctx.createMediaStreamSource(remoteStream);
+//        var gainNode = ctx.createGain();
+//        gainNode.gain.value = .5;
+//        source.connect(gainNode);
+//        source.connect(ctx.destination);
+
+
 
     </script>
 

@@ -184,7 +184,6 @@ var page = {
 		}).attr({
 			playsinline:'',
 			autoplay:'',
-			muted:'',
 			id:'remote'
 		});
 
