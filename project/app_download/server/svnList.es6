@@ -19,11 +19,11 @@ module.exports = [
 	// 	name:"健康成都5.0",
 	// 	svnUrl:"https://172.16.1.34/svn/h5/trank/app/native/Health_CD_5.0"
 	// },
-	// {
-	// 	id:6,
-	// 	name:"3APP",
-	// 	svnUrl:"https://172.16.1.34/svn/h5/trank/app/common/HealthFiles/trunk"
-	// },
+	{
+		id:6,
+		name:"3APP",
+		svnUrl:"https://172.16.1.34/svn/h5/trank/app/common/HealthFiles/trunk"
+	},
 	{
 		id:7,
 		name:"医政卫监客户端",
@@ -79,7 +79,7 @@ module.exports = [
 	},
 	{
 		id:17,
-		name:"bmi",
+		name:"BMI",
 		svnUrl:"https://172.16.1.34/svn/h5/trank/app/common/some_app/trunk/BMI"
 	},
 	{
@@ -101,5 +101,10 @@ module.exports = [
 		id:21,
 		name:"BMR",
 		svnUrl:"https://172.16.1.34/svn/h5/trank/app/common/some_app/trunk/BMR"
+	},
+	{
+		id:22,
+		name:"FAT",
+		svnUrl:"https://172.16.1.34/svn/h5/trank/app/common/some_app/trunk/FAT"
 	}
 ];

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <img src="yzm_1512626860047.webp" />
+    <script src="index.es6"></script>
+    <script>
+
+        verCodeDiscern.getText("yzm_1512626860047.webp").then(function(rs){
+            console.log('-----ok-----');
+            console.log(rs);
+        }).catch(function(rs){
+            console.log('-----err-----');
+            console.log(rs);
+        });
+
+
+
+//        var img = new Image();
+//        img.src = document.getElementsByTagName('img')[0].src;
+//
+//        img.onload = function(){
+//            createCanvas(this);
+//        };
+//
+//        var aaa = function(data1){
+//            var w = data1.width, h = data1.height,data=data1.data;
+//            var newData = [];
+//
+//            var getDataN = function(x,y){
+//                if(x<0 || y<0){
+//                    return -1;
+//                }
+//                return (y*w+x)*4;
+//            };
+//
+//            var setMinData = function(x,y){
+//                var points = [];
+//                for(var i=-1,l=1;i<=l;i++){
+//                    for(var z=-1,zl=1;z<=zl;z++){
+//                        var x1 = x+z,
+//                            y1 = y+i,
+//                            n1 = getDataN(x1,y1),
+//                            val = data[n1];
+//
+//                        if(val==0 || val){
+//                            points.push(val);
+//                        }
+//
+//                    }
+//                }
+//
+//                points.sort(function(a,b){
+//                    return (a>b)? 1 : -1;
+//                });
+//                var minVal = points[0];
+//
+//                var n = getDataN(x,y);
+//
+//
+//
+//                newData[n] = minVal;
+//                newData[n+1] = minVal;
+//                newData[n+2] = minVal;
+//                newData[n+3] = data[n+3];
+//
+//
+////                if(data[n] != newData[n]){
+////                    console.log(n)
+////                }
+//
+//            };
+//
+//
+//            for(var y=0,yl=h;y<yl;y++){
+//                for(var x=0,xl=w;x<xl;x++){
+////                    if(y==12 && x==57){
+////                        console.log(1)
+////                    }
+//                    setMinData(x,y);
+//                }
+//            }
+//
+//            return newData;
+//
+//        };
+//        var bbb = function(data1){
+//            var w = data1.width, h = data1.height,data=data1.data;
+//            var newData = [];
+//
+//            var getDataN = function(x,y){
+//                if(x<0 || y<0){
+//                    return -1;
+//                }
+//                return (y*w+x)*4;
+//            };
+//
+//            var setMinData = function(x,y){
+//                var points = [];
+//                for(var i=-1,l=1;i<=l;i++){
+//                    for(var z=-1,zl=1;z<=zl;z++){
+//                        var x1 = x+z,
+//                                y1 = y+i,
+//                                n1 = getDataN(x1,y1),
+//                                val = data[n1];
+//
+//                        if(val==0 || val){
+//                            points.push(val);
+//                        }
+//
+//                    }
+//                }
+//
+//                points.sort(function(a,b){
+//                    return (a>b)? 1 : -1;
+//                });
+//                var minVal = points[points.length-1];
+//
+//                var n = getDataN(x,y);
+//
+//
+//
+//                newData[n] = minVal;
+//                newData[n+1] = minVal;
+//                newData[n+2] = minVal;
+//                newData[n+3] = data[n+3];
+//
+//
+////                if(data[n] != newData[n]){
+////                    console.log(n)
+////                }
+//
+//            };
+//
+//
+//            for(var y=0,yl=h;y<yl;y++){
+//                for(var x=0,xl=w;x<xl;x++){
+////                    if(y==12 && x==57){
+////                        console.log(1)
+////                    }
+//                    setMinData(x,y);
+//                }
+//            }
+//
+//            return newData;
+//
+//        };
+//
+//        var createCanvas = function(obj){
+//            var canvas = document.createElement('canvas');
+//            var ctx = canvas.getContext('2d');
+//            canvas.width = 	obj.width*2;
+//            canvas.height = obj.height*2;
+//            ctx.drawImage(obj,0,0,obj.width*2,obj.height*2);
+//            document.body.append(canvas);
+//
+//            var data = ctx.getImageData(0,0,obj.width*2,obj.height*2);
+//            var data1 = data.data;
+//            var min,max;
+//
+//            for(var i=0,l=data1.length/4;i<l;i++){
+//                var ii = i*4;
+//                var grap = (data1[ii]+data1[ii+1]+data1[ii+2])/3;
+//                if(!min || !max){
+//                    min = grap;
+//                    max = grap;
+//                }else{
+//                    min = (min<grap)? min : grap;
+//                    max = (max>grap)? max : grap;
+//                }
+//
+//                data1[ii] = grap;
+//                data1[ii+1] = grap;
+//                data1[ii+2] = grap;
+//            }
+//
+//
+//            var n = min+(max-min)/2;
+//
+////            var n = 255/2;
+//            for(var z=0,zl=data1.length/4;z<zl;z++){
+//                var zz = z*4;
+//                var newVal = (data1[zz]<n)? 255 : 0;
+//                data1[zz] = newVal;
+//                data1[zz+1] = newVal;
+//                data1[zz+2] = newVal;
+//            }
+//
+////            console.log(data)
+//
+//            ctx.putImageData(data,0,0);
+//
+//
+//            var backData1 = aaa(data);
+//            var backData = bbb({
+//                width:obj.width*2,
+//                height:obj.height*2,
+//                data:backData1
+//            });
+//
+//
+//
+//            var data2=  data.data;
+//            for(var j=0,jl=data2.length;j<jl;j++){
+////                if(data2[j]!=backData[j]){
+////                    console.log(data2[j],backData[j])
+////                }
+//                data2[j] = backData[j];
+//            }
+//
+////            console.log(JSON.stringify(backData) == JSON.stringify(data.data))
+////            console.log(JSON.stringify(backData))
+//
+//            window.imgData = data;
+//            window.imgData1 = backData;
+//
+//
+//            var canvas1 = document.createElement('canvas');
+//            var ctx1 = canvas1.getContext('2d');
+//            canvas1.width = 	obj.width*2;
+//            canvas1.height = obj.height*2;
+//            document.body.append(canvas1);
+//            ctx1.putImageData(data,0,0);
+//
+//        };
+
+
+
+
+    </script>
+</body>
+</html>
