@@ -58,7 +58,7 @@ var ALL = {
 			_this = this;
 
 		var autoSetTopClass = function(topVal){
-			if(!ProductDian){return;}
+			if(!window.ProductDian){return;}
 			var data = JSON.parse(JSON.stringify(ProductDian));
 			data.push(topVal);
 			data.sort(function(a,b){
@@ -66,7 +66,7 @@ var ALL = {
 			});
 			var n = data.indexOf(topVal);
 			n = n -1;
-			if(!ProductClass){return;}
+			if(!window.ProductClass){return;}
 			var class_ = ProductClass[n];
 			if(class_){
 				top2.addClass(class_);
@@ -77,6 +77,7 @@ var ALL = {
 
 		$(window).scroll(function(){
 			var topVal = $(window).scrollTop();
+			console.log(topVal)
 			autoSetTopClass(topVal);
 			_this.rightPointEvent(topVal);
 			if(topVal<=100){
@@ -91,7 +92,7 @@ var ALL = {
 	rightPointEvent:function(val){
 		var allP = $('#scroll_dian').find('.scroll_dian_item');
 
-		if(!ProductDian){return;}
+		if(!window.ProductDian){return;}
 		var data = JSON.parse(JSON.stringify(ProductDian));
 		data.push(val);
 		data.sort(function(a,b){

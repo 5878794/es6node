@@ -10,15 +10,16 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
     <link type="text/css" rel="stylesheet" href="css/all.css" />
-    <link type="text/css" rel="stylesheet" href="css/p1.css" />
+    <link type="text/css" rel="stylesheet" href="css/p4.css" />
     <script type="text/javascript" src="js/jquery-2.1.1.min.js" ></script>
-    <script type="text/javascript" src="js/p1.js" ></script>
+    <script type="text/javascript" src="js/lib.js" ></script>
+    <script type="text/javascript" src="js/p4.js" ></script>
     <script type="text/javascript" src="js/all.js"></script>
 
 </head>
 <body>
 <!--初始顶部-->
-<div class="top main">
+<div id="top" class="top main">
     <div class="clear top_row1">
         <div class="top_left hover_animate"></div>
         <div class="top_2ma"></div>
@@ -30,18 +31,39 @@
     </div>
     <div class="clear top_row2">
         <div class="top_products">
-            <a class="hover_animate" href="#">新光学美白仪</a>
-            <a class="hover_animate" href="#">光学美白仪时尚版</a>
-            <a class="hover_animate" href="#">炫光美白牙膏</a>
-            <a class="hover_animate" href="#">3D晶白声波电动牙刷</a>
+            <a class="hover_animate" href="p1.html">新光学美白仪</a>
+            <a class="hover_animate" href="p2.html">光学美白仪时尚版</a>
+            <a class="hover_animate" href="p3.html">炫光美白牙膏</a>
+            <a class="hover_animate" href="p4.html">3D晶白声波电动牙刷</a>
         </div>
-        <div class="top_join hover_animate"></div>
+        <div class="top_join hover_animate" id="join"></div>
     </div>
 </div>
 
 <!--滑动时顶部-->
-<div class="top_">
+<div id="top_" class="top_ " style="display: none;">
+    <div class="main" style="width: 100%; height: 39px;">
+        <div class="top__logo hover_animate"></div>
+        <div class="top_products">
+            <a class="hover_animate" href="p1.html">新光学美白仪</a>
+            <a class="hover_animate" href="p2.html">光学美白仪时尚版</a>
+            <a class="hover_animate" href="p3.html">炫光美白牙膏</a>
+            <a class="hover_animate" href="p4.html">3D晶白声波电动牙刷</a>
+        </div>
+        <div class="top_join hover_animate" id="join1"></div>
+    </div>
+</div>
 
+
+
+
+<div class="main p4_main">
+    <div class="p4_page1"></div>
+    <div class="p4_page2"></div>
+    <div class="p4_page3"></div>
+    <div class="p4_page4"></div>
+    <div class="p4_page5"></div>
+    <div class="p4_page6"></div>
 </div>
 
 
@@ -52,11 +74,10 @@
 
 
 
-
-
-
-<div class="scroll_dian">
+<div class="scroll_dian" id="scroll_dian">
     <div class="scroll_dian_item hover_animate select"></div>
+    <div class="scroll_dian_item hover_animate"></div>
+    <div class="scroll_dian_item hover_animate"></div>
     <div class="scroll_dian_item hover_animate"></div>
     <div class="scroll_dian_item hover_animate"></div>
     <div class="scroll_dian_item hover_animate"></div>
@@ -99,6 +120,24 @@
     2014. 四川泽晨唯爱生物科技有限公司. 备案号:蜀ICP备17001169号
 </div>
 
+
+<!--弹出层-->
+<div class="open_win" id="open_win" style="display: none;">
+    <div class="open_win_body">
+        <div class="open_win_main" id="zx1">
+            <div class="open_win_main_er"></div>
+            <div class="open_win_main_text">咨询及投诉客服将为您解答以及解决购买及代理的一切问题和事务</div>
+            <div id="zxBtn1" class="open_win_main_btn hover_animate">选择切换至售后客服</div>
+        </div>
+        <div class="open_win_main" id="zx2"  style="display: none;">
+            <div class="open_win_main_er1"></div>
+            <div class="open_win_main_text">售后客服将为您解答以及解决售后的一切问题和事务</div>
+            <div id="zxBtn2" class="open_win_main_btn hover_animate">选择切换至咨询客服</div>
+        </div>
+        <div class="open_win_close hover_animate" id="open_win_close">×</div>
+    </div>
+
+</div>
 
 </body>
 </html>
