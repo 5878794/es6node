@@ -499,7 +499,8 @@ a:hover{
     -webkit-border-radius:15px;
     -moz-border-radius:15px;
     border-radius:15px;
-    margin-bottom: 20px; cursor: pointer;
+    margin-bottom: 20px;
+    /*cursor: pointer;*/
     border:1px solid rgb(111,111,111);
 }
 .scroll_dian .select{
