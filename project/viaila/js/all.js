@@ -14,6 +14,7 @@ var ALL = {
 		var body = 	$('#open_win'),
 			btn = $('#join'),
 			btn1 = $('#join1'),
+			btn2 = $('.top_2ma'),
 			close = $('#open_win_close'),
 			zx1Body = $('#zx1'),
 			zx2Body = $('#zx2'),
@@ -34,6 +35,13 @@ var ALL = {
 				background:'rgba(0,0,0,0.5)'
 			},500);
 		});
+		btn2.addClass('hover_animate').click(function(){
+			body.css({
+				display:'block'
+			}).cssAnimate({
+				background:'rgba(0,0,0,0.5)'
+			},500);
+		});
 
 		close.click(function(){
 			body.css({display:'none',background:'rgba(0,0,0,0)'});
@@ -47,7 +55,8 @@ var ALL = {
 		});
 
 		zx2Btn.click(function(){
-
+			zx1Body.css({display:'block'});
+			zx2Body.css({display:'none'});
 		})
 
 

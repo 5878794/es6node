@@ -1,5 +1,5 @@
 
-var ProductDian = [0,920,1812,2717];
+var ProductDian = [0,920,1812,2867];
 var ProductClass = ['','back_','',''];
 
 
@@ -13,18 +13,15 @@ var page = {
 		this.addEvent();
 	},
 	addEvent:function(){
-		var p1 = $('#p1'),
-			p1_ = $('#p1Btn'),
-			p2 = $('#p2'),
-			p3 = $('#p3'),
-			p4 = $('#p4');
+		var p1 = $('#p1Btn'),
+			p2 = $('#p2Btn'),
+			p3 = $('#p3Btn'),
+			p4 = $('#p4Btn');
 
 		p1.click(function(){
 			window.location.href = 'p1.html';
 		});
-		p1_.click(function(){
-			window.location.href = 'p1.html';
-		});
+
 		p2.click(function(){
 			window.location.href = 'p2.html';
 		});

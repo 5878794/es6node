@@ -357,11 +357,11 @@ a:hover{
     margin-left: 60px;
 }
 .top__logo{
-    float:left; width: 161px; height: 33px;
+    float:left; width: 80px; height: 16px;
     background: url(../image/logo.png) no-repeat center center;
     -webkit-background-size:100% 100%;
     background-size:100% 100%;
-    cursor: pointer; margin: 3px 0 0 20px;
+    cursor: pointer; margin: 11px 0 0 20px;
 }
 .back_ .top__logo{
     background: url(../image/logo_.png) no-repeat center center;
@@ -385,6 +385,10 @@ a:hover{
     -webkit-background-size:100% 100%;
     background-size:100% 100%;
     margin:34px 78px 0 0;
+    cursor: pointer;
+}
+.top_2ma:hover{
+    opacity: 0.8;
 }
 .top_right{
     float:right; width:250px; height:100px; text-align: right;
