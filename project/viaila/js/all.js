@@ -7,7 +7,7 @@ var ALL = {
 	init:function(){
 		this.openWinEvent();
 		this.topEvent();
-
+		this.logoEvent();
 
 	},
 	openWinEvent:function(){
@@ -77,7 +77,6 @@ var ALL = {
 
 		$(window).scroll(function(){
 			var topVal = $(window).scrollTop();
-			console.log(topVal)
 			autoSetTopClass(topVal);
 			_this.rightPointEvent(topVal);
 			if(topVal<=100){
@@ -102,8 +101,18 @@ var ALL = {
 		n = n -1;
 		n = (n<=0)? 0 : n;
 
-		console.log(n)
 		allP.removeClass('select');
 		allP.eq(n).addClass('select');
+	},
+	logoEvent:function(){
+		var logo = $('#top').find('.top_left'),
+			logo1 = $('#top_').find('.top__logo');
+
+		logo.click(function(){
+			window.location.href = 'index.html';
+		});
+		logo1.click(function(){
+			window.location.href = 'index.html';
+		});
 	}
 };

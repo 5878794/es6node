@@ -1,0 +1,90 @@
+.p1_main{
+    background: #000; color: #fff; font-size: 14px;
+}
+/*.p1_main .page_p{*/
+    /*width: 100%; height: 100%;*/
+/*}*/
+
+
+.p1_page1,
+.p1_page2,
+.p1_page3,
+.p1_page4,
+.p1_page5,
+.p1_page6,
+.p1_page7{
+    width: 100%; position: relative;
+}
+.text1{
+    width: 100%; height: 40px;
+    line-height: 40px; padding: 60px 0;
+    text-align: center; font-size: 32px;
+}
+.text2{
+    width: 62%; line-height: 30px; font-size: 14px; text-align: center;
+    margin: 0 auto; color: #c3c3c3; padding: 40px 0;
+}
+
+
+
+
+.p1_img{
+    width: 100%; height: 414px;
+    background: url(../image/product1/1.png) no-repeat center center;
+    -webkit-background-size:750px 414px;
+    background-size:750px 414px;
+}
+.p2_img{
+    width: 100%; height: 421px;
+    background: url(../image/product1/2.png) no-repeat center center;
+    -webkit-background-size:750px 421px;
+    background-size:750px 421px;
+}
+.p3_img{
+    width: 100%; height: 481px;
+    background: url(../image/product1/3.png) no-repeat center center;
+    -webkit-background-size:750px 481px;
+    background-size:750px 481px;
+}
+.p4_img{
+    width: 100%; height: 450px;
+    background: url(../image/product1/4.png) no-repeat center center;
+    -webkit-background-size:750px 450px;
+    background-size:750px 450px;
+}
+.p5_img{
+    width: 100%; height: 267px;
+    background: url(../image/product1/5.png) no-repeat center center;
+    -webkit-background-size:750px 267px;
+    background-size:750px 267px;
+}
+.p6_img{
+    width: 100%; height: 90px;
+    background: url(../image/product1/6.png) no-repeat center center;
+    -webkit-background-size:750px 90px;
+    background-size:750px 90px;
+}
+.p7_img{
+    width: 100%; height: 160px;
+    background: url(../image/product1/7.png) no-repeat center center;
+    -webkit-background-size:750px 160px;
+    background-size:750px 160px;
+}
+
+
+.p3_1img{
+    width: 100px; height: 43px;
+    position: absolute; left:10%; top:50%; margin-top: -60px;
+    padding-top: 77px; line-height: 43px; text-align: center;
+    background: url(../image/product1/3l.png) no-repeat center top;
+    -webkit-background-size:53px 77px;
+    background-size:53px 77px;
+}
+.p3_2img{
+    width: 100px; height: 43px;
+    position: absolute; right:10%; top:50%; margin-top: -60px;
+    padding-top: 77px; line-height: 43px; text-align: center;
+    background: url(../image/product1/3r.png) no-repeat center 13px;
+    -webkit-background-size:70px 51px;
+    background-size:70px 51px;
+}
