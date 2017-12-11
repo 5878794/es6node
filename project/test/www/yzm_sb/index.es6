@@ -257,7 +257,6 @@ let verCodeDiscern = {
 			}
 		}
 
-		console.log(groups)
 
 		//合并分组
 		for(let [maxG,minG] of Object.entries(groups)){
@@ -276,7 +275,7 @@ let verCodeDiscern = {
 				max_group_val.map(rs=>{min_group_val.push(rs)});
 			}else{
 				//已经删除掉 递归找到应该
-
+				console.log('eeeeeeee')
 			}
 
 			//删除大的组
@@ -285,7 +284,6 @@ let verCodeDiscern = {
 
 		//获取分组的区块坐标及大小
 		//分组数据在 newGroupPoints 中
-
 		let area = [];
 		for(let points of Object.values(newGroupPoints)){
 			let minX,maxX,minY,maxY;
