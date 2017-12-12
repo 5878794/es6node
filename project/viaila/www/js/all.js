@@ -3,12 +3,15 @@ $(document).ready(function(){
 });
 
 
+
+
 var ALL = {
 	init:function(){
 		this.openWinEvent();
 		this.topEvent();
 		this.logoEvent();
-
+		this.initAnimateDivStyle();
+		this.pageAnimate(0);
 	},
 	openWinEvent:function(){
 		var body = 	$('#open_win'),
@@ -85,9 +88,11 @@ var ALL = {
 		};
 
 		$(window).scroll(function(){
+			console.log($(window).scrollTop())
 			var topVal = $(window).scrollTop();
 			autoSetTopClass(topVal);
 			_this.rightPointEvent(topVal);
+			_this.pageAnimate(topVal);
 			if(topVal<=100){
 				top1.css({visibility: 'visible'});
 				top2.css({display:'none'});
@@ -123,5 +128,79 @@ var ALL = {
 		logo1.click(function(){
 			window.location.href = 'index.html';
 		});
+	},
+	initAnimateDivStyle:function(){
+		if(!window.animate || !window.animateType){return;}
+
+		var body = $('._scroll');
+
+		for(var i=0,l=body.length;i<l;i++){
+			var divs = body.eq(i).find('div');
+			for(var d=0,dl=divs.length;d<dl;d++){
+				var this_div = divs.eq(d),
+					this_data = (animateType[i])? animateType[i][d] : {};
+				this_data = this_data || {};
+
+				if(this_data.type){
+					var style_,dir_;
+					if(this_data.type == 'left'){
+						style_ = 'translateX';
+						dir_ = '-';
+					}else if(this_data.type=='right'){
+						style_ = 'translateX';
+						dir_ = '';
+					}else if(this_data.type == 'up'){
+						style_ = 'translateY';
+						dir_ = '-';
+					}else if(this_data.type=='down'){
+						style_ = 'translateY';
+						dir_ = '';
+					}else{
+						continue;
+					}
+
+					this_div.css3({
+						transform:style_+'('+dir_+this_data.val+'px)'
+					})
+				}
+			}
+		}
+	},
+	pageAnimate:function(topVal){
+		if(!window.animate || !window.animateType){return;}
+
+		var data = JSON.parse(JSON.stringify(animate));
+		data.push(topVal);
+		data.sort(function(a,b){
+			return (a>b)? 1 : -1;
+		});
+		var n = data.indexOf(topVal);
+		n = n -1;
+		n = (n<=0)? 0 : n;
+
+		var fn = function(time,detail,dom){
+			// console.log(time,dom,detail)
+			setTimeout(function(){
+				// console.log(time,detail,dom)
+				dom.cssAnimate({
+					transform:'translate3D(0,0,0)',
+					opacity:1
+				},time)
+			},detail,function(){},'','ease-in-out')
+		};
+
+		var animateData = animateType[n];
+		if(animateData.isRun){return;}
+
+
+		var doms = $('._scroll').eq(n).find('div');
+		for(var i =0,l=animateData.length;i<l;i++){
+			var time = animateData[i].time,
+				dom = doms.eq(i);
+			// console.log(dom)
+
+			fn(time,animateData[i].detail,dom);
+		}
+		animateData.isRun = true;
 	}
 };

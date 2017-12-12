@@ -571,4 +571,10 @@ a:hover{
 
 
 
+._scroll{
+    overflow: hidden;
+}
+._scroll div{
+    opacity:0;
+}
 
