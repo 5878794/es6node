@@ -132,8 +132,13 @@ var ALL = {
 	initAnimateDivStyle:function(){
 		if(!window.animate || !window.animateType){return;}
 
-		var body = $('._scroll');
+		// var doms = $('#body').children();
+		// for(var b=2,bl=doms.length;b<bl;b++){
+		// 	doms.eq(b).css({display:'none'});
+		// }
 
+
+		var body = $('._scroll');
 		for(var i=0,l=body.length;i<l;i++){
 			var divs = body.eq(i).find('div');
 			for(var d=0,dl=divs.length;d<dl;d++){
@@ -178,7 +183,7 @@ var ALL = {
 		n = n -1;
 		n = (n<=0)? 0 : n;
 
-		var fn = function(time,detail,dom){
+		var fn = function(time,detail,dom,callback){
 			// console.log(time,dom,detail)
 			setTimeout(function(){
 				// console.log(time,detail,dom)
@@ -186,14 +191,17 @@ var ALL = {
 					transform:'translate3D(0,0,0)',
 					opacity:1
 				},time)
-			},detail,function(){},'','ease-in-out')
+			},detail,function(){
+				// callback();
+			},'','ease-in-out')
 		};
 
 		var animateData = animateType[n];
 		if(animateData.isRun){return;}
 
 
-		var doms = $('._scroll').eq(n).find('div');
+		var body = $('._scroll'),
+			doms = body.eq(n).find('div');
 		for(var i =0,l=animateData.length;i<l;i++){
 			var time = animateData[i].time,
 				dom = doms.eq(i);
