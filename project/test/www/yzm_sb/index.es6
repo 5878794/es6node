@@ -6,7 +6,8 @@ let getData = Symbol(),
 	CorrosionOrExpansion = Symbol(),
 	clearNoise = Symbol(),
 	getImageN = Symbol(),
-	getTextArea = Symbol();
+	getTextArea = Symbol(),
+	mergeGroup = Symbol();
 
 
 
@@ -21,10 +22,9 @@ let verCodeDiscern = {
 
 
 
-		console.log(textArea)
 		this.showImage(clearNoiseData,textArea);
 
-
+		this.showChildrenImage(clearNoiseData,textArea);
 
 
 	},
@@ -194,6 +194,72 @@ let verCodeDiscern = {
 		return (y*w+x)*4;
 	},
 
+
+	//合并分组处理出最终的分组情况
+	[mergeGroup](data){
+		let backData = {};
+		let cloneData = JSON.parse(JSON.stringify(data));
+
+		for(let [fromGroup,toGroups] of Object.entries(data)){
+			let preVal;
+			toGroups.map(group=>{
+				let findVal = group;
+				//查找最终要加入的组号
+				while(cloneData[findVal]){
+					findVal = Math.min.apply(this,cloneData[findVal]);
+				}
+
+				//第一次直接插入
+				if(!preVal){
+					if(!backData[findVal]){
+						backData[findVal] = [];
+					}
+					backData[findVal].push(fromGroup);
+					preVal = findVal;
+				}else{
+					if(preVal == findVal){
+						//指向同一个组  忽略
+					}else{
+						//指向不同的组，合并这2个指向的组, 合并到序号小的组里面
+						let temp = [preVal,findVal],
+							minG = Math.min.apply(this,temp),
+							maxG = Math.max.apply(this,temp);
+
+
+						if(backData[maxG]){
+							backData[maxG].map(g=>{
+								if(!backData[minG]){
+									backData[minG] = [];
+								}
+								backData[minG].push(g);
+							})
+						}
+						backData[minG].push(maxG);
+
+						//删除大序号的组
+						delete backData[maxG];
+
+						//增加新的对应关系到克隆数组
+						cloneData[maxG] = [minG];
+
+						//将最小的值认为是前一个溶入的组值
+						preVal = minG;
+					}
+				}
+			});
+		}
+
+
+		let newData = [];
+		for(let [key,val] of Object.entries(backData)){
+			val.push(key);
+			newData.push(val);
+		}
+
+		return newData;
+	},
+
+
 	//获取图片中文字的区域
 	//连笔的区域
 	//带修正方向及忽略几个像素的值  TODO
@@ -218,7 +284,7 @@ let verCodeDiscern = {
 				let p1n = this[getImageN](x,y-1,w),
 				//获取该点左面的点
 					p2n = this[getImageN](x-1,y,w),
-				//获取该点左上点点
+				//获取该点左上的点
 					p3n = this[getImageN](x-1,y-1,w);
 
 				let p1 = newData[p1n] || {},
@@ -231,22 +297,43 @@ let verCodeDiscern = {
 					minGroup,
 					thisGroup;
 
+
 				tempGroup = tempGroup.filter(rs=>{if(rs!=0){return rs}});
 
 
 				minGroup = (tempGroup.length == 0)? 0 : Math.min.apply(this,tempGroup);
-
 				if(minGroup != 0){
 					thisGroup = minGroup;
-
-					if(p1group && p1group != minGroup){groups[p1group] = minGroup}
-					if(p2group && p2group != minGroup){groups[p2group] = minGroup}
-					if(p3group && p3group != minGroup){groups[p3group] = minGroup}
+					if(p1group && p1group != minGroup){
+						if(!groups[p1group]){
+							groups[p1group] = [];
+						}
+						if(groups[p1group].indexOf(minGroup) == -1){
+							groups[p1group].push(minGroup);
+						}
+					}
+					if(p2group && p2group != minGroup){
+						if(!groups[p2group]){
+							groups[p2group] = [];
+						}
+						if(groups[p2group].indexOf(minGroup) == -1){
+							groups[p2group].push(minGroup);
+						}
+					}
+					if(p3group && p3group != minGroup){
+						if(!groups[p3group]){
+							groups[p3group] = [];
+						}
+						if(groups[p3group].indexOf(minGroup) == -1){
+							groups[p3group].push(minGroup);
+						}
+					}
 
 				}else{
 					group++;
 					thisGroup = group;
 				}
+
 
 				if(!newGroupPoints[thisGroup]){
 					newGroupPoints[thisGroup] = [];
@@ -258,37 +345,31 @@ let verCodeDiscern = {
 		}
 
 
-		//合并分组
-		for(let [maxG,minG] of Object.entries(groups)){
-
-			//获取最终要加入的组
-			// while(!groups[minG])
+		//合并分组处理出最终的分组情况
+		groups = this[mergeGroup](groups);
 
 
-
-			let max_group_val = newGroupPoints[maxG],
-				min_group_val = newGroupPoints[minG];
-
-
-			// 组号大的加入组号小的
-			if(min_group_val){
-				max_group_val.map(rs=>{min_group_val.push(rs)});
-			}else{
-				//已经删除掉 递归找到应该
-				console.log('eeeeeeee')
+		//合并分组中点
+		let mergeData = [];
+		for(let i = 0,l = groups.length;i<l;i++){
+			let thisGroup = groups[i];
+			let thisMergeData = [];
+			mergeData.push(thisMergeData);
+			for(let j=0,jl=thisGroup.length;j<jl;j++){
+				newGroupPoints[thisGroup[j]].map(p=>{
+					thisMergeData.push(p);
+				});
 			}
-
-			//删除大的组
-			delete newGroupPoints[maxG];
 		}
+
 
 		//获取分组的区块坐标及大小
 		//分组数据在 newGroupPoints 中
 		let area = [];
-		for(let points of Object.values(newGroupPoints)){
+		mergeData.map(g=>{
 			let minX,maxX,minY,maxY;
 
-			points.map(point=>{
+			g.map(point=>{
 				if(!minX && minX != 0){
 					minX = point.x;
 					maxX = point.x;
@@ -303,17 +384,41 @@ let verCodeDiscern = {
 			});
 
 			area.push({x:minX,y:minY,w:maxX-minX,h:maxY-minY});
-		}
+		});
 
-		//去除过小或过大的
+
+
+
+		//去除过小的
 		area = area.filter(rs=>{
 			if(rs.w > 9 && rs.h > 9){
 				return rs;
 			}
 		});
 
+		//分开过大的
+		let newArea = [];
+		area.map(rs=>{
+			if(rs.w>35){
+				newArea.push({
+					w:35,
+					h:rs.h,
+					x:rs.x,
+					y:rs.y
+				});
+				newArea.push({
+					w:rs.w-35,
+					h:rs.h,
+					x:rs.x+35,
+					y:rs.y
+				})
+			}else{
+				newArea.push(rs);
+			}
+		});
 
-		return area;
+
+		return newArea;
 
 	},
 
@@ -324,12 +429,36 @@ let verCodeDiscern = {
 		canvas.height = data.height;
 		ctx.putImageData(data,0,0);
 
+
 		document.body.appendChild(canvas);
 
-		// ctx.fillStyle = '#ff0000';
-		// textArea.map(rs=>{
-		// 	ctx.fillRect(rs.x,rs.y,rs.w,rs.h);
-		// })
+
+		console.log(textArea)
+		let colors = ['red','antiquewhite','cadetblue','blue','green'];
+		textArea.map((rs,i)=>{
+			ctx.fillStyle = colors[i];
+			ctx.fillRect(rs.x,rs.y,rs.w,rs.h);
+		})
+	},
+
+
+	showChildrenImage(data,textArea){
+		textArea.map((rs,i)=>{
+			let {canvas,ctx} = this[createCanvas]();
+			canvas.width = rs.w;
+			canvas.height = rs.h;
+			ctx.putImageData(data,-rs.x,-rs.y);
+			let newData = canvas.toDataURL();
+
+			let img = new Image();
+			img.onload = function(){
+				canvas.width = 90;
+				canvas.height = 90;
+				ctx.drawImage(img,0,0,rs.w,rs.h,0,0,90,90);
+				document.body.appendChild(canvas);
+			};
+			img.src= newData;
+		})
 	}
 };
 
