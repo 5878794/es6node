@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/yzm.es6" type="text/javascript"></script>
     <script src="/socket.io/socket.io.js"></script>
+
     <style>
         *{padding: 0;margin: 0;}
         #msg{
@@ -147,6 +149,17 @@
                 break;
             case 'imgCode':
                 msg.append("<p>连接成功</p>");
+                    console.log(message)
+                verCodeDiscern.getText(message.url).then(function(rs){
+                    $('#code').val(rs.join('').substr(0,4));
+                    $('#code1').val(rs.join('').substr(0,4));
+                    console.log('-----'+rs+'-----');
+//                    console.log(rs);
+                }).catch(function(rs){
+                    console.log('-----err-----');
+                    console.log(rs);
+                });
+
                 $("#img").attr({src:message.url});
                 $("#img1").attr({src:message.url});
                 break;
