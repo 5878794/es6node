@@ -1,3 +1,16 @@
+//验证码识别
+//jk系统的
+
+
+// verCodeDiscern.getText("aaa.webp").then(function(rs){
+// 	console.log('-----ok-----');
+// 	console.log(rs);
+// }).catch(function(rs){
+// 	console.log('-----err-----');
+// 	console.log(rs);
+// });
+
+
 
 let getData = Symbol(),
 	createCanvas = Symbol(),
@@ -7,7 +20,50 @@ let getData = Symbol(),
 	clearNoise = Symbol(),
 	getImageN = Symbol(),
 	getTextArea = Symbol(),
-	mergeGroup = Symbol();
+	mergeGroup = Symbol(),
+	getImageAreaData = Symbol(),
+	scaleImageData = Symbol(),
+	imageData2Code = Symbol(),
+	checkText = Symbol();
+
+var myCodes = {
+	// 0:[],
+	// 1:[],
+	2:[487, 574, 687, 74, 383, 420, 806, 614, 458],
+	3:[468, 569, 769, 324, 719, 596, 431, 564, 770],
+	4:[60, 686, 260, 517, 655, 262, 359, 657, 434],
+	5:[858, 534, 451, 384, 529, 758, 474, 578, 698],
+	6:[428, 668, 398, 860, 571, 659, 521, 644, 767],
+	7:[448, 558, 749, 8, 569, 163, 351, 447, 0],
+	8:[47, 698, 581, 441, 773, 677, 312, 689, 724],
+	9:[572, 596, 559, 658, 686, 880, 381, 622, 568],
+	a:[78, 668, 371, 247, 646, 633, 714, 432, 717],
+	b:[895, 712, 488, 900, 646, 476, 898, 525, 821],
+	c:[140, 660, 552, 613, 620, 22, 78, 656, 668],
+	d:[711, 612, 261, 704, 126, 767, 769, 668, 382],
+	e:[750, 475, 390, 812, 643, 402, 750, 476, 564],
+	f:[627, 653, 450, 729, 682, 380, 645, 387, 0],
+	g:[368, 637, 475, 770, 23, 263, 582, 558, 660],
+	h:[775, 9, 802, 850, 575, 860, 775, 0, 795],
+	// i:[],
+	j:[0, 300, 835, 0, 341, 840, 244, 810, 714],
+	k:[774, 186, 430, 821, 671, 40, 789, 146, 607],
+	l:[837, 171, 0, 844, 177, 0, 803, 607, 480],
+	m:[832, 249, 823, 789, 682, 795, 542, 756, 596],
+	n:[706, 208, 562, 660, 619, 554, 501, 215, 626],
+	// o:[],
+	p:[821, 575, 852, 750, 647, 491, 750, 210, 0],
+	// q:[],
+	r:[856, 618, 495, 858, 739, 347, 801, 212, 729],
+	s:[805, 592, 314, 445, 686, 466, 518, 667, 730],
+	t:[496, 891, 456, 51, 870, 18, 0, 808, 18],
+	u:[865, 0, 567, 870, 0, 570, 782, 451, 683],
+	v:[772, 30, 449, 486, 406, 599, 207, 816, 321],
+	w:[684, 573, 512, 704, 766, 793, 537, 411, 868],
+	x:[636, 176, 450, 156, 861, 267, 470, 436, 711],
+	y:[674, 141, 564, 180, 795, 180, 0, 870, 0],
+	z:[512, 569, 788, 28, 664, 232, 708, 566, 432]
+};
 
 
 
@@ -16,15 +72,24 @@ let verCodeDiscern = {
 		let img = await this[loadImage](imgSrc),
 			data = this[getData](img,3),
 			towColorData = this[grayImageAndGetTwoColorImageData](data),
-			clearNoiseData = this[clearNoise](towColorData),
-			textArea = this[getTextArea](clearNoiseData);
+			clearNoiseData = this[clearNoise](towColorData);
+		// this.showImage(clearNoiseData);
 
+		let	textArea = this[getTextArea](clearNoiseData);
 
+		let	areaImageData = this[getImageAreaData](textArea,clearNoiseData),
+			afterScaleImageData = await this[scaleImageData](areaImageData,90,90),
+			textCode = this[imageData2Code](afterScaleImageData);
 
+		let text = this[checkText](textCode);
 
-		this.showImage(clearNoiseData,textArea);
+		// console.log(textCode)
 
-		this.showChildrenImage(clearNoiseData,textArea);
+		// this.showImage(clearNoiseData,textArea);
+
+		// this.showChildrenImage(afterScaleImageData);
+
+		console.log(text)
 
 
 	},
@@ -121,7 +186,6 @@ let verCodeDiscern = {
 		for(let i=0,l=RGBData.length;i<l;i++){
 			RGBData[i] = tempData[i];
 		}
-
 		return data;
 	},
 
@@ -401,15 +465,15 @@ let verCodeDiscern = {
 		area.map(rs=>{
 			if(rs.w>35){
 				newArea.push({
-					w:35,
+					w:39,
 					h:rs.h,
 					x:rs.x,
 					y:rs.y
 				});
 				newArea.push({
-					w:rs.w-35,
+					w:rs.w-39,
 					h:rs.h,
-					x:rs.x+35,
+					x:rs.x+39,
 					y:rs.y
 				})
 			}else{
@@ -417,10 +481,130 @@ let verCodeDiscern = {
 			}
 		});
 
+		newArea = newArea.filter(rs=>{
+			if(rs.w > 9 && rs.h > 9){
+				return rs;
+			}
+		});
+
+
+		//根据x坐标排序输出
+		newArea.sort(function(a,b){
+			return (a.x>b.x)? 1 : -1;
+		});
 
 		return newArea;
 
 	},
+
+	//单独生成区域的图片imageData
+	[getImageAreaData](textArea,data){
+		let backData = [],
+			width = data.width,
+			{ctx} = this[createCanvas](),
+			rgbData = data.data;
+
+		textArea.map(rs=>{
+			let x = rs.x,
+				y = rs.y,
+				w = rs.w,
+				h = rs.h,
+				newImageData = ctx.createImageData(w,h),
+				i=0;
+
+			for(let _y=y,_yl=y+h;_y<_yl;_y++){
+				for(let _x=x,_xl=x+w;_x<_xl;_x++){
+					let n = this[getImageN](_x,_y,width);
+					for(let z=0,zl=4;z<zl;z++){
+						newImageData.data[i] = rgbData[n+z];
+						i++;
+					}
+				}
+			}
+
+			backData.push(newImageData);
+		});
+
+		return backData;
+	},
+
+	//缩放图片成 90*90大小
+	async [scaleImageData](data,width,height){
+		let back = [];
+		let {canvas,ctx} = this[createCanvas]();
+
+		for(let i=0,l=data.length;i<l;i++){
+			let imageData = data[i];
+			canvas.width = imageData.width;
+			canvas.height = imageData.height;
+			ctx.putImageData(imageData,0,0);
+			let base64Url = canvas.toDataURL();
+			canvas.width = width;
+			canvas.height = height;
+			let img = await this[loadImage](base64Url);
+			ctx.drawImage(img,0,0,img.width,img.height,0,0,90,90);
+			back.push(ctx.getImageData(0,0,90,90))
+		}
+
+		return back;
+	},
+
+	//图像数据转特征码
+	//将图像分成16等分格子，并计算每个格子的像素点占比 来生成
+	[imageData2Code](datas){
+		let codes = [];
+		datas.map(imageData=>{
+			let w = imageData.width,
+				h = imageData.height,
+				rgbData = imageData.data,
+				thisCode = [0,0,0,0,0,0,0,0,0],
+				getN = function(x,y){
+					let _x = parseInt(x/(w/3)),
+						_y = parseInt(y/(h/3));
+					return _y*3+_x;
+				};
+
+			for(let y=0,yl=h;y<yl;y++){
+				for(let x=0,xl=w;x<xl;x++){
+					let n = this[getImageN](x,y,w),
+						thisData = rgbData[n];
+
+					if(thisData > 0){
+						let _n = getN(x,y);
+						thisCode[_n]++;
+					}
+				}
+			}
+			codes.push(thisCode);
+		});
+
+		return codes;
+	},
+
+	//字符揣揣揣
+	[checkText](data){
+		let texts = [];
+		data.map((rs,i)=>{
+			let temp = [];
+			for(let [key,val] of Object.entries(myCodes)){
+				let errScore = 0
+				val.map((_val,n)=>{
+					errScore += Math.abs(parseInt((_val - rs[n])/50));
+				});
+
+				temp.push({key:key,err:errScore})
+			}
+
+			temp.sort(function(a,b){
+				return (a.err>b.err)? 1 : -1;
+			});
+
+			texts[i] = temp[0].key
+		});
+
+		return texts;
+	},
+
 
 	//显示图片
 	showImage(data,textArea){
@@ -433,32 +617,23 @@ let verCodeDiscern = {
 		document.body.appendChild(canvas);
 
 
-		console.log(textArea)
-		let colors = ['red','antiquewhite','cadetblue','blue','green'];
-		textArea.map((rs,i)=>{
-			ctx.fillStyle = colors[i];
-			ctx.fillRect(rs.x,rs.y,rs.w,rs.h);
-		})
+		// console.log(textArea)
+		// let colors = ['red','antiquewhite','cadetblue','blue','green'];
+		// textArea.map((rs,i)=>{
+		// 	ctx.fillStyle = colors[i];
+		// 	ctx.fillRect(rs.x,rs.y,rs.w,rs.h);
+		// })
 	},
 
 
-	showChildrenImage(data,textArea){
-		textArea.map((rs,i)=>{
+	showChildrenImage(data){
+		data.map(imageData=>{
 			let {canvas,ctx} = this[createCanvas]();
-			canvas.width = rs.w;
-			canvas.height = rs.h;
-			ctx.putImageData(data,-rs.x,-rs.y);
-			let newData = canvas.toDataURL();
-
-			let img = new Image();
-			img.onload = function(){
-				canvas.width = 90;
-				canvas.height = 90;
-				ctx.drawImage(img,0,0,rs.w,rs.h,0,0,90,90);
-				document.body.appendChild(canvas);
-			};
-			img.src= newData;
-		})
+			canvas.width = imageData.width;
+			canvas.height = imageData.height;
+			ctx.putImageData(imageData,0,0);
+			document.body.append(canvas);
+		});
 	}
 };
 
