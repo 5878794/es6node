@@ -5,7 +5,7 @@
 
 
 var ProductDian = [0,700,1460,2200,3100];
-var ProductClass = ['','','','',''];
+var ProductClass = ['back_','back_','back_','back_','back_'];
 
 
 
