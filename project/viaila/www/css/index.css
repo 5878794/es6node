@@ -38,6 +38,14 @@ body{
     position: relative;
     /*cursor: pointer;*/
 }
+.p5{
+    width: 100%; height:851px;
+    background: url(../image/index/p5.jpg) no-repeat center center;
+    -webkit-background-size:1440px 851px;
+    background-size:1440px 851px;
+    position: relative;
+    /*cursor: pointer;*/
+}
 
 
 .ps_show_more{

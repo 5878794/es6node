@@ -1,6 +1,6 @@
 
-var ProductDian = [0,920,1812,2867];
-var ProductClass = ['','back_','',''];
+var ProductDian = [0,920,1812,2867,3720];
+var ProductClass = ['','back_','','','back_'];
 
 
 $(document).ready(function(){
@@ -16,7 +16,8 @@ var page = {
 		var p1 = $('#p1Btn'),
 			p2 = $('#p2Btn'),
 			p3 = $('#p3Btn'),
-			p4 = $('#p4Btn');
+			p4 = $('#p4Btn'),
+			p5 = $('#p5Btn');
 
 		p1.click(function(){
 			window.location.href = 'p1.html';
@@ -30,6 +31,9 @@ var page = {
 		});
 		p4.click(function(){
 			window.location.href = 'p4.html';
+		});
+		p5.click(function(){
+			window.location.href = 'p5.html';
 		});
 	}
 };
