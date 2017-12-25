@@ -25,7 +25,7 @@ var page = {
 			if(val){
 				_this.getData(val);
 			}else{
-				alert('请输入需要查询代理的微信号、手机号或代理授权编号进行查询');
+				alert('请输入需要查询的防伪码');
 			}
 		})
 	},
@@ -37,28 +37,17 @@ var page = {
 
 		this.loading.show('查询中');
 		$.ajax({
-			url: "http://hccrm.bj.bdysite.com/shouquan_api.php",
+			url: "http://viaila.hyxmt.cn/ServiceAPI/usercenter/Manager.aspx",
 			type: "GET",
-			data: {
-				queryString: code
-			},
 			catch:false,
+			data: {
+				action:'queryfw',
+				FWcode: code
+			},
 			dataType: "jsonp", //指定服务器返回的数据类型
 			success: function (data) {
-
-				if(data.code==0){
-					_this.loading.hide();
-					alert(data.msg);
-				}else{
-					var src = data.image,
-						img = new Image();
-
-					img.onload = function(){
-						_this.loading.hide();
-						imageDom.append(img);
-					};
-					img.src = src;
-				}
+				_this.loading.hide();
+				alert(data.messages);
 			},
 			error: function () {
 				_this.loading.hide();
