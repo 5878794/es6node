@@ -12,30 +12,30 @@ var ProductClass = ['back_','back_','back_','back_','back_'];
 var animate = [0,700,1460,2200,3100];
 var animateType = [
 	[
-		{type:'',val:'',time:500,detail:0},
-		{type:'up',val:100,time:500,detail:500}
+		{type:'',val:'',time:1000,detail:0},
+		{type:'up',val:100,time:1000,detail:1000}
 	],
 	[
 		{type:'',val:'',time:1000,detail:0},
-		{type:'up',val:100,time:500,detail:0},
-		{type:'',val:100,time:500,detail:700}
+		{type:'up',val:100,time:1000,detail:400},
+		{type:'',val:100,time:1000,detail:1000}
 	],
 	[
-		{type:'up',val:100,time:500,detail:0},
-		{type:'',val:'',time:500,detail:400},
-		{type:'down',val:100,time:500,detail:900}
+		{type:'up',val:100,time:1000,detail:0},
+		{type:'',val:'',time:1000,detail:1000},
+		{type:'down',val:100,time:1000,detail:2000}
 	],
 	[
-		{type:'',val:100,time:500,detail:0},
-		{type:'up',val:100,time:500,detail:400},
-		{type:'left',val:100,time:500,detail:900},
-		{type:'down',val:100,time:500,detail:900}
+		{type:'',val:100,time:1000,detail:0},
+		{type:'up',val:100,time:1000,detail:1000},
+		{type:'left',val:100,time:1000,detail:2000},
+		{type:'down',val:100,time:1000,detail:2000}
 	],
 	[
-		{type:'',val:100,time:500,detail:0},
-		{type:'down',val:100,time:500,detail:400},
-		{type:'up',val:100,time:500,detail:800},
-		{type:'down',val:100,time:500,detail:1300},
-		{type:'',val:'',time:500,detail:1800}
+		{type:'',val:100,time:1000,detail:0},
+		{type:'down',val:100,time:1000,detail:1000},
+		{type:'up',val:100,time:1000,detail:2000},
+		{type:'down',val:100,time:1000,detail:3000},
+		{type:'',val:'',time:1000,detail:4000}
 	]
 ];

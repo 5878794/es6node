@@ -7,6 +7,7 @@ $(document).ready(function(){
 
 var ALL = {
 	init:function(){
+		$('#top_').css({display:"block"});
 		this.openWinEvent();
 		this.topEvent();
 		this.logoEvent();
@@ -93,12 +94,18 @@ var ALL = {
 			autoSetTopClass(topVal);
 			_this.rightPointEvent(topVal);
 			_this.pageAnimate(topVal);
-			if(topVal<=100){
-				top1.css({visibility: 'visible'});
-				top2.css({display:'none'});
+			if(topVal<=140){
+				// top1.css({visibility: 'visible'});
+				// top2.css({display:'none'});
+				top2.cssAnimate({
+					transform:'translateY(-41px)'
+				},800,function(){},true,'ease')
 			}else{
-				top1.css({visibility: 'hidden'});
-				top2.css({display:'block'});
+				// top1.css({visibility: 'hidden'});
+				// top2.css({display:'block'});
+				top2.cssAnimate({
+					transform:'translateY(0)'
+				},800,function(){},true,'ease')
 			}
 		});
 	},
@@ -190,10 +197,10 @@ var ALL = {
 				dom.cssAnimate({
 					transform:'translate3D(0,0,0)',
 					opacity:1
-				},time)
-			},detail,function(){
-				// callback();
-			},'','ease-in-out')
+				},time,function(){
+					// callback();
+				},true,'ease')
+			},detail)
 		};
 
 		var animateData = animateType[n];

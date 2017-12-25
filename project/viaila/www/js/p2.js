@@ -12,21 +12,21 @@ var ProductClass = ['back_','back_','back_'];
 var animate = [0,800,2060];
 var animateType = [
 	[
-		{type:'up',val:100,time:500,detail:0},
-		{type:'',val:'',time:500,detail:400},
-		{type:'down',val:100,time:500,detail:900}
+		{type:'up',val:100,time:1000,detail:0},
+		{type:'',val:'',time:1000,detail:1000},
+		{type:'down',val:100,time:1000,detail:2000}
 	],
 	[
-		{type:'up',val:100,time:500,detail:0},
-		{type:'',val:'',time:500,detail:400},
-		{type:'down',val:100,time:500,detail:900}
+		{type:'up',val:100,time:1000,detail:0},
+		{type:'',val:'',time:1000,detail:1000},
+		{type:'down',val:100,time:1000,detail:2000}
 	],
 	[
-		{type:'',val:100,time:500,detail:0},
-		{type:'up',val:100,time:500,detail:400},
-		{type:'down',val:100,time:500,detail:900},
-		{type:'',val:100,time:500,detail:1400},
-		{type:'down',val:100,time:500,detail:1900},
-		{type:'up',val:100,time:500,detail:2400}
+		{type:'',val:100,time:1000,detail:0},
+		{type:'up',val:100,time:1000,detail:1000},
+		{type:'down',val:100,time:1000,detail:2000},
+		{type:'',val:100,time:1000,detail:3000},
+		{type:'down',val:100,time:1000,detail:4000},
+		{type:'up',val:100,time:1000,detail:5000}
 	]
 ];
