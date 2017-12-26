@@ -28,6 +28,7 @@ body{
     -webkit-background-size:2880px 900px;
     background-size:2880px 900px;
     position: relative;
+    padding-bottom:150px;
     /*cursor: pointer;*/
 }
 .p4{
@@ -55,7 +56,7 @@ body{
     -moz-border-radius:5px;
     border-radius:5px;
     position: absolute; left:50%; bottom: 80px;
-    margin-left: -60px; cursor: pointer;
+    margin-left: -78px; cursor: pointer;
 }
 .ps_show_more1{
     color: #000; border:1px solid #000;
