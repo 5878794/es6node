@@ -1,4 +1,12 @@
 $(document).ready(function(){
+	window.ProductDian = [];
+	window.animate = [];
+	$("#body").children().each(function(){
+		var top = $(this).offset().top - 100;
+		top = (top<0)? 0 : top;
+		window.ProductDian.push(top);
+		window.animate.push(top);
+	});
 	ALL.init();
 });
 
@@ -89,7 +97,7 @@ var ALL = {
 		};
 
 		$(window).scroll(function(){
-			console.log($(window).scrollTop())
+			// console.log($(window).scrollTop())
 			var topVal = $(window).scrollTop();
 			autoSetTopClass(topVal);
 			_this.rightPointEvent(topVal);

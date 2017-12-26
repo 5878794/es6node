@@ -4,12 +4,12 @@
 
 
 
-var ProductDian = [0,700,1460,2200,3100];
+// var ProductDian = [0,700,1460,2200,3100];
 var ProductClass = ['back_','back_','back_','back_','back_'];
 
 
 
-var animate = [0,700,1460,2200,3100];
+// var animate = [0,700,1460,2200,3100];
 var animateType = [
 	[
 		{type:'',val:'',time:1000,detail:0},
@@ -27,9 +27,9 @@ var animateType = [
 	],
 	[
 		{type:'',val:100,time:1000,detail:0},
-		{type:'up',val:100,time:1000,detail:1000},
-		{type:'left',val:100,time:1000,detail:2000},
-		{type:'down',val:100,time:1000,detail:2000}
+		{type:'',val:100,time:1000,detail:1000},
+		{type:'up',val:100,time:1000,detail:2000},
+		{type:'down',val:100,time:1000,detail:2500}
 	],
 	[
 		{type:'',val:100,time:1000,detail:0},

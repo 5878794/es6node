@@ -5,11 +5,11 @@
 
 
 
-var ProductDian = [0,800,2060];
+// var ProductDian = [0,800,2060];
 var ProductClass = ['back_','back_','back_'];
 
 
-var animate = [0,800,2060];
+// var animate = [0,800,2060];
 var animateType = [
 	[
 		{type:'up',val:100,time:1000,detail:0},

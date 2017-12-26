@@ -4,12 +4,12 @@
 
 
 
-var ProductDian = [0,950,1720,2600];
+// var ProductDian = [0,950,1720,2600];
 var ProductClass = ['','','',''];
 
 
 
-var animate = [0,950,1720,2600];
+// var animate = [0,950,1720,2600];
 var animateType = [
 	[
 		{type:'up',val:100,time:1000,detail:0},
