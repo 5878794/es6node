@@ -8,41 +8,41 @@ body{
     width: 100%; min-width:1080px;
 }
 .p1{
-    width: 100%; height:810px;
-    background: url(../image/index/p1.jpg) no-repeat center center;
-    -webkit-background-size:1438px 810px;
-    background-size:1438px 810px;
+    width: 100%; height:900px;
+    background: url(../image/index/p1.jpeg) no-repeat center center;
+    -webkit-background-size:2880px 900px;
+    background-size:2880px 900px;
     position: relative;
 }
 .p2{
     width: 100%; height:900px;
-    background: url(../image/index/p2.jpg) no-repeat center center;
-    -webkit-background-size:1440px 900px;
-    background-size:1440px 900px;
+    background: url(../image/index/p2.jpeg) no-repeat center center;
+    -webkit-background-size:2880px 900px;
+    background-size:2880px 900px;
     position: relative;
     /*cursor: pointer;*/
 }
 .p3{
-    width: 100%; height:1050px;
-    background: url(../image/index/p3.jpg) no-repeat top center;
-    -webkit-background-size:1440px 900px;
-    background-size:1440px 900px;
+    width: 100%; height:900px;
+    background: url(../image/index/p3.jpeg) no-repeat top center;
+    -webkit-background-size:2880px 900px;
+    background-size:2880px 900px;
     position: relative;
     /*cursor: pointer;*/
 }
 .p4{
-    width: 100%; height:850px;
-    background: url(../image/index/p4.jpg) no-repeat center center;
-    -webkit-background-size:1440px 850px;
-    background-size:1440px 850px;
+    width: 100%; height:900px;
+    background: url(../image/index/p4.jpeg) no-repeat center center;
+    -webkit-background-size:2880px 900px;
+    background-size:2880px 900px;
     position: relative;
     /*cursor: pointer;*/
 }
 .p5{
-    width: 100%; height:851px;
-    background: url(../image/index/p5.jpg) no-repeat center center;
-    -webkit-background-size:1440px 851px;
-    background-size:1440px 851px;
+    width: 100%; height:900px;
+    background: url(../image/index/p5.jpeg) no-repeat center center;
+    -webkit-background-size:2880px 900px;
+    background-size:2880px 900px;
     position: relative;
     /*cursor: pointer;*/
 }

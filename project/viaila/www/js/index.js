@@ -1,5 +1,5 @@
 
-var ProductDian = [0,920,1812,2867,3720];
+// var ProductDian = [0,920,1812,2867,3720];
 var ProductClass = ['','back_','','','back_'];
 
 
