@@ -1,9 +1,14 @@
 $(document).ready(function(){
 	window.ProductDian = [];
 	window.animate = [];
+	var maxScroll = document.body.scrollHeight-window.innerHeight;
+	var i=50;
+
 	$("#body").children().each(function(){
+		i--;
 		var top = $(this).offset().top - 100;
 		top = (top<0)? 0 : top;
+		top = (top>maxScroll)? maxScroll-i : top;
 		window.ProductDian.push(top);
 		window.animate.push(top);
 	});
@@ -11,7 +16,7 @@ $(document).ready(function(){
 });
 
 
-
+var isRun = {};
 
 var ALL = {
 	init:function(){
@@ -211,19 +216,26 @@ var ALL = {
 			},detail)
 		};
 
-		var animateData = animateType[n];
-		if(animateData.isRun){return;}
+		// console.log('n:'+n)
+		for(var z=0,zl=n;z<=zl;z++){
+			var animateData = animateType[n];
+			if(isRun[z]){continue;}
 
+			// console.log(z)
+			var body = $('._scroll'),
+				doms = body.eq(z).find('div');
+			for(var i =0,l=animateData.length;i<l;i++){
+				var time = animateData[i].time,
+					dom = doms.eq(i);
+				// console.log(dom)
 
-		var body = $('._scroll'),
-			doms = body.eq(n).find('div');
-		for(var i =0,l=animateData.length;i<l;i++){
-			var time = animateData[i].time,
-				dom = doms.eq(i);
-			// console.log(dom)
-
-			fn(time,animateData[i].detail,dom);
+				fn(time,animateData[i].detail,dom);
+			}
+			isRun[z] = true;
 		}
-		animateData.isRun = true;
+
+
+
+
 	}
 };
