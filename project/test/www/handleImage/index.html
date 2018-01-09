@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<br/><br/><br/><br/>
+    <img src="aaa.webp" />
+
+
+    <script src="index.es6"></script>
+    <script>
+        verCodeDiscern.getText("aaa.webp").then(function(rs){
+            console.log('-----ok-----');
+            console.log(rs);
+        }).catch(function(rs){
+            console.log('-----err-----');
+            console.log(rs);
+        });
+    </script>
+</body>
+</html>
