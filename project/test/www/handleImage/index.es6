@@ -7,7 +7,9 @@ let getImageData = Symbol(),
 	imageDataToBase64 = Symbol(),
 	gray = Symbol.for('gray'),
 	BlackAndWhite = Symbol.for('BlackAndWhite'),
-	lightness = Symbol.for('lightness');
+	lightness = Symbol.for('lightness'),
+	scaleByNear = Symbol.for('scaleByNear'),
+	scaleByDoubleLine = Symbol.for('scaleByDoubleLine');
 
 
 
@@ -15,14 +17,38 @@ let handleImage = {
 	async test(){
 		let src = document.getElementById('aaa').src;
 			data = await this[getImageData](src);
+		data1 = data;
 
-		let newData = this[lightness](data,200),
+		let scale = 0.8;
+
+		//处理1
+		let newData = this[scaleByDoubleLine](data,scale),
 			newSrc = this[imageDataToBase64](newData);
 
 		let img = new Image();
 		img.src = newSrc;
 		document.body.appendChild(img);
 
+
+		//处理2
+		let newData1 = this[scaleByNear](data,scale),
+			newSrc1 = this[imageDataToBase64](newData1);
+
+		let img1 = new Image();
+		img1.src = newSrc1;
+		document.body.appendChild(img1);
+
+
+		//系统效果
+		let {canvas,ctx} = this[createCanvas]();
+		canvas.width = data.width;
+		canvas.height = data.height;
+		ctx.putImageData(data,0,0);
+		let src2 = canvas.toDataURL();
+		let img3 = new Image();
+		img3.src = src2;
+		img3.width = data.width*scale;
+		document.body.appendChild(img3);
 	},
 
 
@@ -171,8 +197,89 @@ let handleImage = {
 		}
 
 		return imgData;
-	}
+	},
 
+
+	//图片缩放  (速度快,有锯齿)
+	//临近插值法
+	//
+	[scaleByNear](imgData,scale){
+		let rgbaData = imgData.data,
+			_width =  imgData.width,
+			width = Math.round(imgData.width*scale),
+			height = Math.round(imgData.height*scale),
+			newRgbaData = new ImageData(width,height);
+
+		for(let y=0,yl=height;y<yl;y++){
+			let _y = Math.round(y/scale);
+
+			for(let x=0,xl=width;x<xl;x++){
+				let _x = Math.round(x/scale),
+					_n = (_y*_width+_x)*4,
+					n = (y*width+x)*4;
+
+				newRgbaData.data[n] = rgbaData[_n];
+				newRgbaData.data[n+1] = rgbaData[_n+1];
+				newRgbaData.data[n+2] = rgbaData[_n+2];
+				newRgbaData.data[n+3] = rgbaData[_n+3];
+			}
+		}
+
+		return newRgbaData;
+	},
+
+
+	//图片缩放  （速度中等，效果中等）
+	//双线行插值法
+	//https://zh.wikipedia.org/wiki/%E5%8F%8C%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC
+	[scaleByDoubleLine](imgData,scale){
+		let rgbaData = imgData.data,
+			_width = imgData.width,
+			_height = imgData.height,
+			width = Math.round(imgData.width*scale),
+			height = Math.round(imgData.height*scale),
+			newRgbaData = new ImageData(width,height);
+
+		for(let y=0,yl=height;y<yl;y++){
+			let _y = y/scale,
+				y1 = parseInt(_y),
+				perY = _y - y1,
+				y2 = y1+1;
+			y2 = (y2>_height)? _height : y2;
+
+			for(let x=0,xl=width;x<xl;x++){
+				let _x = x/scale,
+					x1 = parseInt(_x),
+					perX = _x - x1,
+					x2 = x1 + 1,
+					n = (y*width+x)*4;
+				x2 = (x2>_width)? _width : x2;
+
+				//获取周围4个点的n值
+				let p11 = (y1*_width+x1)*4,
+					p21 = (y1*_width+x2)*4,
+					p12 = (y2*_width+x1)*4,
+					p22 = (y2*_width+x2)*4;
+
+				let r = (rgbaData[p21]*perX + rgbaData[p11]*(1-perX))*(1-perY) +
+						(rgbaData[p22]*perX + rgbaData[p12]*(1-perX))*perY;
+				let g = (rgbaData[p21+1]*perX + rgbaData[p11+1]*(1-perX))*(1-perY) +
+						(rgbaData[p22+1]*perX + rgbaData[p12+1]*(1-perX))*perY;
+				let b = (rgbaData[p21+2]*perX + rgbaData[p11+2]*(1-perX))*(1-perY) +
+						(rgbaData[p22+2]*perX + rgbaData[p12+2]*(1-perX))*perY;
+				let a = (rgbaData[p21+3]*perX + rgbaData[p11+3]*(1-perX))*(1-perY) +
+						(rgbaData[p22+3]*perX + rgbaData[p12+3]*(1-perX))*perY;
+
+
+				newRgbaData.data[n] = r;
+				newRgbaData.data[n+1] = g;
+				newRgbaData.data[n+2] = b;
+				newRgbaData.data[n+3] = a;
+			}
+		}
+
+		return newRgbaData;
+	}
 
 
 };
