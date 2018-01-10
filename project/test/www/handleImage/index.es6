@@ -4,6 +4,7 @@
 let getImageData = Symbol(),
 	loadImage = Symbol(),
 	createCanvas = Symbol(),
+	imageDataToBase64 = Symbol(),
 	gray = Symbol.for('gray'),
 	BlackAndWhite = Symbol.for('BlackAndWhite'),
 	lightness = Symbol.for('lightness');
@@ -11,6 +12,20 @@ let getImageData = Symbol(),
 
 
 let handleImage = {
+	async test(){
+		let src = document.getElementById('aaa').src;
+			data = await this[getImageData](src);
+
+		let newData = this[lightness](data,200),
+			newSrc = this[imageDataToBase64](newData);
+
+		let img = new Image();
+		img.src = newSrc;
+		document.body.appendChild(img);
+
+	},
+
+
 	//创建canvas
 	[createCanvas](){
 		let canvas = document.createElement('canvas'),
@@ -49,6 +64,18 @@ let handleImage = {
 
 		ctx.drawImage(img,0,0,img.width,img.height);
 		return ctx.getImageData(0,0,canvas.width,canvas.height);
+	},
+
+
+	//图片数据转base64
+	[imageDataToBase64](data){
+		let {canvas,ctx} = this[createCanvas]();
+		canvas.width = data.width;
+		canvas.height = data.height;
+		ctx.putImageData(data,0,0);
+
+
+		return canvas.toDataURL();
 	},
 
 
