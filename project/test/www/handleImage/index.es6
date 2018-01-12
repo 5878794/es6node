@@ -9,7 +9,8 @@ let getImageData = Symbol(),
 	BlackAndWhite = Symbol.for('BlackAndWhite'),
 	lightness = Symbol.for('lightness'),
 	scaleByNear = Symbol.for('scaleByNear'),
-	scaleByDoubleLine = Symbol.for('scaleByDoubleLine');
+	scaleByDoubleLine = Symbol.for('scaleByDoubleLine'),
+	scaleByDoubleThreeTimes = Symbol.for('DoubleThreeTimes');
 
 
 
@@ -19,7 +20,7 @@ let handleImage = {
 			data = await this[getImageData](src);
 		data1 = data;
 
-		let scale = 0.8;
+		let scale = 1.5;
 
 		//处理1
 		let newData = this[scaleByDoubleLine](data,scale),
@@ -37,6 +38,15 @@ let handleImage = {
 		let img1 = new Image();
 		img1.src = newSrc1;
 		document.body.appendChild(img1);
+
+
+		//处理3
+		let newData4 = this[scaleByDoubleThreeTimes](data,scale),
+			newSrc4 = this[imageDataToBase64](newData4);
+
+		let img4 = new Image();
+		img4.src = newSrc4;
+		document.body.appendChild(img4);
 
 
 		//系统效果
@@ -279,7 +289,154 @@ let handleImage = {
 		}
 
 		return newRgbaData;
+	},
+
+
+	//图片缩放  （速度超慢，效果较好）
+	//双三次插值  （要优化）
+	//https://zh.wikipedia.org/wiki/%E5%8F%8C%E4%B8%89%E6%AC%A1%E6%8F%92%E5%80%BC
+	[scaleByDoubleThreeTimes](imgData,scale){
+		let rgbaData = imgData.data,
+			_width = imgData.width,
+			_height = imgData.height,
+			width = Math.round(imgData.width*scale),
+			height = Math.round(imgData.height*scale),
+			newRgbaData = new ImageData(width,height);
+
+
+		//权重函数
+		let lengthWeights = function(l){
+			let a = -0.5;
+			l = Math.abs(l);
+
+			if(l<=1){
+				return (a+2)*l*l*l - (a+3)*l*l + 1;
+			}else if(l>1 && l<2){
+				return a*l*l*l - 5*a*l*l + 8*a*l - 4*a;
+			}else{
+				return 0;
+			}
+		};
+
+
+		for(let y=0,yl=height;y<yl;y++){
+			//计算附近4个点的y坐标
+			let _y = y/scale,
+				y1 = parseInt(_y),
+				perY = _y - y1,
+				y2 = y1+1,
+				y3 = y1+2,
+				y0 = y1-1;
+
+			y2 = (y2>_height)? _height : y2;
+			y3 = (y3>_height)? _height : y3;
+			y0 = (y0<0)? 0 : y0;
+
+			for(let x=0,xl=width;x<xl;x++){
+				//计算附近4个点的x坐标
+				let _x = x/scale,
+					x1 = parseInt(_x),
+					perX = _x - x1,
+					x2 = x1 + 1,
+					x3 = x1 + 2,
+					x0 = x1 - 1,
+					n = (y*width+x)*4;
+
+				x2 = (x2>_width)? _width : x2;
+				x3 = (x3>_width)? _width : x3;
+				x0 = (x0<0)? 0 : x0;
+
+				//获取周围16个点的n值
+				let p00 = (y0*_width+x0)*4,
+					p10 = (y0*_width+x1)*4,
+					p20 = (y0*_width+x2)*4,
+					p30 = (y0*_width+x3)*4,
+					p01 = (y1*_width+x0)*4,
+					p11 = (y1*_width+x1)*4,
+					p21 = (y1*_width+x2)*4,
+					p31 = (y1*_width+x3)*4,
+					p02 = (y2*_width+x0)*4,
+					p12 = (y2*_width+x1)*4,
+					p22 = (y2*_width+x2)*4,
+					p32 = (y2*_width+x3)*4,
+					p03 = (y3*_width+x0)*4,
+					p13 = (y3*_width+x1)*4,
+					p23 = (y3*_width+x2)*4,
+					p33 = (y3*_width+x3)*4;
+
+				let r = rgbaData[p00]*lengthWeights(-1-perX)*lengthWeights(-1-perY)+
+						rgbaData[p10]*lengthWeights(-perX)*lengthWeights(-1-perY)+
+						rgbaData[p20]*lengthWeights(1-perX)*lengthWeights(-1-perY)+
+						rgbaData[p30]*lengthWeights(2-perX)*lengthWeights(-1-perY)+
+						rgbaData[p01]*lengthWeights(-1-perX)*lengthWeights(-perY)+
+						rgbaData[p11]*lengthWeights(-perX)*lengthWeights(-perY)+
+						rgbaData[p21]*lengthWeights(1-perX)*lengthWeights(-perY)+
+						rgbaData[p31]*lengthWeights(2-perX)*lengthWeights(-perY)+
+						rgbaData[p02]*lengthWeights(-1-perX)*lengthWeights(1-perY)+
+						rgbaData[p12]*lengthWeights(-perX)*lengthWeights(1-perY)+
+						rgbaData[p22]*lengthWeights(1-perX)*lengthWeights(1-perY)+
+						rgbaData[p32]*lengthWeights(2-perX)*lengthWeights(1-perY)+
+						rgbaData[p03]*lengthWeights(-1-perX)*lengthWeights(2-perY)+
+						rgbaData[p13]*lengthWeights(-perX)*lengthWeights(2-perY)+
+						rgbaData[p23]*lengthWeights(1-perX)*lengthWeights(2-perY)+
+						rgbaData[p33]*lengthWeights(2-perX)*lengthWeights(2-perY);
+				let g = rgbaData[p00+1]*lengthWeights(-1-perX)*lengthWeights(-1-perY)+
+						rgbaData[p10+1]*lengthWeights(-perX)*lengthWeights(-1-perY)+
+						rgbaData[p20+1]*lengthWeights(1-perX)*lengthWeights(-1-perY)+
+						rgbaData[p30+1]*lengthWeights(2-perX)*lengthWeights(-1-perY)+
+						rgbaData[p01+1]*lengthWeights(-1-perX)*lengthWeights(-perY)+
+						rgbaData[p11+1]*lengthWeights(-perX)*lengthWeights(-perY)+
+						rgbaData[p21+1]*lengthWeights(1-perX)*lengthWeights(-perY)+
+						rgbaData[p31+1]*lengthWeights(2-perX)*lengthWeights(-perY)+
+						rgbaData[p02+1]*lengthWeights(-1-perX)*lengthWeights(1-perY)+
+						rgbaData[p12+1]*lengthWeights(-perX)*lengthWeights(1-perY)+
+						rgbaData[p22+1]*lengthWeights(1-perX)*lengthWeights(1-perY)+
+						rgbaData[p32+1]*lengthWeights(2-perX)*lengthWeights(1-perY)+
+						rgbaData[p03+1]*lengthWeights(-1-perX)*lengthWeights(2-perY)+
+						rgbaData[p13+1]*lengthWeights(-perX)*lengthWeights(2-perY)+
+						rgbaData[p23+1]*lengthWeights(1-perX)*lengthWeights(2-perY)+
+						rgbaData[p33+1]*lengthWeights(2-perX)*lengthWeights(2-perY);
+				let b = rgbaData[p00+2]*lengthWeights(-1-perX)*lengthWeights(-1-perY)+
+						rgbaData[p10+2]*lengthWeights(-perX)*lengthWeights(-1-perY)+
+						rgbaData[p20+2]*lengthWeights(1-perX)*lengthWeights(-1-perY)+
+						rgbaData[p30+2]*lengthWeights(2-perX)*lengthWeights(-1-perY)+
+						rgbaData[p01+2]*lengthWeights(-1-perX)*lengthWeights(-perY)+
+						rgbaData[p11+2]*lengthWeights(-perX)*lengthWeights(-perY)+
+						rgbaData[p21+2]*lengthWeights(1-perX)*lengthWeights(-perY)+
+						rgbaData[p31+2]*lengthWeights(2-perX)*lengthWeights(-perY)+
+						rgbaData[p02+2]*lengthWeights(-1-perX)*lengthWeights(1-perY)+
+						rgbaData[p12+2]*lengthWeights(-perX)*lengthWeights(1-perY)+
+						rgbaData[p22+2]*lengthWeights(1-perX)*lengthWeights(1-perY)+
+						rgbaData[p32+2]*lengthWeights(2-perX)*lengthWeights(1-perY)+
+						rgbaData[p03+2]*lengthWeights(-1-perX)*lengthWeights(2-perY)+
+						rgbaData[p13+2]*lengthWeights(-perX)*lengthWeights(2-perY)+
+						rgbaData[p23+2]*lengthWeights(1-perX)*lengthWeights(2-perY)+
+						rgbaData[p33+2]*lengthWeights(2-perX)*lengthWeights(2-perY);
+				let a = rgbaData[p00+3]*lengthWeights(-1-perX)*lengthWeights(-1-perY)+
+						rgbaData[p10+3]*lengthWeights(-perX)*lengthWeights(-1-perY)+
+						rgbaData[p20+3]*lengthWeights(1-perX)*lengthWeights(-1-perY)+
+						rgbaData[p30+3]*lengthWeights(2-perX)*lengthWeights(-1-perY)+
+						rgbaData[p01+3]*lengthWeights(-1-perX)*lengthWeights(-perY)+
+						rgbaData[p11+3]*lengthWeights(-perX)*lengthWeights(-perY)+
+						rgbaData[p21+3]*lengthWeights(1-perX)*lengthWeights(-perY)+
+						rgbaData[p31+3]*lengthWeights(2-perX)*lengthWeights(-perY)+
+						rgbaData[p02+3]*lengthWeights(-1-perX)*lengthWeights(1-perY)+
+						rgbaData[p12+3]*lengthWeights(-perX)*lengthWeights(1-perY)+
+						rgbaData[p22+3]*lengthWeights(1-perX)*lengthWeights(1-perY)+
+						rgbaData[p32+3]*lengthWeights(2-perX)*lengthWeights(1-perY)+
+						rgbaData[p03+3]*lengthWeights(-1-perX)*lengthWeights(2-perY)+
+						rgbaData[p13+3]*lengthWeights(-perX)*lengthWeights(2-perY)+
+						rgbaData[p23+3]*lengthWeights(1-perX)*lengthWeights(2-perY)+
+						rgbaData[p33+3]*lengthWeights(2-perX)*lengthWeights(2-perY);
+
+
+				newRgbaData.data[n] = r;
+				newRgbaData.data[n+1] = g;
+				newRgbaData.data[n+2] = b;
+				newRgbaData.data[n+3] = a;
+			}
+		}
+
+		return newRgbaData;
 	}
-
-
 };
