@@ -10,133 +10,79 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
     <link type="text/css" rel="stylesheet" href="css/all.css" />
-    <link type="text/css" rel="stylesheet" href="css/index.css" />
+    <!--<link type="text/css" rel="stylesheet" href="css/index.css" />-->
     <script type="text/javascript" src="js/jquery-2.1.1.min.js" ></script>
-    <script type="text/javascript" src="js/lib.js"></script>
-    <script type="text/javascript" src="js/all.js"></script>
-    <script type="text/javascript" src="js/index.js" ></script>
-    <script>
-        $(document).ready(function(){
-            window.ProductDian = [0,1043,1943,2993,3893];
-            window.ProductClass = ['','back_','','','back_'];
-        })
-    </script>
+    <!--<script type="text/javascript" src="js/lib.js"></script>-->
+    <!--<script type="text/javascript" src="js/all.js"></script>-->
+    <!--<script type="text/javascript" src="js/index.js" ></script>-->
+    <style>
+        html,body{
+            width: 100%; height: 100%; overflow: hidden;
+            background: #000;
+        }
+        .btn{
+            width: 200px; height: 40px; line-height: 40px;
+            font-size: 20px; color: #fff;
+            border:1px solid #fff;
+            -webkit-border-radius:5px;
+            -moz-border-radius:5px;
+            border-radius:5px;
+            position: fixed;
+            left:50%;
+            bottom:20%;
+            text-align: center;
+            cursor: pointer;
+            margin-left: -100px;
+            opacity: 0.7;
+        }
+        .btn:hover{
+            opacity: 1;
+        }
+    </style>
 
 </head>
 <body>
-    <!--初始顶部-->
-    <div id="top" class="top main">
-        <div class="clear top_row1">
-            <div class="top_left hover_animate"></div>
-            <div class="top_2ma"></div>
-            <div class="top_right">
-                <a class="hover_animate" href="about.html">集团介绍</a>
-                <a class="hover_animate" href="dl.html">代理查询</a>
-                <a class="hover_animate" href="fw.html">防伪查询</a>
-            </div>
-        </div>
-        <div class="clear top_row2">
-            <div class="top_products">
-                <a class="hover_animate" href="p1.html">新光学美白仪</a>
-                <a class="hover_animate" href="p2.html">光学美白仪时尚版</a>
-                <a class="hover_animate" href="p3.html">炫光美白牙膏</a>
-                <a class="hover_animate" href="p4.html">3D晶白声波电动牙刷</a>
-                <a class="hover_animate" href="p5.html">极致美白牙贴</a>
-            </div>
-            <div class="top_join hover_animate" id="join"></div>
-        </div>
-    </div>
-
-    <!--滑动时顶部-->
-    <div id="top_" class="top_ " style="display: none;">
-        <div class="main" style="width: 100%; height: 39px;">
-            <div class="top__logo hover_animate"></div>
-            <div class="top_products">
-                <a class="hover_animate" href="p1.html">新光学美白仪</a>
-                <a class="hover_animate" href="p2.html">光学美白仪时尚版</a>
-                <a class="hover_animate" href="p3.html">炫光美白牙膏</a>
-                <a class="hover_animate" href="p4.html">3D晶白声波电动牙刷</a>
-                <a class="hover_animate" href="p5.html">极致美白牙贴</a>
-            </div>
-            <div class="top_join hover_animate" id="join1"></div>
-        </div>
-    </div>
+    <script>
+        var vW = 882,
+            vH = 496;
 
 
-    <div class="ps main">
-        <div class="p1" id="p1"><div id="p1Btn" class="ps_show_more hover_animate">点击了解更多</div></div>
-        <div class="p2" id="p2"><div id="p2Btn" class="ps_show_more ps_show_more1 hover_animate">点击了解更多</div></div>
-        <div class="p3" id="p3"><div id="p3Btn" class="ps_show_more hover_animate">点击了解更多</div></div>
-        <div class="p4" id="p4"><div id="p4Btn" class="ps_show_more hover_animate">点击了解更多</div></div>
-        <div class="p5" id="p5"><div id="p5Btn" class="ps_show_more ps_show_more1 hover_animate">点击了解更多</div></div>
-    </div>
+        var setVideoSize = function(){
+            var width = window.innerWidth,
+                height = window.innerHeight;
+
+            var video = $('video').get(0);
+
+            video.width = width;
+            video.height = height;
+
+        };
+        $(document).ready(function(){
+            setVideoSize();
+
+            $('.btn').click(function(){
+                window.location.href = 'index1.html';
+            })
+        });
+        $(window).resize(function(){
+            setVideoSize();
+        });
 
 
+    </script>
+    <video
+            autoplay="autoplay"
+            preload="auto"
+            loop="loop"
 
+            width="100%"
+    >
+        <source src="10hei.mp4" type="video/mp4" />
+        <!--<source src="111.ogg" type="video/ogg" />-->
+        您的浏览器不支持 video 标签。
+    </video>
 
-    <div class="scroll_dian" id="scroll_dian">
-        <div class="scroll_dian_item hover_animate select"></div>
-        <div class="scroll_dian_item hover_animate"></div>
-        <div class="scroll_dian_item hover_animate"></div>
-        <div class="scroll_dian_item hover_animate"></div>
-        <div class="scroll_dian_item hover_animate"></div>
-    </div>
+    <div class="btn hover_animate">发现唯爱新纪元</div>
 
-
-
-    <div class="bottom main">
-        <div class="bottom_left"></div>
-        <div class="bottom_center">
-            <div class="bottom_center_cel">
-                <p>品牌产品</p>
-                <a href="#" class="hover_animate">热销产品</a>
-                <a href="#" class="hover_animate">行业信息</a>
-            </div>
-            <div class="bottom_center_cel">
-                <p>最新信息</p>
-                <a href="#" class="hover_animate">最新信息</a>
-                <a href="#" class="hover_animate">行业信息</a>
-                <a href="#" class="hover_animate">公司动态</a>
-            </div>
-            <div class="bottom_center_cel">
-                <p>关于Viaila</p>
-                <a href="#" class="hover_animate">关于我们</a>
-                <a href="#" class="hover_animate">联系我们</a>
-            </div>
-            <div class="bottom_center_cel">
-                <p>代理查询</p>
-                <a href="dl.html" class="hover_animate">代理查询</a>
-                <a href="fw.html" class="hover_animate">防伪查询</a>
-            </div>
-            <div class="clear"></div>
-        </div>
-        <div class="bottom_right">
-            <div class="bottom_right_tel">400 0994 661</div>
-            <div class="bottom_right_info">周一至周日 9:00-18:00（仅收市话费）</div>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <div class="bottom_info main">
-        2014. 四川泽晨唯爱生物科技有限公司. 备案号:蜀ICP备17001169号
-    </div>
-
-
-    <!--弹出层-->
-    <div class="open_win" id="open_win" style="display: none;">
-        <div class="open_win_body">
-            <div class="open_win_main" id="zx1">
-                <div class="open_win_main_er"></div>
-                <div class="open_win_main_text">咨询及投诉客服将为您解答以及解决购买及代理的一切问题和事务</div>
-                <div id="zxBtn1" class="open_win_main_btn hover_animate">选择切换至售后客服</div>
-            </div>
-            <div class="open_win_main" id="zx2"  style="display: none;">
-                <div class="open_win_main_er1"></div>
-                <div class="open_win_main_text">售后客服将为您解答以及解决售后的一切问题和事务</div>
-                <div id="zxBtn2" class="open_win_main_btn hover_animate">选择切换至咨询客服</div>
-            </div>
-            <div class="open_win_close hover_animate" id="open_win_close">×</div>
-        </div>
-
-    </div>
 </body>
 </html>

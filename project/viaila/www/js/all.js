@@ -21,11 +21,35 @@ var isRun = {};
 var ALL = {
 	init:function(){
 		$('#top_').css({display:"block"});
+		this.setRightPointTop();
+		this.addRightPointEvent();
 		this.openWinEvent();
 		this.topEvent();
 		this.logoEvent();
 		this.initAnimateDivStyle();
 		this.pageAnimate(0);
+	},
+	setRightPointTop:function(){
+		var body = $('#scroll_dian'),
+			bodyHeight = parseInt(body.height());
+		body.css({
+			top:'50%',
+			'margin-top':-bodyHeight/2+'px'
+		});
+	},
+	addRightPointEvent:function(){
+		if(!window.ProductDian){return;}
+
+		var btns = $('#scroll_dian').find('div');
+		btns.each(function(i){
+			$(this).attr({i:i}).css({cursor:'pointer'});
+			$(this).click(function(){
+				var n = $(this).attr('i');
+				var top = ProductDian[n]+10;
+				$("html,body").animate({scrollTop:top+'px'},300);
+			});
+		})
+
 	},
 	openWinEvent:function(){
 		var body = 	$('#open_win'),
@@ -94,6 +118,7 @@ var ALL = {
 			n = n -1;
 			if(!window.ProductClass){return;}
 			var class_ = ProductClass[n];
+			// console.log(class_)
 			if(class_){
 				top2.addClass(class_);
 			}else{
@@ -123,7 +148,8 @@ var ALL = {
 		});
 	},
 	rightPointEvent:function(val){
-		var allP = $('#scroll_dian').find('.scroll_dian_item');
+		var body = $('#scroll_dian'),
+			allP = body.find('.scroll_dian_item');
 
 		if(!window.ProductDian){return;}
 		var data = JSON.parse(JSON.stringify(ProductDian));
@@ -143,10 +169,10 @@ var ALL = {
 			logo1 = $('#top_').find('.top__logo');
 
 		logo.click(function(){
-			window.location.href = 'index.html';
+			window.location.href = 'index1.html';
 		});
 		logo1.click(function(){
-			window.location.href = 'index.html';
+			window.location.href = 'index1.html';
 		});
 	},
 	initAnimateDivStyle:function(){
@@ -218,7 +244,7 @@ var ALL = {
 
 		// console.log('n:'+n)
 		for(var z=0,zl=n;z<=zl;z++){
-			var animateData = animateType[n];
+			var animateData = animateType[z] || [];
 			if(isRun[z]){continue;}
 
 			// console.log(z)

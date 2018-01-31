@@ -11,6 +11,7 @@ $(document).ready(function(){
 var page = {
 	init:function(){
 		this.addEvent();
+		this.videoEvent();
 	},
 	addEvent:function(){
 		var p1 = $('#p1Btn'),
@@ -35,5 +36,40 @@ var page = {
 		p5.click(function(){
 			window.location.href = 'p5.html';
 		});
+	},
+	videoEvent:function(){
+		var video = $('video').get(0),
+			playBtn = $('#p6_play'),
+			startBtn = $('#p6_play1'),
+			zz = $('#p6_fm');
+
+		startBtn.click(function(){
+			video.play();
+			zz.css({
+				display:'none',
+				background:'rgba(0,0,0,0.5)'
+			});
+			playBtn.css({display:'block'});
+			startBtn.remove();
+
+		});
+
+
+		video.addEventListener('loadeddata',function(){
+			startBtn.css({display:'block'});
+		},false);
+
+
+		playBtn.click(function(){
+			video.play();
+			zz.css({display:'none'});
+		});
+
+		video.addEventListener('click',function(){
+			video.pause();
+			zz.css({display:'block'});
+		},false)
+
+
 	}
 };

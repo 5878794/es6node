@@ -427,18 +427,67 @@ a:hover{
 
 
 .top_products{
-    width: 600px; height: 39px; line-height: 38px;
-    color: #fff; margin-left: 105px; float:left;
+    width: 800px; height: 39px; line-height: 38px;
+    color: #fff; margin-left: 85px; float:left;
 }
 .top_products a{
-    margin-right: 30px;
+    margin-right: 30px; display: inline-block; position: relative;
+    padding-left: 30px;
 }
+
+.top_products .dh_icon1{
+    background: url(../image/all_icon/icon1.png) no-repeat left center;
+    background-size: 20px 20px;
+}
+.top_products .dh_icon2{
+    background: url(../image/all_icon/icon2.png) no-repeat left center;
+    background-size: 20px 20px;
+}
+.top_products .dh_icon3{
+    background: url(../image/all_icon/icon3.png) no-repeat left center;
+    background-size: 20px 20px;
+}
+.top_products .dh_icon4{
+    background: url(../image/all_icon/icon4.png) no-repeat left center;
+    background-size: 20px 20px;
+}
+.top_products .dh_icon5{
+    background: url(../image/all_icon/icon5.png) no-repeat left center;
+    background-size: 20px 20px;
+}
+.back_ .top_products .dh_icon1{
+    background: url(../image/all_icon/icon1_.png) no-repeat left center;
+    background-size: 20px 20px;
+}
+.back_ .top_products .dh_icon2{
+    background: url(../image/all_icon/icon2_.png) no-repeat left center;
+    background-size: 20px 20px;
+}
+.back_ .top_products .dh_icon3{
+    background: url(../image/all_icon/icon3_.png) no-repeat left center;
+    background-size: 20px 20px;
+}
+.back_ .top_products .dh_icon4{
+    background: url(../image/all_icon/icon4_.png) no-repeat left center;
+    background-size: 20px 20px;
+}
+.back_ .top_products .dh_icon5{
+    background: url(../image/all_icon/icon5_.png) no-repeat left center;
+    background-size: 20px 20px;
+}
+
+
+
+
+
+
+
 .top_join{
     float: right; width: 97px; height: 30px;
     background: url(../image/join.png) no-repeat center center;
     -webkit-background-size:100% 100%;
     background-size:100% 100%;
-    margin: 4px 110px 0 0; cursor: pointer;
+    margin: 4px 50px 0 0; cursor: pointer;
 }
 .top_join:hover{
     opacity: 0.8;
@@ -496,8 +545,9 @@ a:hover{
 }
 
 .scroll_dian{
-    position: fixed; right: 45px; top: 30%;
+    position: fixed; right: 45px; top: 40%;
     width: 20px;
+    z-index: 100;
 }
 .scroll_dian_item{
     width: 10px; height: 10px; background: rgb(111,111,111);

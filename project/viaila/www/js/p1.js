@@ -6,7 +6,7 @@
 
 
 // var ProductDian = [0,777,1500,2280,3000,3560,3950];
-var ProductClass = ['','','','','','',''];
+var ProductClass = ['','','','','','','',''];
 
 // var animate = [0,777,1500,2280,3000,3560,3950];
 var animateType = [
@@ -46,5 +46,8 @@ var animateType = [
 			{type:'up',val:100,time:1000,detail:0},
 			{type:'',val:'',time:1000,detail:1000},
 			{type:'down',val:100,time:1000,detail:2000}
+		],
+		[
+			{type:'',val:'',time:1000,detail:0}
 		]
 	];
