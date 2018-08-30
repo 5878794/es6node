@@ -1,7 +1,7 @@
 	//获取server
 let
-	// server = require("./lib/server/httpAndSocketServer"),
-	server = require('./lib/server/httpsAndSocketServer'),
+	server = require("./lib/server/httpAndSocketServer"),
+	// server = require('./lib/server/httpsAndSocketServer'),
 	path = require("path"),
 	//获取ip
 	ip = require("./lib/fn/getIp"),
