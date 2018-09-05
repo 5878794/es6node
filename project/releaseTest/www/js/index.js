@@ -98,7 +98,7 @@ var PAGE = {
 			var this_data = data[i],
 				p = $('<p></p>');
 
-			p.html('<span>版本：</span>'+this_data.ver+'<br/><span>信息：</span>'+this_data.msg+'<br/><span>上传人:</span>'+this_data.name+'<br/><span>时间:</span>'+this_data.date);
+			p.html('<span>版本：</span>'+this_data.ver+'<br/><span>信息：</span>'+this_data.msg+'<br/><span>上传:</span>'+this_data.name+'<br/><span>时间:</span>'+this_data.date);
 			p.attr({id:this_data.ver});
 			p.find('span').css({
 				color:'#ccc',
