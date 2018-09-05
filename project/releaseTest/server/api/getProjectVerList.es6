@@ -46,7 +46,7 @@ module.exports =async function(request){
 	let {getData} = await getDataFn(request),
 		id = getData.id,
 		url = getProjectUrl(id),
-		cmd = 'svn log '+url+' -l 10 --username '+svnUser.username+' --password '+svnUser.password,
+		cmd = 'svn log '+url+' -l 50 --username '+svnUser.username+' --password '+svnUser.password,
 		result = await exec(cmd);
 
 	let backData;

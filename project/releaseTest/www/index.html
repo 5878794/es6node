@@ -4,21 +4,28 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/index.js"></script>
 </head>
 <body>
-    <div>选择项目</div>
-    <p><select>
-        <option>1</option>
-        <option>1</option>
-    </select></p>
+    <div style="display:none;" id="div1">
+        <div>选择项目</div>
+        <p><select id="project">
+            <option value="">请选择</option>
+        </select></p>
+        <div style="visibility: hidden;" id="div3">
+            <div id="release" style="cursor:pointer;color:#fff;width: 200px;height: 30px;line-height:30px;text-align:center;background: blue;">发布</div>
+        </div>
+    </div>
 
-    <div>选择版本</div>
-    <p><select>
-        <option>1</option>
-        <option>1</option>
-    </select></p>
+    <div style="display: none;" id="div2">
+        <div>选择版本</div>
+        <div class="main">
+
+        </div>
+    </div>
 
 
-    <div>发布</div>
+
+
 </body>
 </html>
