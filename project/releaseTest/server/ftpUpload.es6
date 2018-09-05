@@ -1,7 +1,8 @@
 let ftp = require('../../../lib/fn/ftpLib'),
 	fs = require('fs'),
-	path = require('path'),
-	localDir;
+	path = require('path');
+
+ftp = new ftp();
 
 
 let createDir = function(dir,projectPath,project){
@@ -17,7 +18,12 @@ let createDir = function(dir,projectPath,project){
 let uploadFiles = function(dir,files,projectPath,project){
 
 	return new Promise(success=>{
-		ftp.on('ready',async function(){
+
+		let readyFn = async function(){
+			setTimeout(function(){
+				readyFn = function(){};
+			},0);
+
 			let ls = await ftp.$ls();
 
 			//判断是否存在目录
@@ -31,14 +37,11 @@ let uploadFiles = function(dir,files,projectPath,project){
 				await ftp.$rmdir(project);
 			}
 
-
 			await ftp.$mkdir(project);
-
 
 			for(let i=0,l=dir.length;i<l;i++){
 				await ftp.$mkdir(dir[i]).catch(rs=>{});
 			}
-
 
 			for(let i=0,l=files.length;i<l;i++){
 				let localFile = files[i],
@@ -46,8 +49,13 @@ let uploadFiles = function(dir,files,projectPath,project){
 
 				await ftp.$put(localFile,remoteFile);
 			}
-			ftp.end();
+			ftp.destroy();
 			success();
+		};
+
+
+		ftp.on('ready',function(){
+			readyFn();
 		});
 
 

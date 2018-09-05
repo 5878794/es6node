@@ -3,6 +3,12 @@
 
 let ftp = require('ftp');
 
+// 详见 https://www.npmjs.com/package/ftp
+
+//注意 ftp.on('ready',function(){}) 注入的方法在ftp类销毁时 不会注销该事件
+//                                 下次在监听该事件时会同时触发之间已经监听的事件的方法。。。。
+//                                  注意完成一次ready时 用setTimeout将ready的方法设置成空函数。
+
 
 class myFtp extends ftp{
 	constructor(opt){
@@ -74,4 +80,4 @@ class myFtp extends ftp{
 
 
 
-module.exports = new myFtp();
+module.exports = myFtp;
