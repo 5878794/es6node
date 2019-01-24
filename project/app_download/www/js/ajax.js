@@ -1,13 +1,19 @@
 var loading;
 var ajax = function(url,data,success,error){
     loading.show("loading");
+
+    var type = "get";
+    if(url=='/app_download/api/download'){
+        type = "post";
+    }
+
     $.ajax({
-        type:"get",
+        type:type,
         cache:false,
         url:url,
         data:data,
-//            contentType:"application/json",
-        contentType:"application/x-www-form-urlencoded",
+           contentType:"application/json",
+        // contentType:"application/x-www-form-urlencoded",
 //            dataType:"json",
         dataType:"json",
         timeout:900000,
@@ -52,7 +58,8 @@ var getList = function(){
             div.find(".download_app").click(function(){
                 var id = $(this).parent().attr("id"),
                     ver = $(this).parent().find("input").val();
-                download(id,ver)
+                getSet(id,ver);
+                // download(id,ver)
             });
             div.find(".info_app").click(function(){
                 var id = $(this).parent().attr("id");
@@ -66,10 +73,132 @@ var getList = function(){
 };
 
 
+var getSet = function(id,ver){
+    ajax("/app_download/api/getSettingJs",{id:id,ver:ver},function(rs){
+        rs = rs.data;
+        rs = rs.split(/SETTING\s*=\s*\{|\}/)[1];
+        rs = rs.split(/\n/);
 
-var download = function(id,ver){
-    ajax("/app_download/api/download",{id:id,ver:ver},function(rs){
+        var tempData = [];
+        for(var i=0,l=rs.length;i<l;i++){
+            var thisData = rs[i];
+            if(thisData){
+                if(/^\s*\/\//.test(thisData)){
+                    tempData.push(thisData.replace(/^\s*\/\//,''));
+                }else{
+                    thisData = '{'+thisData+'}';
+                    thisData = eval('('+thisData+')');
+                    tempData.push(thisData);
+                }
+            }
+        }
+
+        var backData = [];
+        for(var j=0,jl=tempData.length;j<jl;j=j+2){
+            var vals = tempData[j+1],
+                val,ket,type;
+            for(var key in vals){
+                if(vals.hasOwnProperty(key)){
+                    val = vals[key];
+                    ket = key;
+                    type = typeof val;
+                }
+            }
+
+            backData.push({
+                info:tempData[j],
+                val:val,
+                key:ket,
+                type:type
+            });
+        }
+
+
+        openSet(id,ver,backData);
+    },function(){
+        alert("获取配置文件出错");
+    });
+};
+
+
+var openSet = function(id,ver,rs){
+    var zz = $('<div></div>'),
+        main = $('<div></div>'),
+        title = $('<div>参数设置</div>'),
+        list = $('<div></div>'),
+        item = $('<div class="__list__"></div>'),
+        btn = $('<div>确认下载代码包</div>');
+
+    zz.css({
+        width:'100%',height:'100%','z-index':'100',background:'rgba(0,0,0,0.5)',
+        position:'fixed',left:0,top:0
+    });
+    main.css({
+       width:'600px','max-height':'80%',position:'absolute',left:0,top:0,right:0,bottom:0,background:'#fff',
+        margin: 'auto',overflow: 'auto',
+        padding:'20px'
+    });
+    title.css({
+       'font-size':'24px','line-height':'40px','text-align':'center'
+    });
+    btn.css({
+        width:'200px',height:'40px','text-align':'center',
+        'line-height':'40px',background:'#000',color:'#fff',
+        margin:'0 auto',cursor:'pointer'
+    });
+    item.css({
+       'padding-bottom':'10px'
+    });
+
+    main.append(title).append(list).append(btn);
+    zz.append(main);
+
+    for(var i=0,l=rs.length;i<l;i++){
+        var thisItem = item.clone(),
+            thisData = rs[i];
+
+        //TODO 未判断是否是数组的情况
+        thisItem
+            .attr({dataKey:thisData.key,dataType:thisData.type})
+            .append('<p>'+thisData.key+'</p>')
+            .append('<p style="color:#ccc;">'+thisData.info+'</p>')
+            .append('<input style="width:100%;height:30px;text-indent:0.5em;" type="text" value="'+thisData.val+'"/>')
+
+        list.append(thisItem);
+    }
+
+
+    $('body').append(zz);
+
+
+    btn.click(function(){
+        download(id,ver,zz);
+    });
+};
+
+
+var download = function(id,ver,zz){
+    //获取表单数据
+    var text = {};
+    zz.find('.__list__').each(function(){
+        var key = $(this).attr('dataKey'),
+            type = $(this).attr('dataType'),
+            val = $(this).find('input').val();
+
+        if(type=='boolean'){
+            val = (val=='true');
+        }
+        text[key] = val;
+    });
+
+    text = JSON.stringify(text);
+    text = 'var SETTING = ' + text;
+    text = encodeURI(text);
+
+
+    ajax("/app_download/api/download",{id:id,ver:ver,setting:text},function(rs){
         window.open(rs);
+        window.location.reload();
     },function(){
         alert("下载失败");
     });

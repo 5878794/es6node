@@ -2,20 +2,20 @@ module.exports = [
 	{
 		id:23,
 		name:'体质评估',
-		svnUrl:'https://172.16.1.34/svn/h5/trank/app/common/fitnessTest/trunk'
+		svnUrl:'https://172.16.12.200/svn/h5/trank/app/common/fitnessTest/trunk'
 	},
 	{
 		id:1,
 		name:"市民云投票",
-		svnUrl:"https://172.16.1.34/svn/h5/trank/app/wechat/publicCloudVoting/trunk"
+		svnUrl:"https://172.16.12.200/svn/h5/trank/app/wechat/publicCloudVoting/trunk"
 	},
 
-	//
-	// {
-	// 	id:2,
-	// 	name:"预约挂号",
-	// 	svnUrl:"https://172.16.1.34/svn/h5/trank/app/common/AppointmentRegistration_WanDa"
-	// },
+
+	{
+		id:2,
+		name:"高薪微信",
+		svnUrl:"https://172.16.12.200/svn/YZWJ/web3/trunk"
+	},
 	// {
 	// 	id:3,
 	// 	name:"小功能",
@@ -49,7 +49,7 @@ module.exports = [
 	{
 		id:9,
 		name:"健康成都6.0",
-		svnUrl:"https://172.16.1.34/svn/h5/trank/app/native/Health_CD_6.0/trunk"
+		svnUrl:"https://172.16.12.200/svn/h5/trank/app/native/Health_CD_6.0/trunk"
 	}
 	// {
 	// 	id:10,
