@@ -72,7 +72,7 @@ var getList = function(){
     });
 };
 
-
+var getSettingData = '';
 var getSet = function(id,ver){
     ajax("/app_download/api/getSettingJs",{id:id,ver:ver},function(rs){
         rs = rs.data;
@@ -80,6 +80,7 @@ var getSet = function(id,ver){
         rs = '{'+rs+'}';
 
         var bRs = eval('('+rs+')');
+        getSettingData = bRs;
 
         rs = rs.split(/\n/);
         var tempData = [];
@@ -97,7 +98,7 @@ var getSet = function(id,ver){
         for(var key in bRs){
             if(bRs.hasOwnProperty(key)){
                 var type = typeof bRs[key];
-                if(type == 'string' || type=='boolean'){
+                if(type == 'string' || type=='boolean' || type=='number'){
                     backData.push({
                         info:tempData[j],
                         val:bRs[key],
@@ -154,7 +155,6 @@ var openSet = function(id,ver,rs){
         var thisItem = item.clone(),
             thisData = rs[i];
 
-        //TODO 未判断是否是数组的情况
         thisItem
             .attr({dataKey:thisData.key,dataType:thisData.type})
             .append('<p>'+thisData.key+'</p>')
@@ -176,7 +176,6 @@ var openSet = function(id,ver,rs){
 
 var download = function(id,ver,zz){
     //获取表单数据
-    var text = {};
     zz.find('.__list__').each(function(){
         var key = $(this).attr('dataKey'),
             type = $(this).attr('dataType'),
@@ -185,12 +184,12 @@ var download = function(id,ver,zz){
         if(type=='boolean'){
             val = (val=='true');
         }
-        text[key] = val;
+        getSettingData[key] = val;
     });
 
-    text = JSON.stringify(text);
+    var text;
+    text = JSON.stringify(getSettingData);
     text = 'var SETTING = ' + text;
-    text = encodeURI(text);
 
 
     ajax("/app_download/api/download",{id:id,ver:ver,setting:text},function(rs){
