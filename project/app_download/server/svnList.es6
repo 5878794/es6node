@@ -1,14 +1,14 @@
 module.exports = [
-	{
-		id:23,
-		name:'体质评估',
-		svnUrl:'https://172.16.12.200/svn/h5/trank/app/common/fitnessTest/trunk'
-	},
-	{
-		id:1,
-		name:"市民云投票",
-		svnUrl:"https://172.16.12.200/svn/h5/trank/app/wechat/publicCloudVoting/trunk"
-	},
+	// {
+	// 	id:23,
+	// 	name:'体质评估',
+	// 	svnUrl:'https://172.16.12.200/svn/h5/trank/app/common/fitnessTest/trunk'
+	// },
+	// {
+	// 	id:1,
+	// 	name:"市民云投票",
+	// 	svnUrl:"https://172.16.12.200/svn/h5/trank/app/wechat/publicCloudVoting/trunk"
+	// },
 
 
 	{

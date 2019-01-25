@@ -77,41 +77,38 @@ var getSet = function(id,ver){
     ajax("/app_download/api/getSettingJs",{id:id,ver:ver},function(rs){
         rs = rs.data;
         rs = rs.split(/SETTING\s*=\s*\{|\}/)[1];
-        rs = rs.split(/\n/);
+        rs = '{'+rs+'}';
 
+        var bRs = eval('('+rs+')');
+
+        rs = rs.split(/\n/);
         var tempData = [];
         for(var i=0,l=rs.length;i<l;i++){
             var thisData = rs[i];
             if(thisData){
                 if(/^\s*\/\//.test(thisData)){
                     tempData.push(thisData.replace(/^\s*\/\//,''));
-                }else{
-                    thisData = '{'+thisData+'}';
-                    thisData = eval('('+thisData+')');
-                    tempData.push(thisData);
                 }
             }
         }
 
+        var j=0;
         var backData = [];
-        for(var j=0,jl=tempData.length;j<jl;j=j+2){
-            var vals = tempData[j+1],
-                val,ket,type;
-            for(var key in vals){
-                if(vals.hasOwnProperty(key)){
-                    val = vals[key];
-                    ket = key;
-                    type = typeof val;
+        for(var key in bRs){
+            if(bRs.hasOwnProperty(key)){
+                var type = typeof bRs[key];
+                if(type == 'string' || type=='boolean'){
+                    backData.push({
+                        info:tempData[j],
+                        val:bRs[key],
+                        key:key,
+                        type:type
+                    });
                 }
+                j++;
             }
-
-            backData.push({
-                info:tempData[j],
-                val:val,
-                key:ket,
-                type:type
-            });
         }
+
 
 
         openSet(id,ver,backData);
