@@ -25,6 +25,8 @@ module.exports =async function(request){
 		url = getProjectUrl(id),
 		project = url.substr(url.lastIndexOf('/')+1),
 		saveUrl = path.join(__dirname,'../tempSaveCode'),
+		delSvnUrl = path.join(saveUrl,'./.svn'),
+		cmd1 = 'rm -rf '+delSvnUrl,
 		cmd = "svn checkout -r "+ver+" "+url+" "+saveUrl+" --username "+svnUser.username+" --password "+svnUser.password;
 
 	//清空下载的临时文件夹
@@ -39,6 +41,11 @@ module.exports =async function(request){
 	await exec(cmd);
 
 	console.log('svn下载完成')
+
+	//删除.svn文件夹
+	console.log(cmd1)
+	await exec(cmd1);
+
 
 	//执行上传ftp服务器
 	let backUrl = await ftpUpload(project,saveUrl);

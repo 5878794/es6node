@@ -59,12 +59,18 @@ let uploadFiles = function(dir,files,projectPath,project){
 		});
 
 
-
+		// ftp.connect({
+		// 	host:'172.16.1.35',
+		// 	// port:'21',
+		// 	user:'care4u',
+		// 	password:'care4u',
+		// 	connTimeout:'10000'
+		// });
 		ftp.connect({
-			host:'172.16.1.35',
+			host:'10.254.72.29',
 			// port:'21',
-			user:'care4u',
-			password:'care4u',
+			user:'ftptest',
+			password:'paw123###',
 			connTimeout:'10000'
 		});
 	})
@@ -107,7 +113,8 @@ module.exports = async function(project,projectPath){
 	await uploadFiles(dir,file,projectPath,project);
 
 	console.log('ftp上传成功');
-	let url = 'http://172.16.1.35:8090/H5/'+project+'/';
+	// let url = 'http://117.139.233.18/'+project+'/';
+	let url = 'http://117.139.233.18/';
 	console.log(url);
 
 	return url;

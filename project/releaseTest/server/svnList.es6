@@ -1,12 +1,7 @@
 module.exports = [
 	{
-		id:1,
-		name:'健康绿道',
-		svnUrl:'https://172.16.1.34/svn/h5/trank/apps/trunk/sport'
-	},
-	{
-		id:2,
-		name:'国民体质报名',
-		svnUrl:'https://172.16.1.34/svn/h5/trank/app/common/fitnessTest/trunk'
+		id:3,
+		name:'猛追湾',
+		svnUrl:'https://10.254.72.15/svn/chase_bay/web/trunk/v1'
 	}
 ];
